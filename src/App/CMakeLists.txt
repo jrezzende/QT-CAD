@@ -6,6 +6,7 @@ set (
 	MainWindow.cpp
 	Line.cpp
 	Painter.cpp
+	Bezier.cpp
 	)
 	
 set (
@@ -15,6 +16,7 @@ set (
 	Line.h
 	Shapes.h
 	Painter.h
+	Bezier.h
 )
 
 find_package(Qt5Widgets CONFIG 

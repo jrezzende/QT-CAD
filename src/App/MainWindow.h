@@ -8,9 +8,29 @@
 class MainWindow : public QMainWindow
 {
 	Q_OBJECT
-		//todo// must implement slots and actions
+
+	QMenu* fileMenu;
+
+	QAction* newFileAction;
+	QAction* loadFileAction;
+	QAction* saveAction;
+	QAction* saveAsAction;
+	QAction* undoAction;
+	QAction* clearAction;
+	QAction* exitAction;
+
+	QMenu* shapesMenu;
+
+	QAction* lineAction;
+	QAction* bezierAction;
+	QAction* arcAction;
+
 public:
 	MainWindow();
+
+	void setLayout();
+	void setToolbar();
+
 };
 
 #endif // MAINWINDOW_H

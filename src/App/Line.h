@@ -5,12 +5,10 @@
 #include "Point.h"
 #include "Shapes.h"
 
-#include <vector>
-
 class Line : public Shapes
 {
-	Point p1;
-	Point p2;
+	Point p1, p2;
+	
 public:
 	~Line()= default;
 	Line()= default;

@@ -7,33 +7,48 @@ MainWindow::MainWindow()
 	auto p= Painter::getInstance();
 	setCentralWidget(p);
 
-	auto toolbar= menuBar();
-	
-	auto file= new QMenu("File");
-	auto newFile= new QAction("New File - Ctrl + N");
-	auto loadFile= new QAction("Load File - Ctrl + O");
-	auto save= new QAction("Save -  Ctrl + S");
-	auto saveAs= new QAction("Save As...");
-	auto undo= new QAction("Undo - Ctrl + Z");
-	auto exit= new QAction("Exit");
-	toolbar->addMenu(file);
-	file->addAction(newFile);
-	file->addAction(loadFile);
-	file->addAction(saveAs);
-	file->addAction(save);
-	file->addAction(undo);
-	file->addAction(exit);
-	
-	auto shapes= new QMenu("Shapes");
-	auto line= new QAction("Line - Ctrl + L");
-	auto bezier= new QAction("Bezier - Ctrl + B");
-	auto arc= new QAction("Arc - Ctrl + A");
-	toolbar->addMenu(shapes);
-	shapes->addAction(line);
-	shapes->addAction(bezier);
-	shapes->addAction(arc);
+	setLayout();
 
+	show();
+}
+
+void MainWindow::setLayout()
+{
 	setMinimumSize(800, 600);
 	setWindowTitle("QT Cad");
-	show();
+
+	setToolbar();
+}
+
+void MainWindow::setToolbar()
+{
+	auto toolbar = menuBar();
+
+	fileMenu->setTitle("File");
+	newFileAction->setText("New File - Ctrl + N");
+	loadFileAction->setText("Load File - Ctrl + O");
+	saveAction->setText("Save - Ctrl + S");
+	saveAsAction->setText("Save As...");
+	undoAction->setText("Undo - Ctrl + Z");
+	clearAction->setText("Clear - Ctrl + X");
+	exitAction->setText("Exit");
+
+	toolbar->addMenu(fileMenu);
+	fileMenu->addAction(newFileAction);
+	fileMenu->addAction(loadFileAction);
+	fileMenu->addAction(saveAsAction);
+	fileMenu->addAction(saveAction);
+	fileMenu->addAction(undoAction);
+	fileMenu->addAction(clearAction);
+	fileMenu->addAction(exitAction);
+
+	shapesMenu->setTitle("Shapes");
+	lineAction->setText("Line - Ctrl + L");
+	bezierAction->setText("Bezier - Ctrl + B");
+	arcAction->setText("Arc - Ctrl + A");
+
+	toolbar->addMenu(shapesMenu);
+	shapesMenu->addAction(lineAction);
+	shapesMenu->addAction(bezierAction);
+	shapesMenu->addAction(arcAction);
 }

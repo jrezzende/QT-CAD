@@ -8,8 +8,7 @@
 class Shapes
 {
 protected:
-	Point p1;
-	Point p2;
+	Point p1, p2;
 
 public:
 	virtual ~Shapes()= default;
@@ -24,4 +23,4 @@ public:
 	Point& getSecondPoint() { return p2; }
 };
 
-#endif // !1
+#endif // !SHAPES_H

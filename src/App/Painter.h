@@ -4,12 +4,14 @@
 
 #include "qwidget.h"
 #include "Line.h"
+#include "Bezier.h"
 
 class Painter : public QWidget
 {
 	static Painter* instance;
 
 	std::vector<Line*> lines;
+	std::vector<Bezier*> bezierCurves;
 
 	void mousePressEvent(QMouseEvent* event);
 	void mouseMoveEvent(QMouseEvent* event);
@@ -21,6 +23,7 @@ public:
 	~Painter()= default;
 	
 	static Painter* getInstance();
+	void clearVectors() { lines.clear(); bezierCurves.clear(); }
 };
 
 #endif // !PAINTER_H

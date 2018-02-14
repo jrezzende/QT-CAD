@@ -1,0 +1,26 @@
+#pragma once
+#ifndef PAINTER_H
+#define PAINTER_H
+
+#include "qwidget.h"
+#include "Line.h"
+
+class Painter : public QWidget
+{
+	static Painter* instance;
+
+	std::vector<Line*> lines;
+
+	void mousePressEvent(QMouseEvent* event);
+	void mouseMoveEvent(QMouseEvent* event);
+	void mouseReleaseEvent(QMouseEvent* event);
+
+	void paintEvent(QPaintEvent* event);
+
+public:
+	~Painter()= default;
+	
+	static Painter* getInstance();
+};
+
+#endif // !PAINTER_H

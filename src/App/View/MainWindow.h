@@ -18,7 +18,7 @@ class MainWindow : public QMainWindow
 	QAction* undoAction;
 	QAction* clearAction;
 	QAction* exitAction;
-
+		   
 	QMenu* shapesMenu;
 
 	QAction* lineAction;

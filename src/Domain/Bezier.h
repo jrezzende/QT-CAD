@@ -13,6 +13,8 @@ public:
 	Bezier()= default;
 	Bezier(const Point firstPoint, const Point secondPoint, const Point thirdPoint) : Shapes(firstPoint, secondPoint) {}
 
+	void setThirdPoint(const Point point) { p3= point;}
+
 	std::vector<Point> getCoordinates() override;
 };
 

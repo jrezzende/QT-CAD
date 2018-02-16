@@ -13,17 +13,21 @@ class Painter : public QWidget
 	std::vector<Line*> lines;
 	std::vector<Bezier*> bezierCurves;
 
+protected:
+	bool firstClick;
+	bool secondClick;
+	bool drawing;
+
 	void mousePressEvent(QMouseEvent* event);
 	void mouseMoveEvent(QMouseEvent* event);
 	void mouseReleaseEvent(QMouseEvent* event);
-
 	void paintEvent(QPaintEvent* event);
 
 public:
 	~Painter()= default;
+	Painter() { firstClick= false; secondClick= false; drawing= false; }
 	
 	static Painter* getInstance();
-	void clearVectors() { lines.clear(); bezierCurves.clear(); }
 };
 
 #endif // !PAINTER_H

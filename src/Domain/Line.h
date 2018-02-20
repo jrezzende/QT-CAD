@@ -5,14 +5,13 @@
 #include "Point.h"
 #include "Shapes.h"
 
-class Line : public Shapes
+class Line : public Shape
 {
-	Point p1, p2;
 	
 public:
-	~Line()= default;
-	Line()= default;
-	Line(const Point firstPoint, const Point lastPoint) : Shapes(firstPoint, lastPoint) {}
+	~Line() {}
+	Line() : Shape() {}
+	Line(const Point firstPoint, const Point lastPoint) : Shape(firstPoint, lastPoint) {}
 
 	std::vector<Point> getCoordinates() override;
 };

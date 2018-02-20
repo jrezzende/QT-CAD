@@ -4,14 +4,15 @@
 
 #include "Shapes.h"
 
-class Bezier : public Shapes
+class Bezier : public Shape
 {
-	Point p1, p2, p3;
+	Point p3;
 
 public:
-	~Bezier()= default;
-	Bezier()= default;
-	Bezier(const Point firstPoint, const Point secondPoint, const Point thirdPoint) : Shapes(firstPoint, secondPoint) {}
+	~Bezier() {}
+	Bezier() : Shape() {}
+	Bezier(const Point firstPoint, const Point secondPoint) : Shape(firstPoint, secondPoint) {}
+	Bezier(const Point firstPoint, const Point secondPoint, const Point thirdPoint) : Shape(firstPoint, secondPoint) { }
 
 	void setThirdPoint(const Point point) { p3= point;}
 

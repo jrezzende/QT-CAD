@@ -2,43 +2,56 @@
 #include "qtoolbar.h"
 #include "qmenubar.h"
 #include "Painter.h"
+#include "qevent.h"
 
 MainWindow::MainWindow()
 {	
 	auto p= Painter::getInstance();
 	setCentralWidget(p);
 
-	fileMenu= new QMenu();
-
-	newFileAction= new QAction();
-	newFileAction= new QAction();
-	loadFileAction= new QAction();
-	saveAction= new QAction();
-	saveAsAction= new QAction();
-	undoAction= new QAction();
-	clearAction= new QAction();
-	exitAction= new QAction();
-
-	shapesMenu= new QMenu();
-
-	lineAction= new QAction();
-	bezierAction= new QAction();
-	arcAction= new QAction();
-
+	createToolbar();
 	setLayout();
+
+	QObject::connect(exitAction, SIGNAL(triggered()), this, SLOT(close()));	
+
 	show();
+}
+
+void MainWindow::closeEvent(QCloseEvent* event)
+{
+	if (flagSave()) {
+		writeSpecifications();
+		event->accept();
+	} else {
+		event->ignore();
+	}
 }
 
 void MainWindow::setLayout()
 {
 	setMinimumSize(800, 600);
 	setWindowTitle("QT Cad");
-
-	setToolbar();
 }
 
-void MainWindow::setToolbar()
+void MainWindow::createToolbar()
 {
+	fileMenu = new QMenu();
+
+	newFileAction = new QAction();
+	newFileAction = new QAction();
+	loadFileAction = new QAction();
+	saveAction = new QAction();
+	saveAsAction = new QAction();
+	undoAction = new QAction();
+	clearAction = new QAction();
+	exitAction = new QAction();
+
+	shapesMenu = new QMenu();
+
+	lineAction = new QAction();
+	bezierAction = new QAction();
+	arcAction = new QAction();
+
 	auto toolbar = menuBar();
 
 	fileMenu->setTitle("File");

@@ -25,7 +25,7 @@ std::vector<Point> Line::getCoordinates()
 				fraction-= horizontalDistance;
 			}
 			x+= horizontalStep;
-			fraction+= horizontalDistance;
+			fraction+= verticalDistance;
 		}
 	}
 	else {

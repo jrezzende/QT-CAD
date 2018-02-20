@@ -3,15 +3,19 @@
 #define PAINTER_H
 
 #include "qwidget.h"
-#include "Line.h"
-#include "Bezier.h"
+#include "Shapes.h"
+
+class Bezier;
+class Line;
 
 class Painter : public QWidget
 {
 	static Painter* instance;
 
-	std::vector<Line*> lines;
-	std::vector<Bezier*> bezierCurves;
+	std::vector<Shape*> shapes;
+
+	Bezier* bezier;
+	Line* line;
 
 protected:
 	bool firstClick;

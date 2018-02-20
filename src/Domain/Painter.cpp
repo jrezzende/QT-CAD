@@ -1,15 +1,17 @@
 #include "Painter.h"
-#include "Shapes.h"
 #include "qevent.h"
 #include "qpainter.h"
 #include "qpainterpath.h"
+#include "Point.h"
+#include "Bezier.h"
+#include "Line.h"
 
 Painter* Painter::instance= nullptr;
 
 Painter* Painter::getInstance()
 {
 	if(!instance)
-		instance= new Painter();
+	instance= new Painter();
 
 	return instance;
 }
@@ -17,31 +19,38 @@ Painter* Painter::getInstance()
 void Painter::mousePressEvent(QMouseEvent* event)
 {
 	if (!drawing) {
-		Bezier* bezier = new Bezier(Point(0, 0), Point(0, 0), Point(0, 0));
-		bezier->setfirstPoint(Point(event->pos()));
+		bezier = new Bezier;
+		line = new Line;
 
-		bezierCurves.push_back(bezier);
+		line->setfirstPoint(Point(event->pos()));
+
+		shapes.push_back(line);
 	}
-	else
-		secondClick= true;
+	else {		
+		bezier->setfirstPoint(line->getFirstPoint());
+		bezier->setSecondPoint(line->getSecondPoint());
+
+		shapes.pop_back();
+		shapes.push_back(bezier);
+
+		secondClick = true;
+	}
 }
 
 void Painter::mouseReleaseEvent(QMouseEvent * event)
 {
-	if (!secondClick) {
+	if (secondClick)
+		drawing = false;
+	else 
 		drawing= true;
-		bezierCurves.back()->setSecondPoint(event->pos());
-	}
-	else if(secondClick)
-		drawing= false;
 }
 
 void Painter::mouseMoveEvent(QMouseEvent * event)
 {
 	if (secondClick)
-		bezierCurves.back()->setThirdPoint(event->pos());
-	else
-		bezierCurves.back()->setSecondPoint(event->pos());
+		bezier->setThirdPoint(Point(event->pos()));	
+	else 
+		line->setSecondPoint(Point(event->pos()));
 	
 	update();
 }
@@ -49,9 +58,16 @@ void Painter::mouseMoveEvent(QMouseEvent * event)
 void Painter::paintEvent(QPaintEvent * event)
 {
 	QPainter painter(this);
-	QPainterPath bezierPath;
 
-	for (auto bezier : bezierCurves) {
-		bezierPath.moveTo(bezier->getFirstPoint());
+	for (auto bezier : shapes)
+	{
+		QPainterPath bezierPath;
+		
+		bezierPath.moveTo(bezier->getFirstPoint().toQPoint());
+
+		for (auto point : bezier->getCoordinates())
+			bezierPath.lineTo(point.toQPoint());
+
+		painter.drawPath(bezierPath);
 	}
 }

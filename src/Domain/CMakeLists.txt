@@ -2,17 +2,20 @@ project(domain CXX)
 
 set(
 	DOMAIN_SOURCES
-	Line.cpp
+	Arc.cpp
 	Bezier.cpp
+	Line.cpp
 	Painter.cpp
 )
 
 set(
 	DOMAIN_HEADERS
-	Shapes.h
-	Line.h
+	Arc.h
 	Bezier.h
+	Line.h
+	Point.h
 	Painter.h
+	Shapes.h
 )
 
 add_library(domain STATIC ${DOMAIN_SOURCES} ${DOMAIN_HEADERS})

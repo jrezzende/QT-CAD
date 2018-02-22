@@ -3,7 +3,7 @@
 #define LINE_H
 
 #include "Point.h"
-#include "Shapes.h"
+#include "Shape.h"
 
 class Line : public Shape
 {

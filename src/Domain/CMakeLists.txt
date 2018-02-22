@@ -15,7 +15,7 @@ set(
 	Line.h
 	Point.h
 	Painter.h
-	Shapes.h
+	Shape.h
 )
 
 add_library(domain STATIC ${DOMAIN_SOURCES} ${DOMAIN_HEADERS})

@@ -4,6 +4,14 @@
 #include "Painter.h"
 #include "qevent.h"
 
+//TODO//ADDICONS
+//TODO// all window functions must be on app
+
+MainWindow::~MainWindow()
+{
+	delete nav;
+}
+
 MainWindow::MainWindow()
 {	
 	auto p= Painter::getInstance();
@@ -12,30 +20,23 @@ MainWindow::MainWindow()
 	createToolbar();
 	setLayout();
 
-	QObject::connect(exitAction, SIGNAL(triggered()), this, SLOT(close()));	
+	QObject::connect(exitAction, SIGNAL(triggered()), this, SLOT(close()));
 
 	show();
 }
 
-void MainWindow::closeEvent(QCloseEvent* event)
-{
-	if (flagSave()) {
-		writeSpecifications();
-		event->accept();
-	} else {
-		event->ignore();
-	}
-}
-
 void MainWindow::setLayout()
 {
-	setMinimumSize(800, 600);
+	setMinimumSize(1024, 768);
 	setWindowTitle("QT Cad");
 }
 
 void MainWindow::createToolbar()
 {
+	nav = menuBar();
+
 	fileMenu = new QMenu();
+	shapesMenu = new QMenu();
 
 	newFileAction = new QAction();
 	newFileAction = new QAction();
@@ -46,24 +47,35 @@ void MainWindow::createToolbar()
 	clearAction = new QAction();
 	exitAction = new QAction();
 
-	shapesMenu = new QMenu();
-
 	lineAction = new QAction();
 	bezierAction = new QAction();
 	arcAction = new QAction();
 
-	auto toolbar = menuBar();
-
 	fileMenu->setTitle("File");
-	newFileAction->setText("New File - Ctrl + N");
-	loadFileAction->setText("Load File - Ctrl + O");
-	saveAction->setText("Save - Ctrl + S");
+	newFileAction->setText("New File");
+	loadFileAction->setText("Load File");
+	saveAction->setText("Save");
 	saveAsAction->setText("Save As...");
-	undoAction->setText("Undo - Ctrl + Z");
-	clearAction->setText("Clear - Ctrl + X");
+	undoAction->setText("Undo");
+	clearAction->setText("Clear");
 	exitAction->setText("Exit");
 
-	toolbar->addMenu(fileMenu);
+	shapesMenu->setTitle("Shapes");
+	lineAction->setText("Line");
+	bezierAction->setText("Bezier");
+	arcAction->setText("Arc");
+
+	newFileAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_N));
+	loadFileAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_O));
+	saveAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_S));
+	undoAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z));
+	clearAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Asterisk));
+
+	lineAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_L));
+	bezierAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_B));
+	arcAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_A));
+
+	nav->addMenu(fileMenu);
 	fileMenu->addAction(newFileAction);
 	fileMenu->addAction(loadFileAction);
 	fileMenu->addAction(saveAsAction);
@@ -72,12 +84,7 @@ void MainWindow::createToolbar()
 	fileMenu->addAction(clearAction);
 	fileMenu->addAction(exitAction);
 
-	shapesMenu->setTitle("Shapes");
-	lineAction->setText("Line - Ctrl + L");
-	bezierAction->setText("Bezier - Ctrl + B");
-	arcAction->setText("Arc - Ctrl + A");
-
-	toolbar->addMenu(shapesMenu);
+	nav->addMenu(shapesMenu);
 	shapesMenu->addAction(lineAction);
 	shapesMenu->addAction(bezierAction);
 	shapesMenu->addAction(arcAction);

@@ -3,7 +3,7 @@
 #define PAINTER_H
 
 #include "qwidget.h"
-#include "Shapes.h"
+#include "Shape.h"
 
 class Bezier;
 class Line;

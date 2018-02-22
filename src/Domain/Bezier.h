@@ -2,7 +2,7 @@
 #ifndef BEZIER_H
 #define BEZIER_H
 
-#include "Shapes.h"
+#include "Shape.h"
 
 class Bezier : public Shape
 {
@@ -12,7 +12,8 @@ public:
 	~Bezier() {}
 	Bezier() : Shape() {}
 	Bezier(const Point firstPoint, const Point secondPoint) : Shape(firstPoint, secondPoint) {}
-	Bezier(const Point firstPoint, const Point secondPoint, const Point thirdPoint) : Shape(firstPoint, secondPoint) { }
+	Bezier(const Point firstPoint, const Point secondPoint, const Point thirdPoint)
+			   : Shape(firstPoint, secondPoint) { }
 
 	void setThirdPoint(const Point point) { p3= point;}
 

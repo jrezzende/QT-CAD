@@ -8,8 +8,11 @@
 class MainWindow : public QMainWindow
 {
 	Q_OBJECT
+	
+	QMenuBar* nav;
 
 	QMenu* fileMenu;
+	QMenu* shapesMenu;
 
 	QAction* newFileAction;
 	QAction* loadFileAction;
@@ -18,37 +21,17 @@ class MainWindow : public QMainWindow
 	QAction* undoAction;
 	QAction* clearAction;
 	QAction* exitAction;
-		   
-	QMenu* shapesMenu;
-
 	QAction* lineAction;
 	QAction* bezierAction;
 	QAction* arcAction;
 
 public:
+	~MainWindow();
 	MainWindow();
-
-	void loadFile(const QString& filename);
-
-protected:
-	void closeEvent(QCloseEvent* event) override;
-
-private slots:
-	void newFile();
-	void open();
-	bool save();
-	bool saveAs();
-	void about();
 
 private:
 	void setLayout();
 	void createToolbar();
-	bool saveFile(const QString& fileName);
-	bool flagSave();
-	void writeSpecifications();
-	void setCurrentFile(const QString& fileName);
-
-	QString currentFile();
 };
 
 #endif // MAINWINDOW_H

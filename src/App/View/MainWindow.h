@@ -3,7 +3,6 @@
 #define MAINWINDOW_H
 
 #include "qmainwindow.h"
-#include "Painter.h"
 
 class MainWindow : public QMainWindow
 {
@@ -28,6 +27,10 @@ class MainWindow : public QMainWindow
 public:
 	~MainWindow();
 	MainWindow();
+
+public slots:
+	void verifyExitAction();
+	//void verifyClearAction();
 
 private:
 	void setLayout();

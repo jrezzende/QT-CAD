@@ -8,7 +8,7 @@ int Arc::quadrantOf(const Point& point)
 		else
 			return 4; // Q4
 	}
-
+	
 	if (point.x <= p1.x && point.y <= p1.y)
 		return 2; // Q2
 

@@ -1,6 +1,6 @@
 #pragma once
-#ifndef PAINTER_H
-#define PAINTER_H
+#ifndef CANVAS_H
+#define CANVAS_H
 
 #include "qwidget.h"
 #include "Shape.h"
@@ -8,9 +8,9 @@
 class Bezier;
 class Line;
 
-class Painter : public QWidget
+class Canvas : public QWidget
 {
-	static Painter* instance;
+	static Canvas* instance;
 
 	std::vector<Shape*> shapes;
 
@@ -28,10 +28,10 @@ protected:
 	void paintEvent(QPaintEvent* event);
 
 public:
-	~Painter()= default;
-	Painter() { firstClick= false; secondClick= false; drawing= false; }
+	~Canvas()= default;
+	Canvas() { firstClick= false; secondClick= false; drawing= false; }
 	
-	static Painter* getInstance();
+	static Canvas* getInstance();
 };
 
-#endif // !PAINTER_H
+#endif // !CANVAS_H

@@ -5,7 +5,6 @@ set(
 	Arc.cpp
 	Bezier.cpp
 	Line.cpp
-	Painter.cpp
 )
 
 set(
@@ -14,7 +13,6 @@ set(
 	Bezier.h
 	Line.h
 	Point.h
-	Painter.h
 	Shape.h
 )
 

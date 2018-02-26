@@ -3,11 +3,13 @@ project(view CXX)
 set(
 	VIEW_SOURCES
 	MainWindow.cpp
+	Canvas.cpp
 )
 
 set(
 	VIEW_HEADERS
 	MainWindow.h
+	Canvas.h
 )
 
 add_library(view STATIC ${VIEW_HEADERS} ${VIEW_SOURCES})

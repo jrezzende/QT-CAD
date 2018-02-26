@@ -1,4 +1,4 @@
-#include "Painter.h"
+#include "Canvas.h"
 #include "qevent.h"
 #include "qpainter.h"
 #include "qpainterpath.h"
@@ -6,17 +6,17 @@
 #include "Bezier.h"
 #include "Line.h"
 
-Painter* Painter::instance= nullptr;
+Canvas* Canvas::instance= nullptr;
 
-Painter* Painter::getInstance()
+Canvas* Canvas::getInstance()
 {
 	if(!instance)
-	instance= new Painter();
+	instance= new Canvas();
 
 	return instance;
 }
 
-void Painter::mousePressEvent(QMouseEvent* event)
+void Canvas::mousePressEvent(QMouseEvent* event)
 {
 	if (!drawing) {
 		bezier = new Bezier;
@@ -37,7 +37,7 @@ void Painter::mousePressEvent(QMouseEvent* event)
 	}
 }
 
-void Painter::mouseReleaseEvent(QMouseEvent * event)
+void Canvas::mouseReleaseEvent(QMouseEvent * event)
 {
 	if (secondClick)
 		drawing = false;
@@ -45,7 +45,7 @@ void Painter::mouseReleaseEvent(QMouseEvent * event)
 		drawing= true;
 }
 
-void Painter::mouseMoveEvent(QMouseEvent * event)
+void Canvas::mouseMoveEvent(QMouseEvent * event)
 {
 	if (secondClick)
 		bezier->setThirdPoint(Point(event->pos()));	
@@ -55,7 +55,7 @@ void Painter::mouseMoveEvent(QMouseEvent * event)
 	update();
 }
 
-void Painter::paintEvent(QPaintEvent * event)
+void Canvas::paintEvent(QPaintEvent * event)
 {
 	QPainter painter(this);
 

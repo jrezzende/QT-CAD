@@ -6,4 +6,6 @@ Model * Model::getInstance()
 		delete instance;
 
 	instance= new Model();
+
+	return instance;
 }

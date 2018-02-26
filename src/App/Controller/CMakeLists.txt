@@ -28,6 +28,7 @@ set(
 	CommandSaveAs.h
 	CommandUndo.h
 	CommandClear.h
+	CommandShape.h
 )
 
 add_library(controller STATIC ${CONTROLLER_SOURCES} ${CONTROLLER_HEADERS})

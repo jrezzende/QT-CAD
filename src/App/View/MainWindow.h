@@ -24,17 +24,24 @@ class MainWindow : public QMainWindow
 	QAction* bezierAction;
 	QAction* arcAction;
 
+	void setLayout();
+	void createToolbar();
+	void createConnections();
+
 public:
 	~MainWindow();
 	MainWindow();
+	void newFile();
+	void loadFile();
+	void saveAs();
+	void save();
+	void undo();
+	void clear();
+	//void exit(); (?)
 
 public slots:
 	void verifyExitAction();
 	//void verifyClearAction();
-
-private:
-	void setLayout();
-	void createToolbar();
 };
 
 #endif // MAINWINDOW_H

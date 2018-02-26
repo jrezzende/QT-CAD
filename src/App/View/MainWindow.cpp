@@ -19,14 +19,34 @@ MainWindow::MainWindow()
 	setCentralWidget(p);
 
 	createToolbar();
+	createConnections();
 	setLayout();
 
-	QObject::connect(
-		exitAction, SIGNAL(triggered()), 
-		this, SLOT(verifyExitAction())
-	);
+	showMaximized();
+}
 
-	show();
+void MainWindow::newFile()
+{
+}
+
+void MainWindow::loadFile()
+{
+}
+
+void MainWindow::saveAs()
+{
+}
+
+void MainWindow::save()
+{
+}
+
+void MainWindow::undo()
+{
+}
+
+void MainWindow::clear()
+{
 }
 
 void MainWindow::setLayout()
@@ -94,13 +114,23 @@ void MainWindow::createToolbar()
 	shapesMenu->addAction(arcAction);
 }
 
+//to be created: other connections
+
+void MainWindow::createConnections()
+{
+	QObject::connect(
+	exitAction, SIGNAL(triggered()),
+	this, SLOT(verifyExitAction())
+	);
+}
+
 //must verify if the current file was saved (bool saved)
 
 void MainWindow::verifyExitAction() 
 {
 	if (QMessageBox::question(this, "Quit", "Are you sure you want to exit?", 
 		QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
-		close();
+		close(); //when controller mananger is created, switch to new cmd
 }
 
 //void MainWindow::verifyClearAction()

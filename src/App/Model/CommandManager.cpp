@@ -1,0 +1,13 @@
+#include "CommandManager.h"
+#include "CommandArc.h"
+#include "CommandBezier.h"
+#include "CommandClear.h"
+#include "CommandIdle.h"
+#include "CommandLine.h"
+#include "CommandLoadFile.h"
+#include "CommandNewFile.h"
+#include "CommandSave.h"
+#include "CommandSaveAs.h"
+#include "CommandSetCurrentFile.h"
+#include "CommandUndo.h"
+

@@ -1,21 +1,51 @@
 #include "Arc.h"
+#include <math.h>
+#define pi 3.1415
+#define radius Point::distanceBetweenTwoPoints(p1, p2);
 
-int Arc::quadrantOf(const Point& point)
+Quadrant Arc::quadrantOf(const Point& point)
 {
 	if (point.x >= p1.x) {
-		if(point.y <= p1.y) // Q1
-			return 1;
+		if(point.y <= p1.y)
+			return Q1;
 		else
-			return 4; // Q4
+			return Q4;
 	}
-	
-	if (point.x <= p1.x && point.y <= p1.y)
-		return 2; // Q2
 
-	return 3; // Q3
+	if (point.x <= p1.x && point.y <= p1.y)
+		return Q2;
+
+	return Q3;
+}
+
+double Arc::calcAngle(double oppleg, double hypotenuse)
+{
+	return asin(oppleg / hypotenuse) * 180 / pi;
+}
+
+double Arc::degreesToRadians(double degrees)
+{
+	return degrees * pi / 180;
+}
+
+Point Arc::archMainPoint(double degrees)
+{
+	double angle= degreesToRadians(degrees);
+
+	double tempX= cos(angle) * radius;
+	double tempY= sin(angle) * radius;
+
+	double x= p1.x + tempX;
+	double y= p1.y - tempY;
+
+	return Point(int(x), int(y));
 }
 
 std::vector<Point> Arc::getCoordinates()
 {
-	return std::vector<Point>();
+	std::vector<Point> points;
+	points.push_back(p2);
+
+	const int q2= quadrantOf(p2);
+	const int q3= quadrantOf(p3);
 }

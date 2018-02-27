@@ -15,8 +15,8 @@ MainWindow::~MainWindow()
 
 MainWindow::MainWindow()
 {	
-	auto p= Canvas::getInstance();
-	setCentralWidget(p);
+	auto pixmap= Canvas::getInstance();
+	setCentralWidget(pixmap);
 
 	createToolbar();
 	createConnections();
@@ -27,26 +27,32 @@ MainWindow::MainWindow()
 
 void MainWindow::newFile()
 {
+	// command newfile
 }
 
 void MainWindow::loadFile()
 {
+	// command loadfile
 }
 
 void MainWindow::saveAs()
 {
+	//command saveas
 }
 
 void MainWindow::save()
 {
+	//command save
 }
 
 void MainWindow::undo()
 {
+	//command undo
 }
 
 void MainWindow::clear()
 {
+	Canvas::getInstance()->clearMap();
 }
 
 void MainWindow::setLayout()
@@ -122,18 +128,25 @@ void MainWindow::createConnections()
 	exitAction, SIGNAL(triggered()),
 	this, SLOT(verifyExitAction())
 	);
+
+	QObject::connect(
+		clearAction, SIGNAL(triggered()),
+		this, SLOT(verifyClearAction())
+	);
 }
 
 //must verify if the current file was saved (bool saved)
 
 void MainWindow::verifyExitAction() 
 {
-	if (QMessageBox::question(this, "Quit", "Are you sure you want to exit?", 
+	if (QMessageBox::question(this, "Quit?", "Are you sure you want to exit?", 
 		QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
-		close(); //when controller mananger is created, switch to new cmd
+		close();
 }
 
-//void MainWindow::verifyClearAction()
-//{
-//	if()
-//}
+void MainWindow::verifyClearAction()
+{
+		if (QMessageBox::question(this, "Clear file?", "Are you sure you want to clear the current file? This action cannot be undone",
+			QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
+			clear();
+}

@@ -41,7 +41,7 @@ public:
 
 public slots:
 	void verifyExitAction();
-	//void verifyClearAction();
+	void verifyClearAction();
 };
 
 #endif // MAINWINDOW_H

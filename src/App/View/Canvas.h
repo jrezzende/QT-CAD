@@ -30,6 +30,23 @@ public:
 	Canvas() {}
 	
 	static Canvas* getInstance();
-};
+	QPixmap& getPixmap() { return pixmap;}
 
+	std::string savePath();
+	std::string loadPath();
+	void saveCurrentFile(); // manager
+
+	void clearMap(); // clear all shapes in vector
+	void dumpShapes(); // to be called along with clearmap
+	void dumpLastShape(); // to be called on undo command
+
+	void lineCommand(); // 
+	void bezierCommand(); // draw commands 
+	void arcCommand(); // 
+
+	void drawCanvas(Shape& shape);
+	void drawPixmap(Shape& shape);
+
+	QPainterPath getDrawPath(Shape& shape);
+};
 #endif // !CANVAS_H

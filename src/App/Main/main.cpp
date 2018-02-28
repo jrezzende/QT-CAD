@@ -3,6 +3,7 @@
 #include "Point.h"
 #include "Shape.h"
 #include "Line.h"
+#include "Arc.h"
 #include <iostream>
 
 int main(int argc, char *argv[])
@@ -11,9 +12,12 @@ int main(int argc, char *argv[])
 
 	MainWindow w;
 
-	Line* line= new Line(Point(10, 10), Point(50, 50));
+	Arc* arc= new Arc();
+	arc->setfirstPoint(Point(20, 20));
+	arc->setSecondPoint(Point(25, 25));
+	arc->setThirdPoint(Point(10, 30));
 
-	std::cout << line->getShapeType();
+	arc->getCoordinates();
 
 	return app.exec();
 }

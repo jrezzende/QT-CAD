@@ -9,13 +9,13 @@
 class Point
 {
 public:
-	int x;
-	int y;
+	double x;
+	double y;
 
 	~Point() {}
 	Point() : x(0), y(0) {}
 	Point(QPoint point) : x(point.x()), y(point.y()) {}
-	Point(int x, int y) : x(x), y(y) {}
+	Point(double x, double y) : x(x), y(y) {}
 
 	QPoint toQPoint() { return QPoint(x, y); }
 

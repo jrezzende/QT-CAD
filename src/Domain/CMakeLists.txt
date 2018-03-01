@@ -5,15 +5,17 @@ set(
 	Arc.cpp
 	Bezier.cpp
 	Line.cpp
+	File.cpp
 )
 
 set(
 	DOMAIN_HEADERS
+	Point.h
+	Shape.h
 	Arc.h
 	Bezier.h
 	Line.h
-	Point.h
-	Shape.h
+	File.h
 )
 
 add_library(domain STATIC ${DOMAIN_SOURCES} ${DOMAIN_HEADERS})

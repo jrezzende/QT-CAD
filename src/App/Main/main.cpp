@@ -13,9 +13,10 @@ int main(int argc, char *argv[])
 	MainWindow w;
 
 	Arc* arc= new Arc();
-	arc->setfirstPoint(Point(20, 20));
-	arc->setSecondPoint(Point(25, 25));
-	arc->setThirdPoint(Point(10, 30));
+	arc->setfirstPoint(Point(-15, -12));
+	arc->setThirdPoint(Point(-15, -30));
+	arc->setSecondPoint(Point(-33, -16));
+	
 
 	arc->getCoordinates();
 

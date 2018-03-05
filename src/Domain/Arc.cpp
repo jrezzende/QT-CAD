@@ -22,8 +22,8 @@ std::vector<Point> Arc::getCoordinates()
 {
 	std::vector<Point> points;
 
-	double dxp2 = p2.x - p1.x; double dyp2 = p2.y - p1.y; // dxy p2
-	double dxp3 = p3.x - p1.x; double dyp3 = p3.y - p1.y; // dxy p3
+	double dxp2 = p2.x - p1.x; double dyp2 = p2.y - p1.y;
+	double dxp3 = p3.x - p1.x; double dyp3 = p3.y - p1.y;
 
 	initialAngle = atan2(dyp2, dxp2); finalAngle = atan2(dyp3, dxp3);
 

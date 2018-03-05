@@ -12,6 +12,7 @@ set(
 	CommandSaveAs.cpp
 	CommandUndo.cpp
 	CommandClear.cpp
+	CommandExit.cpp
 )
 
 set(
@@ -28,7 +29,8 @@ set(
 	CommandSaveAs.h
 	CommandUndo.h
 	CommandClear.h
-	CommandShape.h
+	CommandExit.h
+	ShapeCommand.h
 )
 
 add_library(controller STATIC ${CONTROLLER_SOURCES} ${CONTROLLER_HEADERS})

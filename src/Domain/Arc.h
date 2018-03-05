@@ -20,7 +20,7 @@ class Arc : public Shape
 public:
 	~Arc() {}
 	Arc() : Shape(), p3(Point(0, 0)) {}
-	Arc(const Point& _p1, const Point& _p2, const Point& _p3) : Shape(_p1, _p2, type), p3(_p3) { type= ARC; }
+	Arc(const Point& _p1, const Point& _p2, const Point& _p3) : Shape(_p1, _p2), p3(_p3) {}
 
 	void setThirdPoint(const Point& _p3) { p3 = _p3; }
 

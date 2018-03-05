@@ -10,7 +10,7 @@ public:
 	~CommandClear() {}
 	CommandClear() {}
 
-	virtual void execute(Model& m, MainWindow& w) override;
+	void execute(Model& m, MainWindow& w) override;
 };
 
 #endif // !COMMANDCLEAR_H

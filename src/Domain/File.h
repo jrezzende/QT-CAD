@@ -45,7 +45,7 @@ public:
 	////////////////////////////
 
 	void addShape(Shape* shape);
-	void eraseShape(Shape* shape);
+	void eraseLastShape();
 	void eraseAllShapes(Shape* shape);
 
 	void reprint();

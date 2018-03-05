@@ -10,7 +10,7 @@ public:
 	~CommandNewFile() {}
 	CommandNewFile() {}
 
-	virtual void execute(Model& m, MainWindow& w) override;
+	void execute(Model& m, MainWindow& w) override;
 };
 
 #endif // !COMMANDNEWFILE_H

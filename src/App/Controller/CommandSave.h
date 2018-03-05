@@ -10,7 +10,7 @@ public:
 	~CommandSave() {}
 	CommandSave() {}
 
-	virtual void execute(Model& m, MainWindow& w) override;
+	void execute(Model& m, MainWindow& w) override;
 };
 
 #endif // !COMMANDSAVE_H

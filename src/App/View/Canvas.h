@@ -32,6 +32,8 @@ public:
 	static Canvas* getInstance();
 	QPixmap& getPixmap() { return pixmap;}
 
+	void setDrawing(bool flag) { drawing= flag; }
+
 	std::string savePath();
 	std::string loadPath();
 	void saveCurrentFile(); // manager

@@ -2,15 +2,19 @@
 #ifndef COMMANDLINE_H
 #define COMMANDLINE_H
 
-#include "Command.h"
+#include "ShapeCommand.h"
+#include "Line.h"
 
-class CommandLine : public Command
+class CommandLine : public ShapeCommand
 {
+	Line* line;
 public:
 	~CommandLine() {}
-	CommandLine() {}
+	CommandLine(Model& m) : ShapeCommand(m, LINE) { line= new Line(); }
 
-	virtual void execute(Model& m, MainWindow& w) override;
+	void mousePressEvent(Point& point) override;
+	void mouseMoveEvent(Point& point) override;
+	void mouseReleaseEvent(Point& point) override;
 };
 
 #endif // !COMMANDLINE_H

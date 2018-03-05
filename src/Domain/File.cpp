@@ -1,19 +1,23 @@
 #include "File.h"
 #include "Canvas.h"
 
-void File::addShape(Shape * shape)
+void File::addShape(Shape* newShape)
 {
-	shapes.push_back(shape);
+	for (int i = 0; i < shapes.size(); i++) {
+		if (shapes[i] == newShape)
+			shapes.erase(shapes.begin() + i);
+	}
+
+	shapes.push_back(newShape);
 
 	reprint();
 }
 
-void File::eraseShape(Shape* shape)
+void File::eraseLastShape()
 {
-	for (int i= 0; i < shapes.size(); i++) {
-		if(shapes[i] == shape)
-			shapes.erase(shapes.begin() + i);
-	}
+	shapes.pop_back();
+
+	reprint();
 }
 
 void File::eraseAllShapes(Shape * shape)

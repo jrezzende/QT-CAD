@@ -7,8 +7,6 @@
 class Model
 {
 private:
-	static Model* instance;
-
 	std::vector<File*> files;
 
 	File* currentFile;
@@ -16,7 +14,6 @@ private:
 public:
 	Model() {}
 	~Model() {}
-	Model* getInstance();
 
 	void newFile(File* file) { files.push_back(file); }
 	void deleteFile(File* file) { delete file; }
@@ -26,8 +23,6 @@ public:
 	void setCurrentFile(File* file) { currentFile= file; }
 
 	std::vector<File*> getFiles() const { return files; }
-
-	//
 
 };
 #endif // !MODEL_H

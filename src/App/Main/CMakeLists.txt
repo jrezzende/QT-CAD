@@ -4,13 +4,11 @@ set (
 	APP_SOURCES
 	main.cpp
 	App.cpp
-	CommandManager.cpp
 )
 
 set (
 	APP_HEADERS
 	App.h
-	CommandManager.h
 )
 
 #find_package(Qt5Widgets CONFIG 
@@ -25,7 +23,7 @@ set_target_properties(app PROPERTIES ENABLE_EXPORTS 1)
 
 target_include_directories(app PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
-target_link_libraries(app view controller
+target_link_libraries(app view
 							Qt5::Core
 							Qt5::Widgets
 							Qt5::Gui

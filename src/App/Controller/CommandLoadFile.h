@@ -10,7 +10,7 @@ public:
 	~CommandLoadFile() {}
 	CommandLoadFile() {}
 
-	virtual void execute(Model& m, MainWindow& w) override;
+	void execute(Model& m, MainWindow& w) override;
 };
 
 #endif // !COMMANDLOADFILE_H

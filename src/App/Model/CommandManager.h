@@ -3,7 +3,7 @@
 #define COMMANDMANAGER_H
 
 class Command;
-class CommandShape;
+class ShapeCommand;
 class MainWindow;
 class Model; 
 class Point;
@@ -13,20 +13,22 @@ class CommandManager
 {
 	Model& model;
 	MainWindow& window;
+
 	Command* command;
-	CommandShape* commandShape;
+	ShapeCommand* shapeCommand;
 
 	Point* firstPoint;
 	Point* lastPoint;
 
 public:
 	~CommandManager();
-	CommandManager(Model& model, MainWindow& window);
+	CommandManager(Model& m, MainWindow& w);
 
 	void newFile();
 	void saveFile();// structure commands first
+	void saveAsFile();
 	void openFile();// 
-	void closeFile();
+	void exitFile();
 
 	void mousePressEvent(Point pos);
 	void mouseReleaseEvent(Point pos);
@@ -39,9 +41,9 @@ public:
 	void clearShapes();
 	void clearLastShape();
 
-	CommandShape& getCommandShape() const { return *commandShape; }
+	ShapeCommand& getCommandShape() const { return *shapeCommand; }
 	Command& getCommand() const { return *command; }
 
-	void runCommand(Command* command);
+	void runCommand(Command* cmd);
 };
 #endif // !COMMANDMANAGER_H

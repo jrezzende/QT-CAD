@@ -16,7 +16,6 @@ int main(int argc, char *argv[])
 	arc->setfirstPoint(Point(-15, -12));
 	arc->setThirdPoint(Point(-15, -30));
 	arc->setSecondPoint(Point(-33, -16));
-	
 
 	arc->getCoordinates();
 

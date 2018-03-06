@@ -11,7 +11,6 @@
 #include "CommandLoadFile.h"
 #include "CommandNewFile.h"
 #include "CommandSave.h"
-#include "CommandSaveAs.h"
 #include "CommandSetCurrentFile.h"
 #include "CommandUndo.h"
 #include "CommandExit.h"
@@ -39,12 +38,7 @@ void CommandManager::saveFile()
 	runCommand(new CommandSave());
 }
 
-void CommandManager::saveAsFile()
-{
-	runCommand(new CommandSaveAs());
-}
-
-void CommandManager::openFile()
+void CommandManager::loadFile()
 {
 	runCommand(new CommandLoadFile());
 }
@@ -54,7 +48,7 @@ void CommandManager::clearShapes()
 	runCommand(new CommandClear());
 }
 
-void CommandManager::clearLastShape()
+void CommandManager::eraseLastShape()
 {
 	runCommand(new CommandUndo());
 }
@@ -112,8 +106,8 @@ void CommandManager::bezierCommand()
 
 void CommandManager::lineCommand()
 {
-	if (shapeCommand)
-		delete shapeCommand;
+	/*if (shapeCommand)
+		delete shapeCommand;*/
 
 	shapeCommand = new CommandLine(model);
 }

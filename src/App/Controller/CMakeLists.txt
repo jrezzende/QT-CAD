@@ -5,11 +5,11 @@ set(
 	CommandArc.cpp
 	CommandBezier.cpp
 	CommandLine.cpp
+	CommandIdle.cpp
 	CommandNewFile.cpp
 	CommandSetCurrentFile.cpp
 	CommandLoadFile.cpp
 	CommandSave.cpp
-	CommandSaveAs.cpp
 	CommandUndo.cpp
 	CommandClear.cpp
 	CommandExit.cpp
@@ -26,7 +26,6 @@ set(
 	CommandSetCurrentFile.h
 	CommandLoadFile.h
 	CommandSave.h
-	CommandSaveAs.h
 	CommandUndo.h
 	CommandClear.h
 	CommandExit.h

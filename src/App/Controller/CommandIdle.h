@@ -12,5 +12,4 @@ public:
 
 	void execute(Model& m, MainWindow& w) override;
 };
-
 #endif // !COMMANDIDLE_H

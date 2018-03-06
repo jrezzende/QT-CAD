@@ -1,19 +1,20 @@
 #include "Canvas.h"
 #include "Point.h"
+#include "CommandManager.h"
+#include "Shape.h"
 
 #include "qevent.h"
 #include "qpainter.h"
 #include "qpainterpath.h"
 #include "qfiledialog.h"
 
-Canvas* Canvas::instance= nullptr;
-
-Canvas* Canvas::getInstance()
+Canvas::Canvas(CommandManager* _manager, QWidget* parent) : drawing(false)
 {
-	if(!instance)
-	instance= new Canvas();
+	setCursor(QCursor(Qt::ArrowCursor));
 
-	return instance;
+	manager= _manager;
+	clearMap();
+	lineCommand();
 }
 
 std::string Canvas::savePath()
@@ -28,75 +29,100 @@ std::string Canvas::loadPath()
 
 void Canvas::saveCurrentFile()
 {
-	//command save file
+	manager->saveFile();
 }
 
 void Canvas::clearMap()
 {
 	pixmap.fill();
 
-	//call dumpshapes();
+	dumpShapes();
 }
 
 void Canvas::dumpShapes()
 {
-	//clear data shape vector
+	manager->clearShapes();
 }
 
 void Canvas::dumpLastShape()
 {
-	//pop_back shape vector
+	manager->eraseLastShape();
 }
 
 void Canvas::lineCommand()
 {
-	//start line command
+	manager->lineCommand();
 }
 
 void Canvas::bezierCommand()
 {
-	//start bezier command
+	manager->bezierCommand();
 }
 
 void Canvas::arcCommand()
 {
-	//start arc command
+	manager->arcCommand();
 }
 
-void Canvas::drawCanvas(Shape & shape)
+void Canvas::drawCanvas(Shape& shape)
 {
+	drawPixmap(shape);
 
+	update();
 }
 
-void Canvas::drawPixmap(Shape & shape)
+void Canvas::drawPixmap(Shape& shape)
 {
+	painter.drawPath(getDrawPath(shape));
 }
 
 QPainterPath Canvas::getDrawPath(Shape & shape)
 {
-	return QPainterPath();
+	std::vector<Point> shapePoints= shape.getCoordinates();
+
+	QPainterPath path;
+
+	path.moveTo(shapePoints[0].x, shapePoints[0].y);
+
+	for(auto point : shapePoints)
+		path.lineTo(point.x, point.y);
+
+	return path;
 }
 
 ////////////////////////////////////////////////
 
 void Canvas::mousePressEvent(QMouseEvent* event)
 {
-	
+	if (event->button() == Qt::LeftButton) {
+		manager->mousePressEvent(event->pos());
+		setDrawing(true);
+	}
+
+	event->accept();
 }
 
 void Canvas::mouseReleaseEvent(QMouseEvent * event)
 {
+	if(event->button() == Qt::LeftButton)
+		manager->mouseReleaseEvent(event->pos());
 
+	event->accept();
 }
 
 void Canvas::mouseMoveEvent(QMouseEvent * event)
 {
+	if(drawing)
+		manager->mouseMoveEvent(event->pos());
 
+	event->accept();
 }
-
-/////////////////////////////////////////////
 
 void Canvas::paintEvent(QPaintEvent * event)
 {
-	
+	QPainter shapePainter;
+
+	shapePainter.drawPixmap(x, y, pixmap);
+
+	event->accept();
 }

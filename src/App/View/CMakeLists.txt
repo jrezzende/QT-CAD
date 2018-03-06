@@ -17,7 +17,7 @@ add_library(view STATIC ${VIEW_HEADERS} ${VIEW_SOURCES})
 target_include_directories(view PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 target_link_libraries(
-					view domain
+					view domain model
 					Qt5::Gui
 					Qt5::Widgets
 )

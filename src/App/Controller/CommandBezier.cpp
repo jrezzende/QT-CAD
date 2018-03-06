@@ -33,7 +33,7 @@ void CommandBezier::mouseReleaseEvent(Point& point)
 		previewDraw= false;
 		isDrawing= true;
 		bezier->setSecondPoint(point);
-		model.getCurrentFile()->eraseShape(previewLine);
+		model.getCurrentFile()->eraseLastShape();
 	}
 	else {
 		model.getCurrentFile()->addShape(bezier);

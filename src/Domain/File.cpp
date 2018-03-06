@@ -15,12 +15,15 @@ void File::addShape(Shape* newShape)
 
 void File::eraseLastShape()
 {
-	shapes.pop_back();
+	if(shapes.size() >= 1)
+		shapes.pop_back();
+	else
+		return;
 
 	reprint();
 }
 
-void File::eraseAllShapes(Shape * shape)
+void File::eraseAllShapes()
 {
 	shapes.clear();
 

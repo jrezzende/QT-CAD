@@ -25,9 +25,8 @@ public:
 	CommandManager(Model& m, MainWindow& w);
 
 	void newFile();
-	void saveFile();// structure commands first
-	void saveAsFile();
-	void openFile();// 
+	void saveFile();
+	void loadFile();
 	void exitFile();
 
 	void mousePressEvent(Point pos);
@@ -39,7 +38,7 @@ public:
 	void arcCommand();
 
 	void clearShapes();
-	void clearLastShape();
+	void eraseLastShape();
 
 	ShapeCommand& getCommandShape() const { return *shapeCommand; }
 	Command& getCommand() const { return *command; }

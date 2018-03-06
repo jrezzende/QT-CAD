@@ -18,6 +18,7 @@ class File
 {
 	std::string fileName;
 	std::string filePath;
+
 	std::vector<Shape*> shapes;
 
 	Status status;
@@ -46,7 +47,7 @@ public:
 
 	void addShape(Shape* shape);
 	void eraseLastShape();
-	void eraseAllShapes(Shape* shape);
+	void eraseAllShapes();
 
 	void reprint();
 };

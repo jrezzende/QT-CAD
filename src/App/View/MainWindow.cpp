@@ -1,58 +1,27 @@
 #include "MainWindow.h"
+#include "Canvas.h"
+#include "CommandManager.h"
+#include "qt_windows.h"
+
 #include "qtoolbar.h"
 #include "qmenubar.h"
-#include "Canvas.h"
 #include "qevent.h"
 #include "qmessagebox.h"
-
-//TODO//ADDICONS
-//TODO// all window functions must be on app
+#include "qshortcut.h"
 
 MainWindow::~MainWindow()
 {
 	delete nav;
 }
 
-MainWindow::MainWindow()
+MainWindow::MainWindow(QMainWindow* parent) : QMainWindow(parent), manager(nullptr)
 {	
-	auto pixmap= Canvas::getInstance();
-	setCentralWidget(pixmap);
-
 	createToolbar();
 	createConnections();
+	createShortcuts();
 	setLayout();
 
 	showMaximized();
-}
-
-void MainWindow::newFile()
-{
-	// command newfile
-}
-
-void MainWindow::loadFile()
-{
-	// command loadfile
-}
-
-void MainWindow::saveAs()
-{
-	//command saveas
-}
-
-void MainWindow::save()
-{
-	//command save
-}
-
-void MainWindow::undo()
-{
-	//command undo
-}
-
-void MainWindow::clear()
-{
-	Canvas::getInstance()->clearMap();
 }
 
 void MainWindow::setLayout()
@@ -120,7 +89,42 @@ void MainWindow::createToolbar()
 	shapesMenu->addAction(arcAction);
 }
 
-//to be created: other connections
+//////////////////////////////////////
+
+void MainWindow::newFile()
+{
+	manager->newFile();
+}
+
+void MainWindow::loadFile()
+{
+	manager->loadFile();
+}
+
+void MainWindow::save()
+{
+	manager->saveFile();
+}
+
+void MainWindow::exit()
+{
+	manager->exitFile();
+}
+
+std::string MainWindow::getText()
+{
+	return std::string();
+}
+
+std::string MainWindow::getFileName()
+{
+	return std::string();
+}
+
+Canvas * MainWindow::createCanvas()
+{
+	return new Canvas(manager, this);;
+}
 
 void MainWindow::createConnections()
 {
@@ -130,23 +134,68 @@ void MainWindow::createConnections()
 	);
 
 	QObject::connect(
-		clearAction, SIGNAL(triggered()),
-		this, SLOT(verifyClearAction())
+	newFileAction, SIGNAL(triggered()),
+	this, SLOT(newFile())
+	);
+
+	QObject::connect(
+	loadFileAction, SIGNAL(triggered()),
+	this, SLOT(loadFile())
+	);
+
+	QObject::connect(
+	saveAction, SIGNAL(triggered()),
+	this, SLOT(save())
+	);
+
+	QObject::connect(
+	lineAction, SIGNAL(triggered()),
+	this, SLOT(lineSignal())
+	);
+
+	QObject::connect(
+	bezierAction, SIGNAL(triggered()),
+	this, SLOT(bezierSignal())
+	);
+
+	QObject::connect(
+	arcAction, SIGNAL(triggered()),
+	this, SLOT(arcSignal())
 	);
 }
 
-//must verify if the current file was saved (bool saved)
+void MainWindow::createShortcuts()
+{
+	connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_N), this), &QShortcut::activated, this, &MainWindow::newFile);
+}
 
 void MainWindow::verifyExitAction() 
 {
 	if (QMessageBox::question(this, "Quit?", "Are you sure you want to exit?", 
 		QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
-		close();
+		exit();
 }
 
-void MainWindow::verifyClearAction()
+//////////////////////////////////////
+
+void MainWindow::paintEvent(QPaintEvent * event)
 {
-		if (QMessageBox::question(this, "Clear file?", "Are you sure you want to clear the current file? This action cannot be undone",
-			QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
-			clear();
+	nav->setMaximumWidth(GetSystemMetrics(SM_CXSCREEN));
+}
+
+//////////////////////////////////////
+
+void MainWindow::lineSignal()
+{
+	manager->lineCommand();
+}
+
+void MainWindow::bezierSignal()
+{
+	manager->bezierCommand();
+}
+
+void MainWindow::arcSignal()
+{
+	manager->arcCommand();
 }

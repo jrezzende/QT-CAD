@@ -7,18 +7,21 @@
 #include "qpixmap.h"
 
 class Shape;
+class CommandManager;
 
 class Canvas : public QWidget
 {
 	Q_OBJECT
 
-	static Canvas* instance;
-
 	QPainter painter;
 	QPixmap pixmap;
 
-	bool drawing;
+	CommandManager* manager;
 
+	int x, y;
+
+	bool drawing;
+	//shortcuts go on canvas or window?
 protected:
 	void mousePressEvent(QMouseEvent* event);
 	void mouseMoveEvent(QMouseEvent* event);
@@ -27,24 +30,23 @@ protected:
 
 public:
 	~Canvas() {}
-	Canvas() {}
-	
-	static Canvas* getInstance();
+	Canvas(CommandManager* manager, QWidget* parent= 0);
+
 	QPixmap& getPixmap() { return pixmap;}
 
 	void setDrawing(bool flag) { drawing= flag; }
 
 	std::string savePath();
 	std::string loadPath();
-	void saveCurrentFile(); // manager
+	void saveCurrentFile();
 
-	void clearMap(); // clear all shapes in vector
-	void dumpShapes(); // to be called along with clearmap
-	void dumpLastShape(); // to be called on undo command
+	void clearMap();
+	void dumpShapes();
+	void dumpLastShape();
 
-	void lineCommand(); // 
-	void bezierCommand(); // draw commands 
-	void arcCommand(); // 
+	void lineCommand();
+	void bezierCommand();
+	void arcCommand();
 
 	void drawCanvas(Shape& shape);
 	void drawPixmap(Shape& shape);

@@ -4,10 +4,16 @@
 
 #include "qmainwindow.h"
 
+class CommandManager;
+class Canvas;
+
 class MainWindow : public QMainWindow
 {
 	Q_OBJECT
-	
+
+	CommandManager* manager;
+
+public:
 	QMenuBar* nav;
 
 	QMenu* fileMenu;
@@ -23,25 +29,33 @@ class MainWindow : public QMainWindow
 	QAction* lineAction;
 	QAction* bezierAction;
 	QAction* arcAction;
+	
+	~MainWindow();
+	MainWindow(QMainWindow* parent= 0);
+	CommandManager* getManager() const { return manager; }
 
 	void setLayout();
 	void createToolbar();
 	void createConnections();
+	void createShortcuts();
 
-public:
-	~MainWindow();
-	MainWindow();
-	void newFile();
-	void loadFile();
-	void saveAs();
-	void save();
-	void undo();
-	void clear();
-	//void exit(); (?)
+	std::string getText();
+	std::string getFileName();
+	Canvas* createCanvas();
 
 public slots:
+	void newFile();
+	void loadFile();
+	void save();
 	void verifyExitAction();
-	void verifyClearAction();
-};
+	void exit();
+	//////////////////
+	void lineSignal();
+	void bezierSignal(); // SIGNALS
+	void arcSignal();
+	//////////////////
 
+protected:
+	void paintEvent(QPaintEvent* event) override;
+};
 #endif // MAINWINDOW_H

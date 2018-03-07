@@ -26,7 +26,7 @@ protected:
 	void mousePressEvent(QMouseEvent* event);
 	void mouseMoveEvent(QMouseEvent* event);
 	void mouseReleaseEvent(QMouseEvent* event);
-	void paintEvent(QPaintEvent* event);
+	void paintEvent(QPaintEvent* event, Shape& shape);
 
 public:
 	~Canvas() {}
@@ -36,21 +36,21 @@ public:
 
 	void setDrawing(bool flag) { drawing= flag; }
 
-	std::string savePath();
-	std::string loadPath();
-	void saveCurrentFile();
-
+public slots:
 	void clearMap();
 	void dumpShapes();
 	void dumpLastShape();
+
+public:
+	void saveCurrentFile();
 
 	void lineCommand();
 	void bezierCommand();
 	void arcCommand();
 
 	void drawCanvas(Shape& shape);
-	void drawPixmap(Shape& shape);
+	void drawMap(Shape& shape);
 
 	QPainterPath getDrawPath(Shape& shape);
 };
-#endif // !CANVAS_H
+#endif //!CANVAS_H

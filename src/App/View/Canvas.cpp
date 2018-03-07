@@ -8,28 +8,29 @@
 #include "qpainterpath.h"
 #include "qfiledialog.h"
 
-Canvas::Canvas(CommandManager* _manager, QWidget* parent) : drawing(false)
+Canvas::Canvas(CommandManager* _manager, QWidget* parent) : drawing(false), QWidget(parent)
 {
 	setCursor(QCursor(Qt::ArrowCursor));
 
 	manager= _manager;
 	clearMap();
+
 	lineCommand();
 }
 
-std::string Canvas::savePath()
-{
-	return QFileDialog::getSaveFileName(this, QString("Save file"), QString(".dat files (*.dat)")).toStdString();
-}
-
-std::string Canvas::loadPath()
-{
-	return QFileDialog::getOpenFileName(this, QString("Load file"), QString(".dat files (*.dat)")).toStdString();
-}
+//std::string Canvas::savePath()
+//{
+//	return QFileDialog::getSaveFileName(this, QString("Save file"), QString(".dat files (*.dat)")).toStdString();
+//}
+//
+//std::string Canvas::loadPath()
+//{
+//	return QFileDialog::getOpenFileName(this, QString("Load file"), QString(".dat files (*.dat)")).toStdString();
+//}
 
 void Canvas::saveCurrentFile()
 {
-	manager->saveFile();
+	manager->saveFileCmd();
 }
 
 void Canvas::clearMap()
@@ -66,17 +67,12 @@ void Canvas::arcCommand()
 
 void Canvas::drawCanvas(Shape& shape)
 {
-	drawPixmap(shape);
+	drawMap(shape);
 
 	update();
 }
 
-void Canvas::drawPixmap(Shape& shape)
-{
-	painter.drawPath(getDrawPath(shape));
-}
-
-QPainterPath Canvas::getDrawPath(Shape & shape)
+QPainterPath Canvas::getDrawPath(Shape& shape)
 {
 	std::vector<Point> shapePoints= shape.getCoordinates();
 
@@ -88,6 +84,11 @@ QPainterPath Canvas::getDrawPath(Shape & shape)
 		path.lineTo(point.x, point.y);
 
 	return path;
+}
+
+void Canvas::drawMap(Shape& shape)
+{
+	painter.drawPath(getDrawPath(shape));
 }
 
 ////////////////////////////////////////////////
@@ -118,11 +119,13 @@ void Canvas::mouseMoveEvent(QMouseEvent * event)
 	event->accept();
 }
 
-void Canvas::paintEvent(QPaintEvent * event)
+void Canvas::paintEvent(QPaintEvent * event, Shape& shape)
 {
-	QPainter shapePainter;
+	QPainter shapePainter(this);
 
-	shapePainter.drawPixmap(x, y, pixmap);
+	QPainterPath path= getDrawPath(shape);
+
+	shapePainter.drawPath(path);
 
 	event->accept();
 }

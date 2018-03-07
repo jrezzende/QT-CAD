@@ -1,8 +1,8 @@
 #include "MainWindow.h"
 #include "Canvas.h"
 #include "CommandManager.h"
-#include "qt_windows.h"
 
+#include "qt_windows.h"
 #include "qtoolbar.h"
 #include "qmenubar.h"
 #include "qevent.h"
@@ -11,13 +11,12 @@
 
 MainWindow::~MainWindow()
 {
-	delete nav;
+	delete manager;
 }
 
 MainWindow::MainWindow(QMainWindow* parent) : QMainWindow(parent), manager(nullptr)
-{	
-	createToolbar();
-	createConnections();
+{
+	createToolbarAndConnections();
 	createShortcuts();
 	setLayout();
 
@@ -30,25 +29,24 @@ void MainWindow::setLayout()
 	setWindowTitle("QT Cad");
 }
 
-void MainWindow::createToolbar()
+void MainWindow::createToolbarAndConnections()
 {
-	nav = menuBar();
+	auto nav = menuBar();
 
-	fileMenu = new QMenu();
-	shapesMenu = new QMenu();
+	auto fileMenu = new QMenu();
+	auto shapesMenu = new QMenu();
 
-	newFileAction = new QAction();
-	newFileAction = new QAction();
-	loadFileAction = new QAction();
-	saveAction = new QAction();
-	saveAsAction = new QAction();
-	undoAction = new QAction();
-	clearAction = new QAction();
-	exitAction = new QAction();
+	auto newFileAction = new QAction();
+	auto loadFileAction = new QAction();
+	auto saveAction = new QAction();
+	auto saveAsAction = new QAction();
+	auto undoAction = new QAction();
+	auto clearAction = new QAction();
+	auto exitAction = new QAction();
 
-	lineAction = new QAction();
-	bezierAction = new QAction();
-	arcAction = new QAction();
+	auto lineAction = new QAction();
+	auto bezierAction = new QAction();
+	auto arcAction = new QAction();
 
 	fileMenu->setTitle("File");
 	newFileAction->setText("New File");
@@ -87,38 +85,97 @@ void MainWindow::createToolbar()
 	shapesMenu->addAction(lineAction);
 	shapesMenu->addAction(bezierAction);
 	shapesMenu->addAction(arcAction);
+
+	QObject::connect(
+		exitAction, SIGNAL(triggered()),
+		this, SLOT(verifyExitAction())
+	);
+
+	QObject::connect(
+		newFileAction, SIGNAL(triggered()),
+		this, SLOT(newFile())
+	);
+
+	QObject::connect(
+		loadFileAction, SIGNAL(triggered()),
+		this, SLOT(loadFile())
+	);
+
+	QObject::connect(
+		saveAction, SIGNAL(triggered()),
+		this, SLOT(save())
+	);
+
+	QObject::connect(
+		lineAction, SIGNAL(triggered()),
+		this, SLOT(lineSignal())
+	);
+
+	QObject::connect(
+		bezierAction, SIGNAL(triggered()),
+		this, SLOT(bezierSignal())
+	);
+
+	QObject::connect(
+		arcAction, SIGNAL(triggered()),
+		this, SLOT(arcSignal())
+	);
+
+	QObject::connect(
+		undoAction, SIGNAL(triggered()),
+		this, SLOT(undo())
+	);
+
+	QObject::connect(
+		clearAction, SIGNAL(triggered()),
+		this, SLOT(clear())
+	);
 }
 
 //////////////////////////////////////
 
 void MainWindow::newFile()
 {
-	manager->newFile();
+	manager->newFileCmd();
 }
 
 void MainWindow::loadFile()
 {
-	manager->loadFile();
+	manager->loadFileCmd();
 }
 
 void MainWindow::save()
 {
-	manager->saveFile();
+	manager->saveFileCmd();
+}
+
+void MainWindow::undo()
+{
+	manager->eraseLastShape();
+}
+
+void MainWindow::clear()
+{
+	manager->clearShapes();
 }
 
 void MainWindow::exit()
 {
-	manager->exitFile();
-}
-
-std::string MainWindow::getText()
-{
-	return std::string();
+	manager->exitFileCmd();
 }
 
 std::string MainWindow::getFileName()
 {
-	return std::string();
+	QString filename= QFileDialog::getSaveFileName(this);
+
+	return filename.toStdString();
+}
+
+std::string MainWindow::getOpenFileName()
+{
+	QString fileName= QFileDialog::getOpenFileName(this, tr("Open File"));
+
+	return fileName.toStdString();
 }
 
 Canvas * MainWindow::createCanvas()
@@ -126,47 +183,23 @@ Canvas * MainWindow::createCanvas()
 	return new Canvas(manager, this);;
 }
 
-void MainWindow::createConnections()
-{
-	QObject::connect(
-	exitAction, SIGNAL(triggered()),
-	this, SLOT(verifyExitAction())
-	);
-
-	QObject::connect(
-	newFileAction, SIGNAL(triggered()),
-	this, SLOT(newFile())
-	);
-
-	QObject::connect(
-	loadFileAction, SIGNAL(triggered()),
-	this, SLOT(loadFile())
-	);
-
-	QObject::connect(
-	saveAction, SIGNAL(triggered()),
-	this, SLOT(save())
-	);
-
-	QObject::connect(
-	lineAction, SIGNAL(triggered()),
-	this, SLOT(lineSignal())
-	);
-
-	QObject::connect(
-	bezierAction, SIGNAL(triggered()),
-	this, SLOT(bezierSignal())
-	);
-
-	QObject::connect(
-	arcAction, SIGNAL(triggered()),
-	this, SLOT(arcSignal())
-	);
-}
-
 void MainWindow::createShortcuts()
 {
 	connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_N), this), &QShortcut::activated, this, &MainWindow::newFile);
+
+	connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_O), this), &QShortcut::activated, this, &MainWindow::loadFile);
+
+	connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_S), this), &QShortcut::activated, this, &MainWindow::save);
+
+	connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_L), this), &QShortcut::activated, this, &MainWindow::lineSignal);
+
+	connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_B), this), &QShortcut::activated, this, &MainWindow::bezierSignal);
+
+	connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_A), this), &QShortcut::activated, this, &MainWindow::arcSignal);
+
+	connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z), this), &QShortcut::activated, this, &MainWindow::undo);
+
+	connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_X), this), &QShortcut::activated, this, &MainWindow::clear);
 }
 
 void MainWindow::verifyExitAction() 
@@ -175,15 +208,6 @@ void MainWindow::verifyExitAction()
 		QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
 		exit();
 }
-
-//////////////////////////////////////
-
-void MainWindow::paintEvent(QPaintEvent * event)
-{
-	nav->setMaximumWidth(GetSystemMetrics(SM_CXSCREEN));
-}
-
-//////////////////////////////////////
 
 void MainWindow::lineSignal()
 {

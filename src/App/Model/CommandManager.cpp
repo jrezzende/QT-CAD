@@ -11,7 +11,6 @@
 #include "CommandLoadFile.h"
 #include "CommandNewFile.h"
 #include "CommandSave.h"
-#include "CommandSetCurrentFile.h"
 #include "CommandUndo.h"
 #include "CommandExit.h"
 #include "ShapeCommand.h"
@@ -28,17 +27,17 @@ CommandManager::CommandManager(Model& m, MainWindow& w) : model(m), window(w), s
 	lineCommand();
 }
 
-void CommandManager::newFile()
+void CommandManager::newFileCmd()
 {
 	runCommand(new CommandNewFile());
 }
 
-void CommandManager::saveFile()
+void CommandManager::saveFileCmd()
 {
 	runCommand(new CommandSave());
 }
 
-void CommandManager::loadFile()
+void CommandManager::loadFileCmd()
 {
 	runCommand(new CommandLoadFile());
 }
@@ -53,7 +52,7 @@ void CommandManager::eraseLastShape()
 	runCommand(new CommandUndo());
 }
 
-void CommandManager::exitFile()
+void CommandManager::exitFileCmd()
 {
 	runCommand(new CommandExit());
 }
@@ -106,8 +105,8 @@ void CommandManager::bezierCommand()
 
 void CommandManager::lineCommand()
 {
-	/*if (shapeCommand)
-		delete shapeCommand;*/
+	if (shapeCommand)
+		delete shapeCommand;
 
 	shapeCommand = new CommandLine(model);
 }

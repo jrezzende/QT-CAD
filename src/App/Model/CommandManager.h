@@ -24,10 +24,10 @@ public:
 	~CommandManager();
 	CommandManager(Model& m, MainWindow& w);
 
-	void newFile();
-	void saveFile();
-	void loadFile();
-	void exitFile();
+	void newFileCmd();
+	void saveFileCmd();
+	void loadFileCmd();
+	void exitFileCmd();
 
 	void mousePressEvent(Point pos);
 	void mouseReleaseEvent(Point pos);

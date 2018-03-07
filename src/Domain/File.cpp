@@ -35,7 +35,7 @@ void File::reprint()
 	canvas->clearMap();
 
 	for(auto shape : shapes)
-		canvas->drawPixmap(*shape);
+		canvas->drawMap(*shape);
 
 	canvas->update();
 }

@@ -26,8 +26,8 @@ class File
 	Canvas* canvas;
 public:
 	~File() {}
-	File(const std::string _fileName, const Canvas* _canvas) : fileName(_fileName), 
-		status(SAVED) {}
+	File(const std::string _fileName, Canvas* _canvas) : fileName(_fileName), 
+		status(NOTSAVED), canvas(_canvas) {}
 
 	bool getStatus() { return status; } 
 	void setStatus(Status _status) { status= _status; }
@@ -52,4 +52,4 @@ public:
 	void reprint();
 };
 
-#endif // !FILE_H
+#endif //!FILE_H

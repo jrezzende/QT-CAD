@@ -7,7 +7,6 @@ set(
 	CommandLine.cpp
 	CommandIdle.cpp
 	CommandNewFile.cpp
-	CommandSetCurrentFile.cpp
 	CommandLoadFile.cpp
 	CommandSave.cpp
 	CommandUndo.cpp
@@ -23,7 +22,6 @@ set(
 	CommandBezier.h
 	CommandLine.h
 	CommandNewFile.h
-	CommandSetCurrentFile.h
 	CommandLoadFile.h
 	CommandSave.h
 	CommandUndo.h

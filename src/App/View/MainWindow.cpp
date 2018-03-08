@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 #include "Canvas.h"
 #include "CommandManager.h"
+#include "Model.h"
 
 #include "qt_windows.h"
 #include "qtoolbar.h"
@@ -100,7 +101,7 @@ void MainWindow::createToolbarAndConnections()
 
 	QObject::connect(
 		newFileAction, SIGNAL(triggered()),
-		this, SLOT(newFile())
+		this, SLOT(verifyNewFileAction())
 	);
 
 	QObject::connect(
@@ -188,7 +189,7 @@ Canvas * MainWindow::createCanvas()
 
 void MainWindow::createShortcuts()
 {
-	connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_N), this), &QShortcut::activated, this, &MainWindow::newFile);
+	connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_N), this), &QShortcut::activated, this, &MainWindow::verifyNewFileAction);
 
 	connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_O), this), &QShortcut::activated, this, &MainWindow::loadFile);
 
@@ -205,11 +206,34 @@ void MainWindow::createShortcuts()
 	connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_X), this), &QShortcut::activated, this, &MainWindow::clear);
 }
 
+// apply the same pattern when calling load function \/
+
 void MainWindow::verifyExitAction() 
 {
-	if (QMessageBox::question(this, "Quit?", "Are you sure you want to exit?", 
-		QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
+	if(manager->getModel().getCurrentFile()->getShapes().size() == 0)
 		exit();
+
+	else if(manager->getModel().getCurrentFile()->getStatus() == NOTSAVED) {
+		if (QMessageBox::question(this, "Quit?", "Are you sure you want to exit?",
+			QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
+			exit();
+	}
+	else
+		exit();
+}
+
+void MainWindow::verifyNewFileAction()
+{
+	if(manager->getModel().getCurrentFile()->getShapes().size() == 0)
+		newFile();
+
+	else if(manager->getModel().getCurrentFile()->getStatus() == NOTSAVED) {
+		if (QMessageBox::question(this, "Discard file?", "Are you sure you want to discard this file?",
+			QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
+			newFile();
+	}
+	else
+		newFile();
 }
 
 void MainWindow::lineSignal()

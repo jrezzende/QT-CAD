@@ -2,6 +2,7 @@
 #include "Model.h"
 #include "MainWindow.h"
 #include "CommandManager.h"
+#include "Canvas.h"
 
 #include "qapplication.h"
 
@@ -18,9 +19,14 @@ int App::start(int argc, char ** argv)
 	
 	model= new Model;
 	window= new MainWindow;
-
 	manager= new CommandManager(*model, *window);
+
 	window->setManager(*manager);
+
+	auto file = new File("Untitled", window->createCanvas());
+
+	model->setCurrentFile(file);
+	window->setCentralWidget(file->getCanvas());
 
 	return app.exec();
 }

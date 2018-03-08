@@ -37,6 +37,7 @@ public slots:
 	void undo();
 	void clear();
 	void verifyExitAction();
+	void verifyNewFileAction();
 	void exit();
 
 	//////////////////

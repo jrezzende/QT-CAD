@@ -42,6 +42,7 @@ public:
 
 	ShapeCommand& getCommandShape() const { return *shapeCommand; }
 	Command& getCommand() const { return *command; }
+	Model& getModel() const { return model; }
 
 	void runCommand(Command* cmd);
 };

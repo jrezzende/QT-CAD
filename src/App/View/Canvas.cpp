@@ -8,25 +8,16 @@
 #include "qpainterpath.h"
 #include "qfiledialog.h"
 
-Canvas::Canvas(CommandManager* _manager, QWidget* parent) : drawing(false), QWidget(parent)
+Canvas::Canvas(CommandManager* _manager, QWidget* parent) : QWidget(parent), pixmap(parent->size())
 {
 	setCursor(QCursor(Qt::ArrowCursor));
 
+	drawing= false;
 	manager= _manager;
-	clearMap();
+	//clearMap();
 
-	lineCommand();
+	callLine();
 }
-
-//std::string Canvas::savePath()
-//{
-//	return QFileDialog::getSaveFileName(this, QString("Save file"), QString(".dat files (*.dat)")).toStdString();
-//}
-//
-//std::string Canvas::loadPath()
-//{
-//	return QFileDialog::getOpenFileName(this, QString("Load file"), QString(".dat files (*.dat)")).toStdString();
-//}
 
 void Canvas::saveCurrentFile()
 {
@@ -37,7 +28,7 @@ void Canvas::clearMap()
 {
 	pixmap.fill();
 
-	dumpShapes();
+	//dumpShapes();
 }
 
 void Canvas::dumpShapes()
@@ -50,17 +41,17 @@ void Canvas::dumpLastShape()
 	manager->eraseLastShape();
 }
 
-void Canvas::lineCommand()
+void Canvas::callLine()
 {
 	manager->lineCommand();
 }
 
-void Canvas::bezierCommand()
+void Canvas::callBezier()
 {
 	manager->bezierCommand();
 }
 
-void Canvas::arcCommand()
+void Canvas::callArc()
 {
 	manager->arcCommand();
 }
@@ -76,8 +67,6 @@ QPainterPath Canvas::getDrawPath(Shape& shape)
 {
 	std::vector<Point> shapePoints= shape.getCoordinates();
 
-	QPainterPath path;
-
 	path.moveTo(shapePoints[0].x, shapePoints[0].y);
 
 	for(auto point : shapePoints)
@@ -89,6 +78,8 @@ QPainterPath Canvas::getDrawPath(Shape& shape)
 void Canvas::drawMap(Shape& shape)
 {
 	painter.drawPath(getDrawPath(shape));
+
+	update();
 }
 
 ////////////////////////////////////////////////
@@ -119,11 +110,9 @@ void Canvas::mouseMoveEvent(QMouseEvent * event)
 	event->accept();
 }
 
-void Canvas::paintEvent(QPaintEvent * event, Shape& shape)
+void Canvas::paintEvent(QPaintEvent* event)
 {
 	QPainter shapePainter(this);
-
-	QPainterPath path= getDrawPath(shape);
 
 	shapePainter.drawPath(path);
 

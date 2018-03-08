@@ -15,18 +15,17 @@ class Canvas : public QWidget
 
 	QPainter painter;
 	QPixmap pixmap;
+	QPainterPath path;
 
 	CommandManager* manager;
 
-	int x, y;
-
 	bool drawing;
-	//shortcuts go on canvas or window?
+
 protected:
-	void mousePressEvent(QMouseEvent* event);
-	void mouseMoveEvent(QMouseEvent* event);
-	void mouseReleaseEvent(QMouseEvent* event);
-	void paintEvent(QPaintEvent* event, Shape& shape);
+	void mousePressEvent(QMouseEvent* event) override;
+	void mouseMoveEvent(QMouseEvent* event) override;
+	void mouseReleaseEvent(QMouseEvent* event) override;
+	void paintEvent(QPaintEvent* event) override;
 
 public:
 	~Canvas() {}
@@ -44,9 +43,9 @@ public slots:
 public:
 	void saveCurrentFile();
 
-	void lineCommand();
-	void bezierCommand();
-	void arcCommand();
+	void callLine();
+	void callBezier();
+	void callArc();
 
 	void drawCanvas(Shape& shape);
 	void drawMap(Shape& shape);

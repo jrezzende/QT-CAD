@@ -6,6 +6,8 @@
 #include "Arc.h"
 #include "Line.h"
 
+#include <iostream>
+
 class CommandArc : public ShapeCommand
 {
 	Arc* arc;

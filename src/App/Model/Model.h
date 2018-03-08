@@ -11,20 +11,18 @@ private:
 
 	File* currentFile;
 
-	int fileQuantity;
-
 public:
-	Model() {}
+	Model() : currentFile(nullptr) {}
 	~Model() {}
 
-	void newFile(File* file) { files.push_back(file); fileQuantity++; }
+	void newFile(File* file) { files.push_back(file); }
 	void deleteFile(File* file) { delete file; }
 	void deleteAllFiles();
 
 	File* getCurrentFile() const { return currentFile;}
 	void setCurrentFile(File* file) { currentFile= file; }
 
-	int getFileQuantity() const { return fileQuantity; }
+	int getFileQuantity() const { return static_cast<int>(files.size()); }
 
 	std::vector<File*> getFiles() const { return files; }
 

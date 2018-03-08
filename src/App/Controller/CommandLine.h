@@ -5,12 +5,15 @@
 #include "ShapeCommand.h"
 #include "Line.h"
 
+#include <iostream>
+
 class CommandLine : public ShapeCommand
 {
 	Line* line;
+	//Line* previewLine;
 public:
 	~CommandLine() {}
-	CommandLine(Model& m) : ShapeCommand(m, LINE) { line= new Line(); }
+	CommandLine(Model& m) : ShapeCommand(m, LINE) {}
 
 	void mousePressEvent(Point& point) override;
 	void mouseMoveEvent(Point& point) override;

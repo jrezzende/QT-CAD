@@ -2,8 +2,9 @@
 #include "Model.h"
 #include "MainWindow.h"
 
+#include <iostream>
+
 void CommandSave::execute(Model & m, MainWindow & w)
 {
-	//std::string fileName= w.getFileName();
-
+	// std::cout << "save file" << std::endl; #test purposes only
 }

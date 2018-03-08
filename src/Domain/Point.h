@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <math.h>
+#include <cstdlib>
 #include "qpoint.h"
 
 class Point
@@ -18,6 +19,11 @@ public:
 	Point(double x, double y) : x(x), y(y) {}
 
 	QPoint toQPoint() { return QPoint(x, y); }
+
+	bool operator==(const Point& point) const
+	{
+		return std::abs(x - point.x) + std::abs(y - point.y) == 0;
+	}
 
 	static double distanceBetweenTwoPoints(const Point& p1, const Point& p2) 
 	{ return sqrt(pow(p1.x - p2.x, 2) + pow(p1.y - p2.y, 2)); }

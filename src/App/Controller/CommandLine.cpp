@@ -4,14 +4,20 @@
 void CommandLine::mousePressEvent(Point& point)
 {
 	line= new Line(point, point);
+	isDrawing = true;
 
-	isDrawing= true;
+	//previewLine= new Line(point, point);
 }
 
 void CommandLine::mouseMoveEvent(Point& point)
 {
-	if (isDrawing)
+	if (isDrawing) {
 		line->setSecondPoint(point);
+
+		//previewLine->setSecondPoint(point);
+
+		//model.getCurrentFile()->addShape(previewLine);
+	}
 }
 
 void CommandLine::mouseReleaseEvent(Point & point)

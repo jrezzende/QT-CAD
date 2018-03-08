@@ -39,7 +39,6 @@ void MainWindow::createToolbarAndConnections()
 	auto newFileAction = new QAction();
 	auto loadFileAction = new QAction();
 	auto saveAction = new QAction();
-	auto saveAsAction = new QAction();
 	auto undoAction = new QAction();
 	auto clearAction = new QAction();
 	auto exitAction = new QAction();
@@ -52,7 +51,6 @@ void MainWindow::createToolbarAndConnections()
 	newFileAction->setText("New File");
 	loadFileAction->setText("Load File");
 	saveAction->setText("Save");
-	saveAsAction->setText("Save As...");
 	undoAction->setText("Undo");
 	clearAction->setText("Clear");
 	exitAction->setText("Exit");
@@ -75,7 +73,6 @@ void MainWindow::createToolbarAndConnections()
 	nav->addMenu(fileMenu);
 	fileMenu->addAction(newFileAction);
 	fileMenu->addAction(loadFileAction);
-	fileMenu->addAction(saveAsAction);
 	fileMenu->addAction(saveAction);
 	fileMenu->addAction(undoAction);
 	fileMenu->addAction(clearAction);
@@ -85,6 +82,16 @@ void MainWindow::createToolbarAndConnections()
 	shapesMenu->addAction(lineAction);
 	shapesMenu->addAction(bezierAction);
 	shapesMenu->addAction(arcAction);
+
+	newFileAction->setShortcutContext(Qt::WidgetWithChildrenShortcut);
+	loadFileAction->setShortcutContext(Qt::WidgetWithChildrenShortcut);
+	saveAction->setShortcutContext(Qt::WidgetWithChildrenShortcut);
+	undoAction->setShortcutContext(Qt::WidgetWithChildrenShortcut);
+	clearAction->setShortcutContext(Qt::WidgetWithChildrenShortcut);
+
+	lineAction->setShortcutContext(Qt::WidgetWithChildrenShortcut);
+	bezierAction->setShortcutContext(Qt::WidgetWithChildrenShortcut);
+	arcAction->setShortcutContext(Qt::WidgetWithChildrenShortcut);
 
 	QObject::connect(
 		exitAction, SIGNAL(triggered()),
@@ -166,21 +173,17 @@ void MainWindow::exit()
 
 std::string MainWindow::getFileName()
 {
-	QString filename= QFileDialog::getSaveFileName(this);
-
-	return filename.toStdString();
+	return QFileDialog::getSaveFileName(this).toStdString();
 }
 
 std::string MainWindow::getOpenFileName()
 {
-	QString fileName= QFileDialog::getOpenFileName(this, tr("Open File"));
-
-	return fileName.toStdString();
+	return QFileDialog::getOpenFileName(this, tr("Open File")).toStdString();
 }
 
 Canvas * MainWindow::createCanvas()
 {
-	return new Canvas(manager, this);;
+	return new Canvas(manager, this);
 }
 
 void MainWindow::createShortcuts()

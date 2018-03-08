@@ -13,6 +13,14 @@ void File::addShape(Shape* newShape)
 	reprint();
 }
 
+void File::eraseShape(Shape * shape)
+{
+	for (int i = 0; i < shapes.size(); i++) {
+		if(shapes[0] == shape)
+			shapes.erase(shapes.begin() + i);
+	}
+}
+
 void File::eraseLastShape()
 {
 	if(shapes.size() >= 1)
@@ -28,6 +36,8 @@ void File::eraseAllShapes()
 	shapes.clear();
 
 	reprint();
+
+	canvas->update();
 }
 
 void File::reprint()

@@ -16,6 +16,7 @@ protected:
 	ShapeType type;
 
 	bool isDrawing;
+	bool previewDraw;
 	bool secondClick;
 
 public:
@@ -26,9 +27,11 @@ public:
 	bool hasSecondClick() const { return secondClick; }
 	ShapeType getType () const { return type; }
 
+	void setDrawStatus(bool status) { isDrawing= status; }
+	void setPreviewStatus(bool status) { previewDraw= status; }
+
 	virtual void mousePressEvent(Point& point)= 0;
 	virtual void mouseMoveEvent(Point& point) = 0;
 	virtual void mouseReleaseEvent(Point& point) = 0;
-};
-
+}; 
 #endif // !SHAPECOMMAND_H

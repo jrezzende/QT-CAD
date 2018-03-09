@@ -63,10 +63,12 @@ void Canvas::drawCanvas(Shape& shape)
 	update();
 }
 
+#include <iostream>
+
 QPainterPath Canvas::getDrawPath(Shape& shape)
 {
 	std::vector<Point> shapePoints= shape.getCoordinates();
-
+	std::cout << shapePoints.size() << std::endl;
 	path.moveTo(shapePoints[0].x, shapePoints[0].y);
 
 	for(auto point : shapePoints)

@@ -13,7 +13,11 @@ class Arc : public Shape
 	double finalAngle;
 	double incrementAngle;
 	double radius;
+	
 	int arcDivisions;
+
+	Point& translatePoint(Point& p);
+	Point& retranslatePoint(Point& p);
 
 	int calcArcDivisions(double angleArcSize);
 

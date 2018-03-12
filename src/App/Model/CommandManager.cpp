@@ -23,7 +23,6 @@ CommandManager::~CommandManager()
 
 CommandManager::CommandManager(Model& m, MainWindow& w) : model(m), window(w), shapeCommand(nullptr)
 {
-	command= new CommandIdle();
 	lineCommand();
 }
 

@@ -23,7 +23,7 @@ void File::eraseShape(Shape * shape)
 
 void File::eraseLastShape()
 {
-	if(shapes.size() >= 1)
+	if(shapes.size() > 0) 
 		shapes.pop_back();
 	else
 		return;
@@ -36,8 +36,6 @@ void File::eraseAllShapes()
 	shapes.clear();
 
 	reprint();
-
-	canvas->update();
 }
 
 void File::reprint()
@@ -45,7 +43,5 @@ void File::reprint()
 	canvas->clearMap();
 
 	for(auto shape : shapes)
-		canvas->drawMap(*shape);
-
-	canvas->update();
+		canvas->drawCanvas(*shape);
 }

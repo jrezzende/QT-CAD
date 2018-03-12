@@ -6,6 +6,12 @@ void CommandBezier::mousePressEvent(Point& point)
 {
 	if (!isDrawing) {
 		bezier= new Bezier();
+		bezier->setfirstPoint(point);
+	}
+	else 
+		secondClick= true;
+	/*if (!isDrawing) {
+		bezier= new Bezier();
 		previewLine= new Line();
 		bezier->setfirstPoint(point);
 		previewLine->setfirstPoint(point);
@@ -13,12 +19,15 @@ void CommandBezier::mousePressEvent(Point& point)
 		setPreviewStatus(true);
 	}
 	else
-		secondClick= true;
+		secondClick= true;*/
 }
 
 void CommandBezier::mouseMoveEvent(Point& point)
 {
-	if (previewDraw) {
+	if (isDrawing) {
+		bezier->setThirdPoint(point);
+	}
+	/*if (previewDraw) {
 		previewLine->setSecondPoint(point);
 		bezier->setSecondPoint(point);
 
@@ -31,13 +40,21 @@ void CommandBezier::mouseMoveEvent(Point& point)
 		delete previewLine;
 
 		model.getCurrentFile()->addShape(bezier);
-	}
+	}*/
 }
 
 void CommandBezier::mouseReleaseEvent(Point& point)
 {
-	if (!isDrawing) {
+	if (!secondClick) {
+		bezier->setSecondPoint(point);
+		isDrawing= true;
+	}
+	else {
+		model.getCurrentFile()->addShape(bezier);
+		model.getCurrentFile()->getCanvas()->setDrawing(false);
+	}
+	/*if (!isDrawing) {
 		setPreviewStatus(false);
 		setDrawStatus(true);
-	}
+	}*/
 }

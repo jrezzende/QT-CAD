@@ -24,6 +24,7 @@ class File
 	Status status;
 
 	Canvas* canvas;
+
 public:
 	~File() {}
 	File(const std::string _fileName, Canvas* _canvas) : fileName(_fileName), 

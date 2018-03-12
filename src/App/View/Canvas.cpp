@@ -4,17 +4,19 @@
 #include "Shape.h"
 
 #include "qevent.h"
-#include "qpainter.h"
 #include "qpainterpath.h"
 #include "qfiledialog.h"
 
-Canvas::Canvas(CommandManager* _manager, QWidget* parent) : QWidget(parent), pixmap(parent->size())
+Canvas::Canvas(CommandManager* _manager, QWidget* parent) : QWidget(parent), pixmap(parentWidget()->size())
 {
 	setCursor(QCursor(Qt::ArrowCursor));
 
+	pixmap.fill();
+
+	painter.begin(&pixmap);
+
 	drawing= false;
 	manager= _manager;
-	//clearMap();
 
 	callLine();
 }
@@ -27,8 +29,7 @@ void Canvas::saveCurrentFile()
 void Canvas::clearMap()
 {
 	pixmap.fill();
-
-	//dumpShapes();
+	update();
 }
 
 void Canvas::dumpShapes()
@@ -63,12 +64,9 @@ void Canvas::drawCanvas(Shape& shape)
 	update();
 }
 
-#include <iostream>
-
 QPainterPath Canvas::getDrawPath(Shape& shape)
 {
-	std::vector<Point> shapePoints= shape.getCoordinates();
-	std::cout << shapePoints.size() << std::endl;
+	auto shapePoints= shape.getCoordinates();
 	path.moveTo(shapePoints[0].x, shapePoints[0].y);
 
 	for(auto point : shapePoints)
@@ -80,8 +78,6 @@ QPainterPath Canvas::getDrawPath(Shape& shape)
 void Canvas::drawMap(Shape& shape)
 {
 	painter.drawPath(getDrawPath(shape));
-
-	update();
 }
 
 ////////////////////////////////////////////////
@@ -89,17 +85,18 @@ void Canvas::drawMap(Shape& shape)
 void Canvas::mousePressEvent(QMouseEvent* event)
 {
 	if (event->button() == Qt::LeftButton) {
-		manager->mousePressEvent(event->pos());
+		manager->mousePressEvent(Point::toPoint(event->pos()));
 		setDrawing(true);
+		event->accept();
 	}
 
-	event->accept();
+	event->ignore();	
 }
 
 void Canvas::mouseReleaseEvent(QMouseEvent * event)
 {
 	if(event->button() == Qt::LeftButton)
-		manager->mouseReleaseEvent(event->pos());
+		manager->mouseReleaseEvent(Point::toPoint(event->pos()));
 
 	event->accept();
 }
@@ -107,16 +104,19 @@ void Canvas::mouseReleaseEvent(QMouseEvent * event)
 void Canvas::mouseMoveEvent(QMouseEvent * event)
 {
 	if(drawing)
-		manager->mouseMoveEvent(event->pos());
+		manager->mouseMoveEvent(Point::toPoint(event->pos()));
 
 	event->accept();
 }
 
 void Canvas::paintEvent(QPaintEvent* event)
 {
+	painter.end();
 	QPainter shapePainter(this);
 
-	shapePainter.drawPath(path);
+	shapePainter.drawPixmap(shapePainter.viewport(), pixmap);
 
+	shapePainter.end();
+	painter.begin(&pixmap);
 	event->accept();
 }

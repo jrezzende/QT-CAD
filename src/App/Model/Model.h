@@ -19,7 +19,7 @@ public:
 	void deleteFile(File* file) { delete file; }
 	void deleteAllFiles();
 
-	File* getCurrentFile() const { return currentFile;}
+	File* getCurrentFile() { return currentFile;}
 	void setCurrentFile(File* file) { currentFile= file; }
 
 	int getFileQuantity() const { return static_cast<int>(files.size()); }

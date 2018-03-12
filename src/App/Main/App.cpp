@@ -24,7 +24,8 @@ int App::start(int argc, char ** argv)
 	window->setManager(*manager);
 
 	auto file = new File("Untitled", window->createCanvas());
-
+		
+	model->newFile(file);
 	model->setCurrentFile(file);
 	window->setCentralWidget(file->getCanvas());
 

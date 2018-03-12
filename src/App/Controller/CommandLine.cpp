@@ -3,25 +3,25 @@
 
 void CommandLine::mousePressEvent(Point& point)
 {
-	line= new Line(point, point);
-	isDrawing = true;
-
-	//previewLine= new Line(point, point);
+	line->setfirstPoint(point);
+	//previewLine->setfirstPoint(point);
 }
 
 void CommandLine::mouseMoveEvent(Point& point)
-{
-	if (isDrawing) {
-		line->setSecondPoint(point);
+{		
+	line->setSecondPoint(point);
 
-		//previewLine->setSecondPoint(point);
-
-		//model.getCurrentFile()->addShape(previewLine);
+	/*if (!previewDrawn) {
+		model.getCurrentFile()->addShape(previewLine);
+		previewDrawn= true;
 	}
+	else {
+		model.getCurrentFile()->eraseLastShape();
+		previewDrawn= false;
+	}*/
 }
 
 void CommandLine::mouseReleaseEvent(Point & point)
 {
-	isDrawing= false;
 	model.getCurrentFile()->addShape(line);
 }

@@ -1,14 +1,9 @@
 #include "CommandClear.h"
 #include "Model.h"
-
-#include <iostream>
+#include "MainWindow.h"
+#include "Canvas.h"
 
 void CommandClear::execute(Model & m, MainWindow & w)
 {
-	if(!m.getCurrentFile()->getShapes().empty())
-		m.getCurrentFile()->eraseAllShapes();
-	else
-		return;
-
-	// std::cout << "clear" << std::endl; #test purposes only
+	m.getCurrentFile()->eraseAllShapes();
 }

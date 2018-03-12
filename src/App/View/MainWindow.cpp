@@ -26,7 +26,7 @@ MainWindow::MainWindow(QMainWindow* parent) : QMainWindow(parent), manager(nullp
 
 void MainWindow::setLayout()
 {
-	setMinimumSize(1024, 768);
+	setMinimumSize(800, 600);
 	setWindowTitle("QT Cad");
 }
 

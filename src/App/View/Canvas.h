@@ -40,6 +40,7 @@ public slots:
 	void clearMap();
 	void dumpShapes();
 	void dumpLastShape();
+	void endPainter();
 
 public:
 	void saveCurrentFile();

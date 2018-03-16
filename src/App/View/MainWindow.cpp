@@ -147,6 +147,7 @@ void MainWindow::createToolbarAndConnections()
 
 void MainWindow::newFile()
 {
+	manager->getModel().getCurrentFile()->getCanvas()->endPainter();
 	manager->newFileCmd();
 }
 

@@ -3,7 +3,6 @@
 #include "CommandManager.h"
 #include "Shape.h"
 
-#include "qdebug.h"
 #include "qevent.h"
 #include "qpainterpath.h"
 #include "qfiledialog.h"
@@ -30,6 +29,8 @@ void Canvas::saveCurrentFile()
 void Canvas::clearMap()
 {
 	pixmap.fill();
+	QPainterPath newPath;
+	path.swap(newPath);
 	update();
 }
 
@@ -41,6 +42,11 @@ void Canvas::dumpShapes()
 void Canvas::dumpLastShape()
 {
 	manager->eraseLastShape();
+}
+
+void Canvas::endPainter()
+{
+	painter.end();
 }
 
 void Canvas::callLine()
@@ -114,8 +120,6 @@ void Canvas::mouseMoveEvent(QMouseEvent * event)
 void Canvas::paintEvent(QPaintEvent* event)
 {
 	QPainter shapePainter(this);
-
-	qDebug() << "painting\n";
 
 	shapePainter.drawPixmap(painter.viewport(), pixmap);
 

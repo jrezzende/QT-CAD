@@ -5,6 +5,7 @@
 #include "Shape.h"
 
 #include <string>
+#include <sstream>
 
 class Canvas;
 
@@ -22,12 +23,11 @@ class File
 	std::vector<Shape*> shapes;
 
 	Status status;
-
 	Canvas* canvas;
 
 public:
 	~File() {}
-	File(const std::string _fileName, Canvas* _canvas) : fileName(_fileName), 
+	File(const std::string _fileName, std::string _filePath, Canvas* _canvas) : fileName(_fileName), filePath(_filePath),
 		status(NOTSAVED), canvas(_canvas) {}
 
 	bool getStatus() { return status; } 
@@ -53,5 +53,4 @@ public:
 
 	void reprint();
 };
-
 #endif //!FILE_H

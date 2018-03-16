@@ -8,7 +8,7 @@ void CommandNewFile::execute(Model& m, MainWindow& w)
 {
 	std::string fileName= "Untitled " /*+ m.getFileQuantity()*/;
 
-	File* file= new File(fileName, w.createCanvas());	
+	File* file= new File(fileName, "", w.createCanvas());	
 
 	m.setCurrentFile(file);
 	m.newFile(file);

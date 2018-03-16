@@ -72,9 +72,6 @@ std::vector<Point> Arc::getCoordinates()
 		point= retranslatePoint(point);
 		points.push_back(point);
 	}
-	if (points.size() == 0) {
-		int a =1;
-	}
 
 	return points;
 }

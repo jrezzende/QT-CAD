@@ -9,6 +9,7 @@
 #include "qevent.h"
 #include "qmessagebox.h"
 #include "qshortcut.h"
+#include "qdebug.h"
 
 MainWindow::~MainWindow()
 {
@@ -26,7 +27,9 @@ MainWindow::MainWindow(QMainWindow* parent) : QMainWindow(parent), manager(nullp
 
 void MainWindow::setLayout()
 {
-	setMinimumSize(800, 600);
+	QRect screenSize= desktop.availableGeometry(this);
+	setMinimumSize(QSize(screenSize.width() * 1.2f, screenSize.height() * 1.2f));
+
 	setWindowTitle("QT Cad");
 }
 

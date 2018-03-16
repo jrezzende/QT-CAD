@@ -3,10 +3,7 @@
 
 void File::addShape(Shape* newShape)
 {
-	for (int i = 0; i < shapes.size(); i++) {
-		if (shapes[i] == newShape)
-			shapes.erase(shapes.begin() + i);
-	}
+	eraseShape(newShape);
 
 	shapes.push_back(newShape);
 
@@ -19,14 +16,14 @@ void File::eraseShape(Shape * shape)
 		if(shapes[0] == shape)
 			shapes.erase(shapes.begin() + i);
 	}
+
+	reprint();
 }
 
 void File::eraseLastShape()
 {
 	if(shapes.size() > 0) 
 		shapes.pop_back();
-	else
-		return;
 
 	reprint();
 }
@@ -43,5 +40,7 @@ void File::reprint()
 	canvas->clearMap();
 
 	for(auto shape : shapes)
-		canvas->drawCanvas(*shape);
+		canvas->drawMap(*shape);
+	
+	canvas->update();
 }

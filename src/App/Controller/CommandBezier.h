@@ -11,7 +11,7 @@
 class CommandBezier : public ShapeCommand
 {
 	Bezier* bezier;
-	//Line* previewLine;
+
 public:
 	~CommandBezier() {}
 	CommandBezier(Model& m) : ShapeCommand(m, BEZIER) {}

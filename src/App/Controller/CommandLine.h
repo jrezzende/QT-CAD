@@ -10,12 +10,10 @@
 class CommandLine : public ShapeCommand
 {
 	Line* line;
-	//Line* previewLine;
 
-	//bool previewDrawn;
 public:
 	~CommandLine() {}
-	CommandLine(Model& m) : ShapeCommand(m, LINE) /*previewDrawn(false)*/ { line= new Line(); /*previewLine= new Line();*/ }
+	CommandLine(Model& m) : ShapeCommand(m, LINE) {}
 
 	void mousePressEvent(Point& point) override;
 	void mouseMoveEvent(Point& point) override;

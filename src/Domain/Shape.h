@@ -31,10 +31,11 @@ public:
 	Point& getFirstPoint() { return p1; } 
 	Point& getSecondPoint() { return p2; }
 
-	bool operator==(const Shape& i)
-	{
-		return (p1 == i.p1) && (p2 == i.p2);
-	}
+	//bool operator==(const Shape& i)
+	//{
+	//	return (p1.operator==(i.p1)) && (p2.operator==(i.p2));
+	//	//return (p1 == i.p1) && (p2 == i.p2);
+	//}
 
 };
 #endif // !SHAPES_H

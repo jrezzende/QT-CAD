@@ -1,24 +1,15 @@
 #include "CommandLine.h"
 #include "Model.h"
+#include "Canvas.h"
 
 void CommandLine::mousePressEvent(Point& point)
 {
-	line->setfirstPoint(point);
-	//previewLine->setfirstPoint(point);
+	line = new Line(point, point);
 }
 
 void CommandLine::mouseMoveEvent(Point& point)
-{		
+{			
 	line->setSecondPoint(point);
-
-	/*if (!previewDrawn) {
-		model.getCurrentFile()->addShape(previewLine);
-		previewDrawn= true;
-	}
-	else {
-		model.getCurrentFile()->eraseLastShape();
-		previewDrawn= false;
-	}*/
 }
 
 void CommandLine::mouseReleaseEvent(Point & point)

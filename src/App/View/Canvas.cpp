@@ -3,11 +3,12 @@
 #include "CommandManager.h"
 #include "Shape.h"
 
+#include "qdebug.h"
 #include "qevent.h"
 #include "qpainterpath.h"
 #include "qfiledialog.h"
 
-Canvas::Canvas(CommandManager* _manager, QWidget* parent) : QWidget(parent), pixmap(parentWidget()->size())
+Canvas::Canvas(CommandManager* _manager, QWidget* parent) : QWidget(parent), pixmap(parent->size())
 {
 	setCursor(QCursor(Qt::ArrowCursor));
 
@@ -67,9 +68,10 @@ void Canvas::drawCanvas(Shape& shape)
 QPainterPath Canvas::getDrawPath(Shape& shape)
 {
 	auto shapePoints= shape.getCoordinates();
+
 	path.moveTo(shapePoints[0].x, shapePoints[0].y);
 
-	for(auto point : shapePoints)
+	for (auto point : shapePoints) 
 		path.lineTo(point.x, point.y);
 
 	return path;
@@ -111,12 +113,11 @@ void Canvas::mouseMoveEvent(QMouseEvent * event)
 
 void Canvas::paintEvent(QPaintEvent* event)
 {
-	painter.end();
 	QPainter shapePainter(this);
 
-	shapePainter.drawPixmap(shapePainter.viewport(), pixmap);
+	qDebug() << "painting\n";
 
-	shapePainter.end();
-	painter.begin(&pixmap);
+	shapePainter.drawPixmap(painter.viewport(), pixmap);
+
 	event->accept();
 }

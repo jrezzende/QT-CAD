@@ -3,6 +3,7 @@
 #define MAINWINDOW_H
 
 #include "qmainwindow.h"
+#include "qdesktopwidget.h"
 
 #include "qfiledialog.h"
 
@@ -14,6 +15,7 @@ class MainWindow : public QMainWindow
 	Q_OBJECT
 
 		CommandManager* manager;
+		QDesktopWidget desktop;
 
 public:
 	~MainWindow();
@@ -44,6 +46,6 @@ public slots:
 	void lineSignal();
 	void bezierSignal(); // SIGNALS
 	void arcSignal();
-	//////////////////
+	///////////////////
 };
 #endif // MAINWINDOW_H

@@ -5,6 +5,7 @@
 #include "qwidget.h"
 #include "qpainter.h"
 #include "qpixmap.h"
+#include "qtransform.h"
 
 class Shape;
 class CommandManager;
@@ -25,11 +26,11 @@ protected:
 	void mousePressEvent(QMouseEvent* event) override;
 	void mouseMoveEvent(QMouseEvent* event) override;
 	void mouseReleaseEvent(QMouseEvent* event) override;
-	void paintEvent(QPaintEvent* event) override;
+	void paintEvent(QPaintEvent* event) override; 
 
 public:
 	~Canvas() {}
-	Canvas(CommandManager* manager, QWidget* parent= 0);
+	Canvas(CommandManager* manager, QWidget* parent);
 
 	QPixmap& getPixmap() { return pixmap;}
 

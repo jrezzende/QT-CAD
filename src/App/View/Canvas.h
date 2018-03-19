@@ -16,7 +16,6 @@ class Canvas : public QWidget
 
 	QPainter painter;
 	QPixmap pixmap;
-	QPainterPath path;
 
 	CommandManager* manager;
 

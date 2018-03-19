@@ -11,10 +11,11 @@
 class CommandBezier : public ShapeCommand
 {
 	Bezier* bezier;
+	Line* previewLine;
 
 public:
 	~CommandBezier() {}
-	CommandBezier(Model& m) : ShapeCommand(m, BEZIER) {}
+	CommandBezier(Model& m) : ShapeCommand(m, BEZIER) { previewLine= new Line(); }
 
 	void mousePressEvent(Point& point) override;
 	void mouseMoveEvent(Point& point) override;

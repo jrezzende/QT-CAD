@@ -5,8 +5,6 @@
 #include "ShapeCommand.h"
 #include "Line.h"
 
-#include <iostream>
-
 class CommandLine : public ShapeCommand
 {
 	Line* line;

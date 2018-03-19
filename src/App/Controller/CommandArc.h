@@ -11,10 +11,10 @@
 class CommandArc : public ShapeCommand
 {
 	Arc* arc;
-
+	Line* previewLine;
 public: 
 	~CommandArc() {}
-	CommandArc(Model& m) : ShapeCommand(m, ARC) {}
+	CommandArc(Model& m) : ShapeCommand(m, ARC) { previewLine= new Line(); }
 
 	void mousePressEvent(Point& point) override;
 	void mouseMoveEvent(Point& point) override;

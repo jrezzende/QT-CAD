@@ -13,5 +13,4 @@ public:
 
 	virtual void execute(Model& m, MainWindow& w)= 0;
 };
-
 #endif // !COMMAND_H

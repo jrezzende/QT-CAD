@@ -139,7 +139,7 @@ void MainWindow::createToolbarAndConnections()
 
 	QObject::connect(
 		clearAction, SIGNAL(triggered()),
-		this, SLOT(clear())
+		this, SLOT(verifyClearAction())
 	);
 }
 
@@ -207,7 +207,7 @@ void MainWindow::createShortcuts()
 
 	connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z), this), &QShortcut::activated, this, &MainWindow::undo);
 
-	connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_X), this), &QShortcut::activated, this, &MainWindow::clear);
+	connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_X), this), &QShortcut::activated, this, &MainWindow::verifyClearAction);
 }
 
 // apply the same pattern when calling load function \/
@@ -216,7 +216,6 @@ void MainWindow::verifyExitAction()
 {
 	if(manager->getModel().getCurrentFile()->getShapes().size() == 0)
 		exit();
-
 	else if(manager->getModel().getCurrentFile()->getStatus() == NOTSAVED) {
 		if (QMessageBox::question(this, "Quit?", "Are you sure you want to exit?",
 			QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
@@ -230,7 +229,6 @@ void MainWindow::verifyNewFileAction()
 {
 	if(manager->getModel().getCurrentFile()->getShapes().size() == 0)
 		newFile();
-
 	else if(manager->getModel().getCurrentFile()->getStatus() == NOTSAVED) {
 		if (QMessageBox::question(this, "Discard file?", "Are you sure you want to discard this file?",
 			QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
@@ -238,6 +236,19 @@ void MainWindow::verifyNewFileAction()
 	}
 	else
 		newFile();
+}
+
+void MainWindow::verifyClearAction()
+{
+	if(!manager->getModel().getCurrentFile()->getShapes().size() > 0)
+		clear();
+	else if (manager->getModel().getCurrentFile()->getStatus() == NOTSAVED) {
+		if(QMessageBox::question(this, "This action cannot be undone!", "Are you sure you want to clear the file?",
+			QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
+			clear();
+	}
+	else
+		clear();
 }
 
 void MainWindow::lineSignal()

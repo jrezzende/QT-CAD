@@ -13,7 +13,7 @@ App::~App()
 	delete window;
 }
 
-int App::start(int argc, char ** argv)
+int App::start(int argc, char** argv)
 {
 	QApplication app(argc, argv);
 	

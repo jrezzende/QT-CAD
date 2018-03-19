@@ -7,13 +7,15 @@ void File::addShape(Shape* newShape)
 
 	shapes.push_back(newShape);
 
+	setStatus(NOTSAVED);
+
 	reprint();
 }
 
-void File::eraseShape(Shape * shape)
+void File::eraseShape(Shape* shape)
 {
 	for (int i = 0; i < shapes.size(); i++) {
-		if(shapes[0] == shape)
+		if(shapes[i] == shape)
 			shapes.erase(shapes.begin() + i);
 	}
 

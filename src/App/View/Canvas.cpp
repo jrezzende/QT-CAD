@@ -29,8 +29,6 @@ void Canvas::saveCurrentFile()
 void Canvas::clearMap()
 {
 	pixmap.fill();
-	QPainterPath newPath;
-	path.swap(newPath);
 	update();
 }
 
@@ -74,6 +72,8 @@ void Canvas::drawCanvas(Shape& shape)
 QPainterPath Canvas::getDrawPath(Shape& shape)
 {
 	auto shapePoints= shape.getCoordinates();
+
+	QPainterPath path;
 
 	path.moveTo(shapePoints[0].x, shapePoints[0].y);
 

@@ -40,6 +40,7 @@ public slots:
 	void clear();
 	void verifyExitAction();
 	void verifyNewFileAction();
+	void verifyClearAction();
 	void exit();
 
 	//////////////////

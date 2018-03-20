@@ -67,14 +67,14 @@ void CommandManager::mouseReleaseEvent(Point pos)
 {
 	shapeCommand->mouseReleaseEvent(pos);
 	
-	if(shapeCommand->getType() == LINE)
+	if(shapeCommand->getShape() == LINE)
 		lineCommand();
 
 	else if (shapeCommand->hasSecondClick())
 	{
-		if(shapeCommand->getType() == BEZIER)
+		if(shapeCommand->getShape() == BEZIER)
 			bezierCommand();
-		else if(shapeCommand->getType() == ARC)
+		else if(shapeCommand->getShape() == ARC)
 			arcCommand();
 	}
 }

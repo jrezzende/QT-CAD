@@ -24,13 +24,15 @@ class Arc : public Shape
 public:
 	~Arc() {}
 	Arc() : Shape(), p3(Point(0, 0)) {}
-	Arc(const Point& _p1, const Point& _p2, const Point& _p3) : Shape(_p1, _p2), p3(_p3) {}
+	Arc(const Point& _p1, const Point& _p2, const Point& _p3) : Shape(_p1, _p2), p3(_p3) { type= ARC; }
 
 	void setThirdPoint(const Point& _p3) { p3 = _p3; }
+	Point getThirdPoint() const { return p3; }
 
 	double degreesToRadians(const double degrees) { return degrees * pi / 180; }
 	double radiansToDegrees(const double radians) { return radians * 180 / pi; }
 
 	std::vector<Point> getCoordinates() override;
+	void setShape(const ShapeType _type) { type= _type; }
 };
 #endif //ARC_H

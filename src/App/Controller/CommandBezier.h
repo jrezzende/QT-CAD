@@ -15,7 +15,7 @@ class CommandBezier : public ShapeCommand
 
 public:
 	~CommandBezier() {}
-	CommandBezier(Model& m) : ShapeCommand(m, BEZIER) { previewLine= new Line(); }
+	CommandBezier(Model& m) : ShapeCommand(m, BEZIER) { bezier= new Bezier(); bezier->setShape(BEZIER); previewLine= new Line(); }
 
 	void mousePressEvent(Point& point) override;
 	void mouseMoveEvent(Point& point) override;

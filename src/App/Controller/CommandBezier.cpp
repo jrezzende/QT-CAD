@@ -5,7 +5,6 @@
 void CommandBezier::mousePressEvent(Point& point)
 {
 	if (!isDrawing) {
-		bezier = new Bezier();
 		bezier->setfirstPoint(point);
 		
 		previewLine->setfirstPoint(point);

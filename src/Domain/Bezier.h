@@ -11,13 +11,13 @@ class Bezier : public Shape
 public:
 	~Bezier() {}
 	Bezier() : Shape() {}
-	Bezier(const Point firstPoint, const Point secondPoint) : Shape(firstPoint, secondPoint) {}
-	Bezier(const Point firstPoint, const Point secondPoint, const Point thirdPoint)
-			   : Shape(firstPoint, secondPoint) {}
+	Bezier(const Point firstPoint, const Point secondPoint, const Point thirdPoint) : Shape(firstPoint, secondPoint) {}
 
 	void setThirdPoint(const Point point) { p3= point;}
+	Point getThirdPoint() const { return p3; }
 
 	std::vector<Point> getCoordinates() override;
+	void setShape(const ShapeType _type) { type= _type; }
 };
 
 #endif // !BEZIER_H

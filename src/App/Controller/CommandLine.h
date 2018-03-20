@@ -11,7 +11,7 @@ class CommandLine : public ShapeCommand
 
 public:
 	~CommandLine() {}
-	CommandLine(Model& m) : ShapeCommand(m, LINE) {}
+	CommandLine(Model& m) : ShapeCommand(m, LINE) { line= new Line(); line->setShape(LINE); }
 
 	void mousePressEvent(Point& point) override;
 	void mouseMoveEvent(Point& point) override;

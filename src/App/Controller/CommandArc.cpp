@@ -5,7 +5,6 @@
 void CommandArc::mousePressEvent(Point & point)
 {
 	if (!isDrawing) {
-		arc= new Arc();
 		arc->setfirstPoint(point);
 		
 		previewLine->setfirstPoint(point);

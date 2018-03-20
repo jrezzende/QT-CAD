@@ -4,6 +4,8 @@
 
 #include "Shape.h"
 
+#include "qstring.h"
+
 #include <string>
 #include <sstream>
 
@@ -27,6 +29,7 @@ class File
 
 public:
 	~File() {}
+	File(const std::string _fileName, Canvas* _canvas) : fileName(_fileName), status(NOTSAVED), canvas(_canvas) {}
 	File(const std::string _fileName, std::string _filePath, Canvas* _canvas) : fileName(_fileName), filePath(_filePath),
 		status(NOTSAVED), canvas(_canvas) {}
 
@@ -34,6 +37,7 @@ public:
 	void setStatus(Status _status) { status= _status; }
 
 	std::string getFileName() const { return fileName; }
+	QString getQFileName() const { return QString::fromStdString(fileName); }
 	void setFileName(const std::string _fileName) { fileName= _fileName; }
 
 	std::string getFilePath() const {return filePath;}

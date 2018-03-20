@@ -3,7 +3,8 @@
 
 void CommandLine::mousePressEvent(Point& point)
 {
-	line= new Line(point, point);
+	line->setfirstPoint(point);
+	line->setSecondPoint(point);
 }
 
 void CommandLine::mouseMoveEvent(Point& point)
@@ -14,5 +15,5 @@ void CommandLine::mouseMoveEvent(Point& point)
 
 void CommandLine::mouseReleaseEvent(Point& point)
 {
-
+/////////////////////////////////////////////////
 }

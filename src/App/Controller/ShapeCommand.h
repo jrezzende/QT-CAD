@@ -4,6 +4,7 @@
 
 #include "Command.h"
 #include "Shape.h"
+#include "ShapeType.h"
 
 class Model;
 class Point;
@@ -13,19 +14,19 @@ class ShapeCommand
 protected:
 	Model& model;
 
-	ShapeType type;
-
 	bool isDrawing;
 	bool previewDraw;
 	bool secondClick;
 
+	ShapeType shape;
+
 public:
 	virtual ~ShapeCommand() {}
-	ShapeCommand(Model& _model, ShapeType _type) : model(_model), 
-		type(_type), isDrawing(false), secondClick(false) {}
+	ShapeCommand(Model& _model, ShapeType _shape) : model(_model), isDrawing(false), secondClick(false), shape(_shape) {}
 
 	bool hasSecondClick() const { return secondClick; }
-	ShapeType getType () const { return type; }
+
+	ShapeType getShape() { return shape; }
 
 	virtual void mousePressEvent(Point& point)= 0;
 	virtual void mouseMoveEvent(Point& point) = 0;

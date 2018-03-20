@@ -4,14 +4,15 @@
 #include "File.h"
 #include "Canvas.h"
 
+#include <sstream>
+
 void CommandNewFile::execute(Model& m, MainWindow& w)
 {
-	std::string fileName= "Untitled " /*+ m.getFileQuantity()*/;
-
-	File* file= new File(fileName, "", w.createCanvas());	
+	File* file= new File(w.getFileName(1), w.createCanvas());	
 
 	m.setCurrentFile(file);
 	m.newFile(file);
 
 	w.setCentralWidget(file->getCanvas());
+	w.setWindowTitle(QString::fromStdString(file->getFileName()));
 }

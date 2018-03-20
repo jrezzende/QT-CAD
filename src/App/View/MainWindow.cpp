@@ -10,6 +10,7 @@
 #include "qmessagebox.h"
 #include "qshortcut.h"
 #include "qdebug.h"
+#include "qstring.h"
 
 MainWindow::~MainWindow()
 {
@@ -29,8 +30,6 @@ void MainWindow::setLayout()
 {
 	QRect screenSize= desktop.availableGeometry(this);
 	setMinimumSize(QSize(screenSize.width() * 1.2f, screenSize.height() * 1.2f));
-
-	setWindowTitle("QT Cad");
 }
 
 void MainWindow::createToolbarAndConnections()
@@ -176,9 +175,12 @@ void MainWindow::exit()
 	manager->exitFileCmd();
 }
 
-std::string MainWindow::getFileName()
+std::string MainWindow::getFileName(int param)
 {
-	return QFileDialog::getSaveFileName(this).toStdString();
+	if(param)
+		return QFileDialog::getSaveFileName(this, tr("New File"), "/Users/joao.mathias/Pictures/untitled.png", tr("Dat files (*.dat)")).toStdString();
+	else
+		return QFileDialog::getSaveFileName(this, tr("Save file as..."), "/Users/joao.mathias/Pictures/untitled.png", tr("Dat files (*.dat)")).toStdString();
 }
 
 std::string MainWindow::getOpenFileName()
@@ -240,7 +242,7 @@ void MainWindow::verifyNewFileAction()
 
 void MainWindow::verifyClearAction()
 {
-	if(!manager->getModel().getCurrentFile()->getShapes().size() > 0)
+	if(!(manager->getModel().getCurrentFile()->getShapes().size() > 0))
 		clear();
 	else if (manager->getModel().getCurrentFile()->getStatus() == NOTSAVED) {
 		if(QMessageBox::question(this, "This action cannot be undone!", "Are you sure you want to clear the file?",

@@ -16,6 +16,7 @@ set(
 	Bezier.h
 	Line.h
 	File.h
+	ShapeType.h
 )
 
 add_library(domain STATIC ${DOMAIN_SOURCES} ${DOMAIN_HEADERS})

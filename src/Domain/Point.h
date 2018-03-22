@@ -2,10 +2,11 @@
 #ifndef POINT_H
 #define POINT_H
 
+#include "qpoint.h"
+
 #include <vector>
 #include <math.h>
 #include <cstdlib>
-#include "qpoint.h"
 
 class Point
 {

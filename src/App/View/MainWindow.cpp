@@ -175,12 +175,14 @@ void MainWindow::exit()
 	manager->exitFileCmd();
 }
 
-std::string MainWindow::getFileName(int param)
+std::string MainWindow::getNewFileName()
 {
-	if(param)
-		return QFileDialog::getSaveFileName(this, tr("New File"), "/Users/joao.mathias/Pictures/untitled.png", tr("Dat files (*.dat)")).toStdString();
-	else
-		return QFileDialog::getSaveFileName(this, tr("Save file as..."), "/Users/joao.mathias/Pictures/untitled.png", tr("Dat files (*.dat)")).toStdString();
+	return QFileDialog::getSaveFileName(this, tr("New File"), "/Users/joao.mathias/cadfiles/untitled.dat", tr("Dat files (*.dat)")).toStdString();
+}
+
+std::string MainWindow::getSaveFileName()
+{
+	return QFileDialog::getSaveFileName(this, tr("Save file as..."), "/Users/joao.mathias/cadfiles/untitled.dat", tr("Dat files (*.dat)")).toStdString();
 }
 
 std::string MainWindow::getOpenFileName()

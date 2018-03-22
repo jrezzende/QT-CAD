@@ -8,7 +8,7 @@
 
 void CommandNewFile::execute(Model& m, MainWindow& w)
 {
-	File* file= new File(w.getFileName(1), w.createCanvas());	
+	File* file= new File(w.getNewFileName(), w.createCanvas());	
 
 	m.setCurrentFile(file);
 	m.newFile(file);

@@ -4,12 +4,17 @@ set(
 	MODEL_SOURCES
 	Model.cpp
 	CommandManager.cpp
+	ShapeVisitorSaveFile.cpp
+	ShapeVisitorLoadFile.cpp
 )
 
 set(
 	MODEL_HEADERS
 	Model.h
 	CommandManager.h
+	ShapeVisitor.h
+	ShapeVisitorSaveFile.h
+	ShapeVisitorLoadFile.h
 )
 
 add_library(model STATIC ${MODEL_SOURCES} ${MODEL_HEADERS})

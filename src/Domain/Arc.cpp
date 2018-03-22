@@ -1,6 +1,7 @@
 #include "Arc.h"
+#include "ShapeVisitor.h"
+
 #include <math.h>
-#include <iostream>
 
 Point& Arc::translatePoint(Point& p)
 {

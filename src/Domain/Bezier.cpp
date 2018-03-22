@@ -1,6 +1,7 @@
 #include "Bezier.h"
+#include "ShapeVisitor.h"
+
 #include <math.h>
-#include <iostream>
 
 std::vector<Point> Bezier:: getCoordinates()
 {

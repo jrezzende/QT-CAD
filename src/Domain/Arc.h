@@ -24,7 +24,7 @@ class Arc : public Shape
 public:
 	~Arc() {}
 	Arc() : Shape(), p3(Point(0, 0)) {}
-	Arc(const Point& _p1, const Point& _p2, const Point& _p3) : Shape(_p1, _p2), p3(_p3) { type= ARC; }
+	Arc(const Point& _p1, const Point& _p2, const Point& _p3) : Shape(_p1, _p2), p3(_p3) { type= UNDEFINED; }
 
 	void setThirdPoint(const Point& _p3) { p3 = _p3; }
 	Point getThirdPoint() const { return p3; }
@@ -33,6 +33,8 @@ public:
 	double radiansToDegrees(const double radians) { return radians * 180 / pi; }
 
 	std::vector<Point> getCoordinates() override;
-	void setShape(const ShapeType _type) { type= _type; }
+	void setShape(const ShapeType _type) override { type= _type; }
+	void accept(ShapeVisitor& v) override { v.visitArc(*this); };
 };
+
 #endif //ARC_H

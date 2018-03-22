@@ -28,7 +28,8 @@ public:
 	void createToolbarAndConnections();
 	void createShortcuts();
 
-	std::string getFileName(int param);
+	std::string getNewFileName();
+	std::string getSaveFileName();
 	std::string getOpenFileName();
 	Canvas* createCanvas();
 

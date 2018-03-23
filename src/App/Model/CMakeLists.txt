@@ -5,7 +5,6 @@ set(
 	Model.cpp
 	CommandManager.cpp
 	ShapeVisitorSaveFile.cpp
-	ShapeVisitorLoadFile.cpp
 )
 
 set(
@@ -14,7 +13,6 @@ set(
 	CommandManager.h
 	ShapeVisitor.h
 	ShapeVisitorSaveFile.h
-	ShapeVisitorLoadFile.h
 )
 
 add_library(model STATIC ${MODEL_SOURCES} ${MODEL_HEADERS})

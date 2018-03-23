@@ -3,7 +3,7 @@
 
 #include <math.h>
 
-Point& Arc::translatePoint(Point& p)
+Point Arc::translatePoint(Point& p)
 {
 	 double translatedX= p.x - p1.x;
 	 double translatedY= p.y - p1.y;
@@ -11,7 +11,7 @@ Point& Arc::translatePoint(Point& p)
 	 return Point(translatedX, translatedY);
 }
 
-Point& Arc::retranslatePoint(Point& p)
+Point Arc::retranslatePoint(Point& p)
 {
 	double retranslatedX= p.x + p1.x;
 	double retranslatedY= p.y + p1.y;

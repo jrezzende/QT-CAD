@@ -152,6 +152,7 @@ void MainWindow::newFile()
 
 void MainWindow::loadFile()
 {
+	manager->getModel().getCurrentFile()->getCanvas()->endPainter();
 	manager->loadFileCmd();
 }
 
@@ -187,7 +188,7 @@ std::string MainWindow::getSaveFileName()
 
 std::string MainWindow::getOpenFileName()
 {
-	return QFileDialog::getOpenFileName(this, tr("Open File")).toStdString();
+	return QFileDialog::getOpenFileName(this, tr("Open File"),"/Users/joao.mathias/cadfiles/untitled.dat", tr("Dat files (*.dat)")).toStdString();
 }
 
 Canvas * MainWindow::createCanvas()

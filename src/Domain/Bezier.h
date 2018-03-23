@@ -11,7 +11,8 @@ class Bezier : public Shape
 public:
 	~Bezier() {}
 	Bezier() : Shape() {}
-	Bezier(const Point firstPoint, const Point secondPoint, const Point thirdPoint) : Shape(firstPoint, secondPoint) { type= UNDEFINED; }
+	Bezier(const Point firstPoint, const Point secondPoint, const Point thirdPoint) : Shape(firstPoint, secondPoint) 
+	{ type= BEZIER; }
 
 	void setThirdPoint(const Point point) { p3= point;}
 	Point getThirdPoint() const { return p3; }

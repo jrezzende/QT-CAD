@@ -10,7 +10,7 @@ class Line : public Shape
 public:
 	~Line() {}
 	Line() : Shape() {}
-	Line(const Point firstPoint, const Point lastPoint) : Shape(firstPoint, lastPoint) { type= UNDEFINED; }
+	Line(const Point firstPoint, const Point lastPoint) : Shape(firstPoint, lastPoint) { type= LINE; }
 
 	std::vector<Point> getCoordinates() override;
 	void setShape(const ShapeType _type) override { type= _type; }

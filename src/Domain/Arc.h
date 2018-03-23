@@ -16,15 +16,15 @@ class Arc : public Shape
 	
 	int arcDivisions;
 
-	Point& translatePoint(Point& p);
-	Point& retranslatePoint(Point& p);
+	Point translatePoint(Point& p);
+	Point retranslatePoint(Point& p);
 
 	int calcArcDivisions(double angleArcSize);
 
 public:
 	~Arc() {}
 	Arc() : Shape(), p3(Point(0, 0)) {}
-	Arc(const Point& _p1, const Point& _p2, const Point& _p3) : Shape(_p1, _p2), p3(_p3) { type= UNDEFINED; }
+	Arc(const Point& _p1, const Point& _p2, const Point& _p3) : Shape(_p1, _p2), p3(_p3) { type= ARC; }
 
 	void setThirdPoint(const Point& _p3) { p3 = _p3; }
 	Point getThirdPoint() const { return p3; }

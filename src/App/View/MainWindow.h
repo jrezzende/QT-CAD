@@ -6,6 +6,7 @@
 #include "qdesktopwidget.h"
 
 #include "qfiledialog.h"
+#include "qstatusbar.h"
 
 class CommandManager;
 class Canvas;
@@ -16,6 +17,7 @@ class MainWindow : public QMainWindow
 
 		CommandManager* manager;
 		QDesktopWidget desktop;
+		QStatusBar* statusbar;
 
 public:
 	~MainWindow();
@@ -24,9 +26,12 @@ public:
 	CommandManager* getManager() const { return manager; }
 	void setManager(CommandManager& _manager) {manager= &_manager;}
 
+	QStatusBar* getStatusBar() const { return statusbar; }
+
 	void setLayout();
 	void createToolbarAndConnections();
 	void createShortcuts();
+	void createStatusBar();
 
 	std::string getNewFileName();
 	std::string getSaveFileName();
@@ -39,9 +44,10 @@ public slots:
 	void save();
 	void undo();
 	void clear();
-	void verifyExitAction();
 	void verifyNewFileAction();
+	void verifyLoadFileAction();
 	void verifyClearAction();
+	void verifyExitAction();
 	void exit();
 
 	//////////////////

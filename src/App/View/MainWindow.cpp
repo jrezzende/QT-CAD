@@ -11,16 +11,19 @@
 #include "qshortcut.h"
 #include "qdebug.h"
 #include "qstring.h"
+#include "qstatusbar.h"
 
 MainWindow::~MainWindow()
 {
 	delete manager;
+	delete statusbar;
 }
 
 MainWindow::MainWindow(QMainWindow* parent) : QMainWindow(parent), manager(nullptr)
 {
 	createToolbarAndConnections();
 	createShortcuts();
+	createStatusBar();
 	setLayout();
 
 	showMaximized();
@@ -50,6 +53,17 @@ void MainWindow::createToolbarAndConnections()
 	auto bezierAction = new QAction();
 	auto arcAction = new QAction();
 
+	newFileAction->setIcon(QIcon(":/newfile.png"));
+	loadFileAction->setIcon(QIcon(":/load.png"));
+	saveAction->setIcon(QIcon(":/save.png"));
+	undoAction->setIcon(QIcon(":/undo.png"));
+	clearAction->setIcon(QIcon(":/clear.png"));
+	exitAction->setIcon(QIcon(":/exit.png"));
+
+	lineAction->setIcon(QIcon(":/line.png"));
+	bezierAction->setIcon(QIcon(":/bezier.png"));
+	arcAction->setIcon(QIcon(":/arc.png"));
+
 	fileMenu->setTitle("File");
 	newFileAction->setText("New File");
 	loadFileAction->setText("Load File");
@@ -68,12 +82,14 @@ void MainWindow::createToolbarAndConnections()
 	saveAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_S));
 	undoAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z));
 	clearAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_X));
+	exitAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_F4));
 
 	lineAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_L));
 	bezierAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_B));
 	arcAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_A));
 
 	nav->addMenu(fileMenu);
+
 	fileMenu->addAction(newFileAction);
 	fileMenu->addAction(loadFileAction);
 	fileMenu->addAction(saveAction);
@@ -86,15 +102,17 @@ void MainWindow::createToolbarAndConnections()
 	shapesMenu->addAction(bezierAction);
 	shapesMenu->addAction(arcAction);
 
-	newFileAction->setShortcutContext(Qt::WidgetWithChildrenShortcut);
-	loadFileAction->setShortcutContext(Qt::WidgetWithChildrenShortcut);
-	saveAction->setShortcutContext(Qt::WidgetWithChildrenShortcut);
-	undoAction->setShortcutContext(Qt::WidgetWithChildrenShortcut);
-	clearAction->setShortcutContext(Qt::WidgetWithChildrenShortcut);
+	newFileAction->setShortcutContext(Qt::WidgetShortcut);
+	loadFileAction->setShortcutContext(Qt::WidgetShortcut);
+	saveAction->setShortcutContext(Qt::WidgetShortcut);
+	undoAction->setShortcutContext(Qt::WidgetShortcut);
+	clearAction->setShortcutContext(Qt::WidgetShortcut);
 
-	lineAction->setShortcutContext(Qt::WidgetWithChildrenShortcut);
-	bezierAction->setShortcutContext(Qt::WidgetWithChildrenShortcut);
-	arcAction->setShortcutContext(Qt::WidgetWithChildrenShortcut);
+	lineAction->setShortcutContext(Qt::WidgetShortcut);
+	bezierAction->setShortcutContext(Qt::WidgetShortcut);
+	arcAction->setShortcutContext(Qt::WidgetShortcut);
+
+	nav->setStyleSheet("font-size: 16px");
 
 	QObject::connect(
 		exitAction, SIGNAL(triggered()),
@@ -148,32 +166,43 @@ void MainWindow::newFile()
 {
 	manager->getModel().getCurrentFile()->getCanvas()->endPainter();
 	manager->newFileCmd();
+
+	statusbar->showMessage(tr("New file action invoked."), 10000);
 }
 
 void MainWindow::loadFile()
 {
-	manager->getModel().getCurrentFile()->getCanvas()->endPainter();
 	manager->loadFileCmd();
+
+	statusbar->showMessage(tr("Load file action invoked."), 10000);
 }
 
 void MainWindow::save()
 {
 	manager->saveFileCmd();
+
+	statusbar->showMessage(tr("Save file action invoked."), 10000);
 }
 
 void MainWindow::undo()
 {
 	manager->eraseLastShape();
+
+	statusbar->showMessage(tr("Undo action invoked."), 10000);
 }
 
 void MainWindow::clear()
 {
 	manager->clearShapes();
+
+	statusbar->showMessage(tr("Clear action invoked."), 10000);
 }
 
 void MainWindow::exit()
 {
 	manager->exitFileCmd();
+
+	statusbar->showMessage(tr("Exit action invoked."), 10000);
 }
 
 std::string MainWindow::getNewFileName()
@@ -215,7 +244,14 @@ void MainWindow::createShortcuts()
 	connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_X), this), &QShortcut::activated, this, &MainWindow::verifyClearAction);
 }
 
-// apply the same pattern when calling load function \/
+void MainWindow::createStatusBar()
+{
+	statusbar= statusBar();
+	statusbar->setMaximumWidth(GetSystemMetrics(SM_CXSCREEN));
+	statusbar->showMessage(tr("Ready"), 10000);
+	statusbar->setStyleSheet("color: black; background-color: LightGoldenRodYellow; font-size: 20px");
+	setStatusBar(statusbar);
+}
 
 void MainWindow::verifyExitAction() 
 {
@@ -240,7 +276,18 @@ void MainWindow::verifyNewFileAction()
 			newFile();
 	}
 	else
-		newFile();
+		return;
+}
+
+void MainWindow::verifyLoadFileAction()
+{
+	if (manager->getModel().getCurrentFile()->getStatus() == NOTSAVED) {
+		if(QMessageBox::question(this, "Overwrite this file?", "Are you sure you want to discard this file?",
+			QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
+			loadFile();
+	}
+	else 
+		return;
 }
 
 void MainWindow::verifyClearAction()
@@ -253,20 +300,26 @@ void MainWindow::verifyClearAction()
 			clear();
 	}
 	else
-		clear();
+		return;
 }
 
 void MainWindow::lineSignal()
 {
 	manager->lineCommand();
+
+	statusbar->showMessage(tr("Drawing mode selected: Line."), 10000);
 }
 
 void MainWindow::bezierSignal()
 {
 	manager->bezierCommand();
+
+	statusbar->showMessage(tr("Drawing mode selected: Bezier."), 10000);
 }
 
 void MainWindow::arcSignal()
 {
 	manager->arcCommand();
+
+	statusbar->showMessage(tr("Drawing mode selected: Arc."), 10000);
 }

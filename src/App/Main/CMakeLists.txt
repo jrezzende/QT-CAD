@@ -1,5 +1,7 @@
 project(app CXX)
 
+set(CMAKE_AUTORCC ON)
+
 set (
 	APP_SOURCES
 	main.cpp
@@ -17,7 +19,7 @@ set (
 #list(APPEND THIRD_PARTYS_LIBS Qt5::Core Qt5::Widgets)
 			
 
-add_executable(app ${APP_SOURCES} ${APP_HEADERS})
+add_executable(app ${APP_SOURCES} ${APP_HEADERS} resources.qrc)
 
 set_target_properties(app PROPERTIES ENABLE_EXPORTS 1)
 

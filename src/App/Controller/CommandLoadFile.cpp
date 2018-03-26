@@ -67,6 +67,7 @@ void CommandLoadFile::execute(Model& m, MainWindow& w)
 			m.newFile(file);
 			m.setCurrentFile(file);
 			m.getCurrentFile()->reprint();
+			m.getCurrentFile()->getCanvas()->endPainter();
 
 			w.setCentralWidget(file->getCanvas());
 			w.setWindowTitle(QString::fromStdString(file->getFileName()));

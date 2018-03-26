@@ -1,11 +1,14 @@
 #include "Canvas.h"
 #include "Point.h"
 #include "CommandManager.h"
+#include "MainWindow.h"
 #include "Shape.h"
 
 #include "qevent.h"
 #include "qpainterpath.h"
 #include "qfiledialog.h"
+
+#include <sstream>
 
 Canvas::Canvas(CommandManager* _manager, QWidget* parent) : QWidget(parent), pixmap(parent->size())
 {
@@ -92,9 +95,15 @@ void Canvas::drawMap(Shape& shape)
 
 void Canvas::mousePressEvent(QMouseEvent* event)
 {
+	std::ostringstream aux;
+
 	if (event->button() == Qt::LeftButton) {
 		manager->mousePressEvent(Point::toPoint(event->pos()));
 		setDrawing(true);
+
+		aux << "Mouse press event detected: x: " << event->pos().x() << " y: " << event->pos().y();
+
+		manager->getWindow().getStatusBar()->showMessage(QString::fromStdString(aux.str()));
 		event->accept();
 	}
 
@@ -103,16 +112,30 @@ void Canvas::mousePressEvent(QMouseEvent* event)
 
 void Canvas::mouseReleaseEvent(QMouseEvent * event)
 {
-	if(event->button() == Qt::LeftButton)
+	std::ostringstream aux;
+
+	if (event->button() == Qt::LeftButton) {
 		manager->mouseReleaseEvent(Point::toPoint(event->pos()));
+
+		aux << "Mouse release event detected: x: " << event->pos().x() << " y: " << event->pos().y();
+
+		manager->getWindow().getStatusBar()->showMessage(QString::fromStdString(aux.str()));
+	}
 
 	event->accept();
 }
 
 void Canvas::mouseMoveEvent(QMouseEvent * event)
 {
-	if(drawing)
+	std::ostringstream aux;
+
+	if (drawing) {
 		manager->mouseMoveEvent(Point::toPoint(event->pos()));
+
+		aux << "Mouse move event detected: x: " << event->pos().x() << " y: " << event->pos().y();
+
+		manager->getWindow().getStatusBar()->showMessage(QString::fromStdString(aux.str()));
+	}
 
 	event->accept();
 }

@@ -3,6 +3,7 @@
 #define SHAPECOMMAND_H
 
 #include "Command.h"
+#include "MainWindow.h"
 #include "Shape.h"
 #include "ShapeType.h"
 

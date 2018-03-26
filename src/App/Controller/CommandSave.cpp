@@ -30,5 +30,7 @@ void CommandSave::execute(Model& m, MainWindow& w)
 			shape->accept(v);
 	}
 
+	m.getCurrentFile()->setStatus(SAVED);
+
 	os.close();
 }

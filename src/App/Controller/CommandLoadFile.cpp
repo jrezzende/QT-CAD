@@ -15,8 +15,6 @@ void CommandLoadFile::execute(Model& m, MainWindow& w)
 
 	std::string filePath= w.getOpenFileName();
 	std::ifstream is;
-	
-	Shape* shape= nullptr;
 
 	int type;
 	double p1x, p1y, p2x, p2y, p3x, p3y;
@@ -38,8 +36,8 @@ void CommandLoadFile::execute(Model& m, MainWindow& w)
 			is.read((char*)&p2y, sizeof(double));
 
 			if (type > 1) {
-				is.read((char*)&p3y, sizeof(double));
 				is.read((char*)&p3x, sizeof(double));
+				is.read((char*)&p3y, sizeof(double));
 			}
 
 			switch (type) 
@@ -49,26 +47,23 @@ void CommandLoadFile::execute(Model& m, MainWindow& w)
 			case LINE:
 			{
 				auto line = new Line(Point(p1x, p1y), Point(p2x, p2y));
-				shape= line; 
+				file->addShape(line);
 				break;
 			}
 			case BEZIER:
 			{
 				auto bezier = new Bezier(Point(p1x, p1y), Point(p2x, p2y), Point(p3x, p3y));
-				shape= bezier; 
+				file->addShape(bezier);
 				break;
 			}
 			case ARC:
 			{
 				auto arc = new Arc(Point(p1x, p1y), Point(p2x, p2y), Point(p3x, p3y));
-				shape= arc; 
+				file->addShape(arc);
 				break;
 			}
 		}
-
-			if(shape)
-				file->addShape(shape);
-		}
+	}
 			m.newFile(file);
 			m.setCurrentFile(file);
 			m.getCurrentFile()->reprint();

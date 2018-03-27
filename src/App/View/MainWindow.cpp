@@ -42,6 +42,8 @@ void MainWindow::createToolbarAndConnections()
 	auto fileMenu = new QMenu();
 	auto shapesMenu = new QMenu();
 
+	auto toggleTracking = new QAction();
+
 	auto newFileAction = new QAction();
 	auto loadFileAction = new QAction();
 	auto saveAction = new QAction();
@@ -64,6 +66,8 @@ void MainWindow::createToolbarAndConnections()
 	bezierAction->setIcon(QIcon(":/bezier.png"));
 	arcAction->setIcon(QIcon(":/arc.png"));
 
+	toggleTracking->setText("Mouse tracking on/off");
+
 	fileMenu->setTitle("File");
 	newFileAction->setText("New File");
 	loadFileAction->setText("Load File");
@@ -76,6 +80,8 @@ void MainWindow::createToolbarAndConnections()
 	lineAction->setText("Line");
 	bezierAction->setText("Bezier");
 	arcAction->setText("Arc");
+
+	toggleTracking->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_T));
 
 	newFileAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_N));
 	loadFileAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_O));
@@ -102,6 +108,10 @@ void MainWindow::createToolbarAndConnections()
 	shapesMenu->addAction(bezierAction);
 	shapesMenu->addAction(arcAction);
 
+	nav->addAction(toggleTracking);
+
+	toggleTracking->setShortcutContext(Qt::WidgetShortcut);
+
 	newFileAction->setShortcutContext(Qt::WidgetShortcut);
 	loadFileAction->setShortcutContext(Qt::WidgetShortcut);
 	saveAction->setShortcutContext(Qt::WidgetShortcut);
@@ -113,6 +123,11 @@ void MainWindow::createToolbarAndConnections()
 	arcAction->setShortcutContext(Qt::WidgetShortcut);
 
 	nav->setStyleSheet("font-size: 16px");
+
+	QObject::connect(
+		toggleTracking, SIGNAL(triggered()),
+		this, SLOT(mouseTrackingAction())
+	);
 
 	QObject::connect(
 		exitAction, SIGNAL(triggered()),
@@ -242,6 +257,8 @@ void MainWindow::createShortcuts()
 	connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z), this), &QShortcut::activated, this, &MainWindow::undo);
 
 	connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_X), this), &QShortcut::activated, this, &MainWindow::verifyClearAction);
+
+	connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_T), this), &QShortcut::activated, this, &MainWindow::mouseTrackingAction);
 }
 
 void MainWindow::createStatusBar()
@@ -264,6 +281,13 @@ void MainWindow::verifyExitAction()
 	}
 	else
 		exit();
+}
+
+void MainWindow::mouseTrackingAction()
+{
+	manager->getModel().getCurrentFile()->getCanvas()->toggleTracking();
+
+	statusbar->showMessage(tr("Mouse tracking action invoked."), 10000);
 }
 
 void MainWindow::verifyNewFileAction()

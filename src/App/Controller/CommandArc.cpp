@@ -6,25 +6,24 @@ void CommandArc::mousePressEvent(Point & point)
 {
 	if (!isDrawing) {
 		arc->setfirstPoint(point);
-		
 		previewLine->setfirstPoint(point);
 	}
-	else
-		secondClick= true;
+	else {
+		secondClick = true;
+		arc->setThirdPoint(point);
+		model.getCurrentFile()->eraseShape(previewLine);
+	}
 }
 
 void CommandArc::mouseMoveEvent(Point & point)
 {
 	if (!isDrawing) {
 		previewLine->setSecondPoint(point);
-
 		model.getCurrentFile()->addShape(previewLine);
 	}
 	else {
-		model.getCurrentFile()->eraseShape(previewLine);
-
-		arc->setThirdPoint(point);
 		model.getCurrentFile()->addShape(arc);
+		arc->setThirdPoint(point);
 	}
 }
 
@@ -32,7 +31,6 @@ void CommandArc::mouseReleaseEvent(Point & point)
 {
 	if (!secondClick) {
 		arc->setSecondPoint(point);
-
 		isDrawing= true;
 	}
 	else {

@@ -18,6 +18,8 @@ Canvas::Canvas(CommandManager* _manager, QWidget* parent) : QWidget(parent), pix
 
 	painter.begin(&pixmap);
 
+	setMouseTracking(true);
+
 	drawing= false;
 	manager= _manager;
 
@@ -43,6 +45,15 @@ void Canvas::dumpShapes()
 void Canvas::dumpLastShape()
 {
 	manager->eraseLastShape();
+}
+
+void Canvas::toggleTracking()
+{
+	if (hasMouseTracking()) {
+		setMouseTracking(false);
+		return;
+	}
+	setMouseTracking(true);
 }
 
 void Canvas::endPainter()
@@ -122,12 +133,20 @@ void Canvas::mouseReleaseEvent(QMouseEvent * event)
 		manager->getWindow().getStatusBar()->showMessage(QString::fromStdString(aux.str()));
 	}
 
+	setDrawing(false);
+
 	event->accept();
 }
 
 void Canvas::mouseMoveEvent(QMouseEvent * event)
 {
 	std::ostringstream aux;
+
+	if (!drawing) {
+		aux << "Mouse tracking mode on. Hover position: x: " << event->pos().x() << " y: " << event->pos().y() << ". Press CTRL + T to turn off.";
+
+		manager->getWindow().getStatusBar()->showMessage(QString::fromStdString(aux.str()));
+	}
 
 	if (drawing) {
 		manager->mouseMoveEvent(Point::toPoint(event->pos()));
@@ -136,6 +155,7 @@ void Canvas::mouseMoveEvent(QMouseEvent * event)
 
 		manager->getWindow().getStatusBar()->showMessage(QString::fromStdString(aux.str()));
 	}
+
 
 	event->accept();
 }

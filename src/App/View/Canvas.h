@@ -33,12 +33,13 @@ public:
 
 	QPixmap& getPixmap() { return pixmap;}
 
-	void setDrawing(bool flag) { drawing= flag; }
+	void setDrawing(bool flag) { drawing = flag; }
 
 public slots:
 	void clearMap();
 	void dumpShapes();
 	void dumpLastShape();
+	void toggleTracking();
 	void endPainter();
 
 public:

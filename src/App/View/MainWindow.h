@@ -48,6 +48,7 @@ public slots:
 	void verifyLoadFileAction();
 	void verifyClearAction();
 	void verifyExitAction();
+	void mouseTrackingAction();
 	void exit();
 
 	//////////////////

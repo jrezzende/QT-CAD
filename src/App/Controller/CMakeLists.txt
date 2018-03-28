@@ -10,6 +10,7 @@ set(
 	CommandLoadFile.cpp
 	CommandSave.cpp
 	CommandUndo.cpp
+	CommandRedo.cpp
 	CommandClear.cpp
 	CommandExit.cpp
 )
@@ -25,6 +26,7 @@ set(
 	CommandLoadFile.h
 	CommandSave.h
 	CommandUndo.h
+	CommandRedo.h
 	CommandClear.h
 	CommandExit.h
 	ShapeCommand.h

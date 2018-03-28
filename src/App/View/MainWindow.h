@@ -43,6 +43,7 @@ public slots:
 	void loadFile();
 	void save();
 	void undo();
+	void redo();
 	void clear();
 	void verifyNewFileAction();
 	void verifyLoadFileAction();

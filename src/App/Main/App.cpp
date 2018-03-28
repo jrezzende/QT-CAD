@@ -24,9 +24,14 @@ int App::start(int argc, char** argv)
 	window->setManager(*manager);
 
 	auto file = new File("Untitled", "", window->createCanvas());
+	auto mementoFile = new File("memento", file->getCanvas());
 		
 	model->newFile(file);
 	model->setCurrentFile(file);
+	model->newFile(mementoFile);
+	model->setMementoFile(mementoFile);
+	model->setMementoFlag(false);
+
 	window->setCentralWidget(file->getCanvas());
 
 	return app.exec();

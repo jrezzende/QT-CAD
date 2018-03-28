@@ -39,6 +39,7 @@ public:
 
 	void clearShapes();
 	void eraseLastShape();
+	void redoShape();
 
 	ShapeCommand& getCommandShape() const { return *shapeCommand; }
 	Command& getCommand() const { return *command; }

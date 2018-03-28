@@ -12,6 +12,7 @@
 #include "CommandNewFile.h"
 #include "CommandSave.h"
 #include "CommandUndo.h"
+#include "CommandRedo.h"
 #include "CommandExit.h"
 #include "ShapeCommand.h"
 
@@ -49,6 +50,11 @@ void CommandManager::clearShapes()
 void CommandManager::eraseLastShape()
 {
 	runCommand(new CommandUndo());
+}
+
+void CommandManager::redoShape()
+{
+	runCommand(new CommandRedo());
 }
 
 void CommandManager::exitFileCmd()

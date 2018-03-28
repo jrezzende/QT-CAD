@@ -20,6 +20,7 @@ void CommandLoadFile::execute(Model& m, MainWindow& w)
 	double p1x, p1y, p2x, p2y, p3x, p3y;
 
 	auto file= new File(filePath, canvas);
+	auto mementoFile= new File(filePath);
 
 	is.open(filePath, std::ios::in | std::ios::binary);
 
@@ -65,6 +66,7 @@ void CommandLoadFile::execute(Model& m, MainWindow& w)
 		}
 	}
 			m.newFile(file);
+			m.newFile(mementoFile);
 			m.setCurrentFile(file);
 			m.getCurrentFile()->reprint();
 			m.getCurrentFile()->getCanvas()->endPainter();

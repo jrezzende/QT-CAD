@@ -29,6 +29,7 @@ class File
 
 public:
 	~File() {}
+	File(const std::string _fileName) : fileName(_fileName), status(NOTSAVED) {}
 	File(const std::string _fileName, Canvas* _canvas) : fileName(_fileName), status(NOTSAVED), canvas(_canvas) {}
 	File(const std::string _fileName, std::string _filePath, Canvas* _canvas) : fileName(_fileName), filePath(_filePath),
 		status(NOTSAVED), canvas(_canvas) {}
@@ -45,6 +46,7 @@ public:
 
 	std::vector<Shape*> getShapes() const { return shapes; }
 	Shape* getLastShape() const { return shapes.back();}
+	void popShape() { shapes.pop_back(); }
 
 	Canvas* getCanvas() const { return canvas; }
 

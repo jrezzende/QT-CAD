@@ -48,6 +48,7 @@ void MainWindow::createToolbarAndConnections()
 	auto loadFileAction = new QAction();
 	auto saveAction = new QAction();
 	auto undoAction = new QAction();
+	auto redoAction = new QAction();
 	auto clearAction = new QAction();
 	auto exitAction = new QAction();
 
@@ -59,6 +60,7 @@ void MainWindow::createToolbarAndConnections()
 	loadFileAction->setIcon(QIcon(":/load.png"));
 	saveAction->setIcon(QIcon(":/save.png"));
 	undoAction->setIcon(QIcon(":/undo.png"));
+	redoAction->setIcon(QIcon(":/redo.png"));
 	clearAction->setIcon(QIcon(":/clear.png"));
 	exitAction->setIcon(QIcon(":/exit.png"));
 
@@ -73,6 +75,7 @@ void MainWindow::createToolbarAndConnections()
 	loadFileAction->setText("Load File");
 	saveAction->setText("Save");
 	undoAction->setText("Undo");
+	redoAction->setText("Redo");
 	clearAction->setText("Clear");
 	exitAction->setText("Exit");
 
@@ -87,6 +90,7 @@ void MainWindow::createToolbarAndConnections()
 	loadFileAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_O));
 	saveAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_S));
 	undoAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z));
+	redoAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Y));
 	clearAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_X));
 	exitAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_F4));
 
@@ -100,6 +104,7 @@ void MainWindow::createToolbarAndConnections()
 	fileMenu->addAction(loadFileAction);
 	fileMenu->addAction(saveAction);
 	fileMenu->addAction(undoAction);
+	fileMenu->addAction(redoAction);
 	fileMenu->addAction(clearAction);
 	fileMenu->addAction(exitAction);
 
@@ -116,6 +121,7 @@ void MainWindow::createToolbarAndConnections()
 	loadFileAction->setShortcutContext(Qt::WidgetShortcut);
 	saveAction->setShortcutContext(Qt::WidgetShortcut);
 	undoAction->setShortcutContext(Qt::WidgetShortcut);
+	redoAction->setShortcutContext(Qt::WidgetShortcut);
 	clearAction->setShortcutContext(Qt::WidgetShortcut);
 
 	lineAction->setShortcutContext(Qt::WidgetShortcut);
@@ -170,6 +176,11 @@ void MainWindow::createToolbarAndConnections()
 	);
 
 	QObject::connect(
+		redoAction, SIGNAL(triggered()),
+		this, SLOT(redo())
+	);
+
+	QObject::connect(
 		clearAction, SIGNAL(triggered()),
 		this, SLOT(verifyClearAction())
 	);
@@ -204,6 +215,13 @@ void MainWindow::undo()
 	manager->eraseLastShape();
 
 	statusbar->showMessage(tr("Undo action invoked."), 10000);
+}
+
+void MainWindow::redo()
+{
+	manager->redoShape();
+
+	statusbar->showMessage(tr("Redo action invoked."), 10000);
 }
 
 void MainWindow::clear()
@@ -256,9 +274,12 @@ void MainWindow::createShortcuts()
 
 	connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z), this), &QShortcut::activated, this, &MainWindow::undo);
 
+	connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Y), this), &QShortcut::activated, this, &MainWindow::redo);
+
 	connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_X), this), &QShortcut::activated, this, &MainWindow::verifyClearAction);
 
 	connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_T), this), &QShortcut::activated, this, &MainWindow::mouseTrackingAction);
+
 }
 
 void MainWindow::createStatusBar()

@@ -10,17 +10,21 @@ private:
 	std::vector<File*> files;
 
 	File* currentFile;
+	File* mementoFile;
 
+	bool mementoFlag;
 public:
-	Model() : currentFile(nullptr) {}
-	~Model() {}
-
 	void newFile(File* file) { files.push_back(file); }
 	void deleteFile(File* file) { delete file; }
 	void deleteAllFiles();
 
-	File* getCurrentFile() { return currentFile;}
+	File* getCurrentFile() { return currentFile; }
+	File* getMementoFile() { return mementoFile; }
 	void setCurrentFile(File* file) { currentFile= file; }
+	void setMementoFile(File* file) { mementoFile= file; }
+
+	void setMementoFlag(bool flag) { mementoFlag= flag; }
+	bool getMementoFlag() const { return mementoFlag; }
 
 	int getFileQuantity() const { return static_cast<int>(files.size()); }
 

@@ -65,8 +65,8 @@ void CommandLoadFile::execute(Model& m, MainWindow& w)
 			}
 		}
 	}
-			m.newFile(file);
-			m.newFile(mementoFile);
+			m.addFile(file);
+			m.addFile(mementoFile);
 			m.setCurrentFile(file);
 			m.getCurrentFile()->reprint();
 			m.getCurrentFile()->getCanvas()->endPainter();

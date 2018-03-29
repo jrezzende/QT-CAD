@@ -7,6 +7,26 @@ void File::addShape(Shape* newShape)
 
 	shapes.push_back(newShape);
 
+	clearRedo();
+
+	setStatus(NOTSAVED);
+
+	reprint();
+}
+
+void File::mementoAddShape(Shape* shape)
+{
+	eraseShape(shape);
+	
+	shapes.push_back(shape);
+}
+
+void File::addFromRedo(Shape * shape)
+{
+	eraseShape(shape);
+
+	shapes.push_back(shape);
+
 	setStatus(NOTSAVED);
 
 	reprint();

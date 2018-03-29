@@ -14,7 +14,7 @@ private:
 
 	bool mementoFlag;
 public:
-	void newFile(File* file) { files.push_back(file); }
+	void addFile(File* file);
 	void deleteFile(File* file) { delete file; }
 	void deleteAllFiles();
 
@@ -22,6 +22,10 @@ public:
 	File* getMementoFile() { return mementoFile; }
 	void setCurrentFile(File* file) { currentFile= file; }
 	void setMementoFile(File* file) { mementoFile= file; }
+
+	void addShapeToMemento(Shape* shape);
+
+	void clearMemento() { mementoFile->eraseAllShapes(); }
 
 	void setMementoFlag(bool flag) { mementoFlag= flag; }
 	bool getMementoFlag() const { return mementoFlag; }

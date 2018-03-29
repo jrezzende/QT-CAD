@@ -5,7 +5,7 @@
 void CommandUndo::execute(Model& m, MainWindow& w)
 {
 	if (m.getCurrentFile()->getShapes().size() > 0) {
-		m.getMementoFile()->addShape(m.getCurrentFile()->getShapes().back());
+		m.addShapeToMemento(m.getCurrentFile()->getShapes().back());
 		m.getCurrentFile()->eraseLastShape();
 	}
 	else

@@ -8,6 +8,7 @@
 
 #include <string>
 #include <sstream>
+#include <functional>
 
 class Canvas;
 
@@ -26,6 +27,8 @@ class File
 
 	Status status;
 	Canvas* canvas;
+
+	std::function<void()> clearRedo;
 
 public:
 	~File() {}
@@ -50,9 +53,13 @@ public:
 
 	Canvas* getCanvas() const { return canvas; }
 
+	void connectClearRedo(std::function<void()> func) { clearRedo = func; }
+
 	////////////////////////////
 
 	void addShape(Shape* shape);
+	void addFromRedo(Shape* shape);
+	void mementoAddShape(Shape* shape);
 	void eraseShape(Shape* shape);
 	void eraseLastShape();
 	void eraseAllShapes();

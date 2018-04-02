@@ -11,16 +11,21 @@
 
 void CommandLoadFile::execute(Model& m, MainWindow& w)
 {
-	Canvas* canvas= w.createCanvas();
-
 	std::string filePath= w.getOpenFileName();
+
+	if(filePath == "")
+		return;
+
 	std::ifstream is;
 
 	int type;
 	double p1x, p1y, p2x, p2y, p3x, p3y;
 
-	auto file= new File(filePath, canvas);
-	auto mementoFile= new File(filePath);
+	auto file= new File(filePath, w.createCanvas());
+	auto mementoFile= new File("memento", file->getCanvas());
+
+	m.addFile(file);
+	m.addFile(mementoFile);
 
 	is.open(filePath, std::ios::in | std::ios::binary);
 
@@ -65,11 +70,10 @@ void CommandLoadFile::execute(Model& m, MainWindow& w)
 			}
 		}
 	}
-			m.addFile(file);
-			m.addFile(mementoFile);
 			m.setCurrentFile(file);
+			m.setMementoFile(mementoFile);
+			m.setMementoFlag(false);
 			m.getCurrentFile()->reprint();
-			m.getCurrentFile()->getCanvas()->endPainter();
 
 			w.setCentralWidget(file->getCanvas());
 			w.setWindowTitle(QString::fromStdString(file->getFileName()));

@@ -32,7 +32,7 @@ class File
 
 public:
 	~File() {}
-	File(const std::string _fileName) : fileName(_fileName), status(NOTSAVED) {}
+	File(const std::string _fileName) : fileName(_fileName), status(NOTSAVED), canvas(nullptr) {}
 	File(const std::string _fileName, Canvas* _canvas) : fileName(_fileName), status(NOTSAVED), canvas(_canvas) {}
 	File(const std::string _fileName, std::string _filePath, Canvas* _canvas) : fileName(_fileName), filePath(_filePath),
 		status(NOTSAVED), canvas(_canvas) {}

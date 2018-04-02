@@ -147,7 +147,7 @@ void MainWindow::createToolbarAndConnections()
 
 	QObject::connect(
 		loadFileAction, SIGNAL(triggered()),
-		this, SLOT(loadFile())
+		this, SLOT(verifyLoadFileAction())
 	);
 
 	QObject::connect(
@@ -199,7 +199,7 @@ void MainWindow::newFile()
 void MainWindow::loadFile()
 {
 	manager->loadFileCmd();
-
+	
 	statusbar->showMessage(tr("Load file action invoked."), 10000);
 }
 
@@ -262,7 +262,7 @@ void MainWindow::createShortcuts()
 {
 	connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_N), this), &QShortcut::activated, this, &MainWindow::verifyNewFileAction);
 
-	connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_O), this), &QShortcut::activated, this, &MainWindow::loadFile);
+	connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_O), this), &QShortcut::activated, this, &MainWindow::verifyLoadFileAction);
 
 	connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_S), this), &QShortcut::activated, this, &MainWindow::save);
 
@@ -321,18 +321,22 @@ void MainWindow::verifyNewFileAction()
 			newFile();
 	}
 	else
-		return;
+		newFile();
 }
 
 void MainWindow::verifyLoadFileAction()
 {
 	if (manager->getModel().getCurrentFile()->getStatus() == NOTSAVED) {
-		if(QMessageBox::question(this, "Overwrite this file?", "Are you sure you want to discard this file?",
-			QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
+		if (QMessageBox::question(this, "Overwrite this file?", "Are you sure you want to discard this file?",
+			QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes) {
+			manager->getModel().getCurrentFile()->getCanvas()->endPainter();
 			loadFile();
+		}
 	}
-	else 
-		return;
+	else {
+		manager->getModel().getCurrentFile()->getCanvas()->endPainter();
+		loadFile();
+	}
 }
 
 void MainWindow::verifyClearAction()

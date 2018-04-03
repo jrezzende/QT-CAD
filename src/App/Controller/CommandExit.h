@@ -1,15 +1,16 @@
 #pragma once
-#ifndef COMMANDEXIT_H
-#define COMMANDEXIT_H
+#ifndef INCLUDED_COMMANDEXIT_H
+#define INCLUDED_COMMANDEXIT_H
 
 #include "Command.h"	
 
 class CommandExit : public Command
 {
 public:
-	~CommandExit() {}
-	CommandExit() {}
+	~CommandExit()= default;
+	CommandExit()= default;
 
 	void execute(Model& m, MainWindow& w) override;
 };
-#endif // !COMMANDEXIT_H
+
+#endif //  INCLUDED_COMMANDEXIT_H

@@ -2,10 +2,10 @@
 #include "MainWindow.h"
 #include "Model.h"
 #include "Canvas.h"
-#include "File.h"
-#include "Line.h"
-#include "Bezier.h"
-#include "Arc.h"
+#include "CADFile.h"
+#include "CADLine.h"
+#include "CADBezier.h"
+#include "CADArc.h"
 
 #include <fstream>
 
@@ -13,16 +13,16 @@ void CommandLoadFile::execute(Model& m, MainWindow& w)
 {
 	std::string filePath= w.getOpenFileName();
 
-	if(filePath == "")
+	if(filePath.empty())
 		return;
 
 	std::ifstream is;
 
 	int type;
-	double p1x, p1y, p2x, p2y, p3x, p3y;
+	double p1X, p1Y, p2X, p2Y, p3X, p3Y;
 
-	auto file= new File(filePath, w.createCanvas());
-	auto mementoFile= new File("memento", file->getCanvas());
+	const auto file= new CADFile(filePath, w.createCanvas());
+	const auto mementoFile= new CADFile("memento", file->getCanvas());
 
 	m.addFile(file);
 	m.addFile(mementoFile);
@@ -35,15 +35,15 @@ void CommandLoadFile::execute(Model& m, MainWindow& w)
 		while (!is.eof()) {
 			is.read((char*)&type, sizeof(int));
 
-			is.read((char*)&p1x, sizeof(double));
-			is.read((char*)&p1y, sizeof(double));
+			is.read((char*)&p1X, sizeof(double));
+			is.read((char*)&p1Y, sizeof(double));
 
-			is.read((char*)&p2x, sizeof(double));
-			is.read((char*)&p2y, sizeof(double));
+			is.read((char*)&p2X, sizeof(double));
+			is.read((char*)&p2Y, sizeof(double));
 
 			if (type > 1) {
-				is.read((char*)&p3x, sizeof(double));
-				is.read((char*)&p3y, sizeof(double));
+				is.read((char*)&p3X, sizeof(double));
+				is.read((char*)&p3Y, sizeof(double));
 			}
 
 			switch (type) 
@@ -52,22 +52,21 @@ void CommandLoadFile::execute(Model& m, MainWindow& w)
 				break;
 			case LINE:
 			{
-				auto line = new Line(Point(p1x, p1y), Point(p2x, p2y));
-				file->addShape(line);
+				file->addShape(CADLine(Point(p1X, p1Y), Point(p2X, p2Y)));
 				break;
 			}
 			case BEZIER:
-			{
-				auto bezier = new Bezier(Point(p1x, p1y), Point(p2x, p2y), Point(p3x, p3y));
-				file->addShape(bezier);
+         {
+				file->addShape(CADBezier(Point(p1X, p1Y), Point(p2X, p2Y), Point(p3X, p3Y)));
 				break;
 			}
 			case ARC:
 			{
-				auto arc = new Arc(Point(p1x, p1y), Point(p2x, p2y), Point(p3x, p3y));
-				file->addShape(arc);
+				file->addShape(CADArc(Point(p1X, p1Y), Point(p2X, p2Y), Point(p3X, p3Y)));
 				break;
 			}
+         default:
+            break;
 		}
 	}
 			m.setCurrentFile(file);

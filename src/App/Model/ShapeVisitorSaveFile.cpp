@@ -1,10 +1,10 @@
 #include "ShapeVisitorSaveFile.h"
 #include "ShapeType.h"
-#include "Line.h"
-#include "Bezier.h"
-#include "Arc.h"
+#include "CADLine.h"
+#include "CADBezier.h"
+#include "CADArc.h"
 
-void ShapeVisitorSaveFile::visitLine(Line& l)
+void ShapeVisitorSaveFile::visitLine(CADLine& l)
 {
 	ShapeType shape = LINE;
 	os.write((char*)&shape, sizeof(int));
@@ -20,7 +20,7 @@ void ShapeVisitorSaveFile::visitLine(Line& l)
 	os.write((char*)&y, sizeof(double));
 }
 
-void ShapeVisitorSaveFile::visitBezier(Bezier & b)
+void ShapeVisitorSaveFile::visitBezier(CADBezier & b)
 {
 	ShapeType shape = BEZIER;
 	os.write((char*)&shape, sizeof(int));
@@ -41,7 +41,7 @@ void ShapeVisitorSaveFile::visitBezier(Bezier & b)
 	os.write((char*)&y, sizeof(double));
 }
 
-void ShapeVisitorSaveFile::visitArc(Arc & a)
+void ShapeVisitorSaveFile::visitArc(CADArc & a)
 {
 	ShapeType shape = ARC;
 	os.write((char*)&shape, sizeof(int));

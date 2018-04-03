@@ -1,6 +1,6 @@
 #pragma once
-#ifndef SHAPEVISITORSAVEFILE_H
-#define SHAPEVISITORSAVEFILE_H
+#ifndef INCLUDED_SHAPEVISITORSAVEFILE_H
+#define INCLUDED_SHAPEVISITORSAVEFILE_H
 
 #include "ShapeVisitor.h"
 
@@ -9,13 +9,14 @@
 class ShapeVisitorSaveFile : public ShapeVisitor
 {
 	std::ostream& os;
+
 public:
-	~ShapeVisitorSaveFile()= default;
+	virtual ~ShapeVisitorSaveFile()= default;
 	ShapeVisitorSaveFile(std::ostream& _os) : os(_os) {};
 
-	void visitLine(Line& l) override;
-	void visitBezier(Bezier& b) override;
-	void visitArc(Arc& a) override;
+	void visitLine(CADLine& l) override;
+	void visitBezier(CADBezier& b) override;
+	void visitArc(CADArc& a) override;
 };
 
-#endif // !SHAPEVISITORSAVEFILE_H
+#endif //  INCLUDED_SHAPEVISITORSAVEFILE_H

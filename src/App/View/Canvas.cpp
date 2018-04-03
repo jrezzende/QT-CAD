@@ -2,11 +2,10 @@
 #include "Point.h"
 #include "CommandManager.h"
 #include "MainWindow.h"
-#include "Shape.h"
+#include "CADShape.h"
 
 #include "qevent.h"
 #include "qpainterpath.h"
-#include "qfiledialog.h"
 
 #include <sstream>
 
@@ -76,14 +75,14 @@ void Canvas::callArc()
 	manager->arcCommand();
 }
 
-void Canvas::drawCanvas(Shape& shape)
+void Canvas::drawCanvas(CADShape& shape)
 {
 	drawMap(shape);
 
 	update();
 }
 
-QPainterPath Canvas::getDrawPath(Shape& shape)
+QPainterPath Canvas::getDrawPath(CADShape& shape)
 {
 	auto shapePoints= shape.getCoordinates();
 
@@ -91,13 +90,13 @@ QPainterPath Canvas::getDrawPath(Shape& shape)
 
 	path.moveTo(shapePoints[0].x, shapePoints[0].y);
 
-	for (auto point : shapePoints) 
+	for (const auto point : shapePoints) 
 		path.lineTo(point.x, point.y);
 
 	return path;
 }
 
-void Canvas::drawMap(Shape& shape)
+void Canvas::drawMap(CADShape& shape)
 {
 	painter.drawPath(getDrawPath(shape));
 }
@@ -109,7 +108,7 @@ void Canvas::mousePressEvent(QMouseEvent* event)
 	std::ostringstream aux;
 
 	if (event->button() == Qt::LeftButton) {
-		manager->mousePressEvent(Point::toPoint(event->pos()));
+		manager->mousePressEvent(Point(event->pos().x(), event->pos().y()));
 		setDrawing(true);
 
 		aux << "Mouse press event detected: x: " << event->pos().x() << " y: " << event->pos().y();
@@ -126,7 +125,7 @@ void Canvas::mouseReleaseEvent(QMouseEvent * event)
 	std::ostringstream aux;
 
 	if (event->button() == Qt::LeftButton) {
-		manager->mouseReleaseEvent(Point::toPoint(event->pos()));
+		manager->mouseReleaseEvent(Point(event->pos().x(), event->pos().y()));
 
 		aux << "Mouse release event detected: x: " << event->pos().x() << " y: " << event->pos().y();
 
@@ -149,7 +148,7 @@ void Canvas::mouseMoveEvent(QMouseEvent * event)
 	}
 
 	if (drawing) {
-		manager->mouseMoveEvent(Point::toPoint(event->pos()));
+		manager->mouseMoveEvent(Point(event->pos().x(), event->pos().y()));
 
 		aux << "Mouse move event detected: x: " << event->pos().x() << " y: " << event->pos().y();
 

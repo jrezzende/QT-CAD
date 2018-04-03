@@ -1,16 +1,16 @@
 #pragma once
-#ifndef COMMANDUNDO_H
-#define COMMANDUNDO_H
+#ifndef INCLUDED_COMMANDUNDO_H
+#define INCLUDED_COMMANDUNDO_H
 
 #include "Command.h"
 
 class CommandUndo : public Command
 {
 public:
-	~CommandUndo() {}
-	CommandUndo() {}
+	~CommandUndo()= default;
+	CommandUndo()= default;
 
 	void execute(Model& m, MainWindow& w) override;
 };
 
-#endif // !COMMANDUNDO_H
+#endif //  INCLUDED_COMMANDUNDO_H

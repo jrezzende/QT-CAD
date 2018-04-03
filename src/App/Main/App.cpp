@@ -6,10 +6,12 @@
 
 #include "qapplication.h"
 
+App* App::instance= nullptr;
+
 App::~App()
 {
-	delete manager;
 	delete model;
+	delete manager;
 	delete window;
 }
 
@@ -23,8 +25,8 @@ int App::start(int argc, char** argv)
 
 	window->setManager(*manager);
 
-	auto file = new File("Untitled", window->createCanvas());
-	auto mementoFile = new File("memento", file->getCanvas());
+	const auto file= new CADFile("Untitled", window->createCanvas());
+	const auto mementoFile= new CADFile("memento", file->getCanvas());
 		
 	model->addFile(file);
 	model->setCurrentFile(file);
@@ -36,8 +38,6 @@ int App::start(int argc, char** argv)
 
 	return app.exec();
 }
-
-App* App::instance= nullptr;
 
 App& App::getInstance()
 {

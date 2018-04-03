@@ -1,15 +1,16 @@
 #pragma once
-#ifndef COMMANDIDLE_H
-#define COMMANDIDLE_H
+#ifndef INCLUDED_COMMANDIDLE_H
+#define INCLUDED_COMMANDIDLE_H
 
 #include "Command.h"
 
 class CommandIdle : public Command
 {
 public:
-	~CommandIdle() {}
-	CommandIdle() {}
+	~CommandIdle()= default;
+	CommandIdle()= default;
 
 	void execute(Model& m, MainWindow& w) override;
 };
-#endif // !COMMANDIDLE_H
+
+#endif //  INCLUDED_COMMANDIDLE_H

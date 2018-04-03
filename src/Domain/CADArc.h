@@ -1,11 +1,11 @@
 #pragma once
-#ifndef ARC_H
-#define ARC_H
-#define pi 3.1415
+#ifndef INCLUDED_CADARC_H
+#define INCLUDED_CADARC_H
+#define PI 3.1415
 
-#include "Shape.h"
+#include "CADShape.h"
 
-class Arc : public Shape
+class CADArc : public CADShape
 {
 	Point p3;
 
@@ -13,7 +13,6 @@ class Arc : public Shape
 	double finalAngle;
 	double incrementAngle;
 	double radius;
-	
 	int arcDivisions;
 
 	Point translatePoint(Point& p);
@@ -22,19 +21,19 @@ class Arc : public Shape
 	int calcArcDivisions(double angleArcSize);
 
 public:
-	~Arc() {}
-	Arc() : Shape(), p3(Point(0, 0)) {}
-	Arc(const Point& _p1, const Point& _p2, const Point& _p3) : Shape(_p1, _p2), p3(_p3) { type= ARC; }
+	~CADArc()= default;
+	CADArc() : p3(Point(0, 0)) {}
+	CADArc(const Point& _p1, const Point& _p2, const Point& _p3) : CADShape(_p1, _p2), p3(_p3) { type= ARC; }
 
 	void setThirdPoint(const Point& _p3) { p3 = _p3; }
 	Point getThirdPoint() const { return p3; }
 
-	double degreesToRadians(const double degrees) { return degrees * pi / 180; }
-	double radiansToDegrees(const double radians) { return radians * 180 / pi; }
-
 	std::vector<Point> getCoordinates() override;
 	void setShape(const ShapeType _type) override { type= _type; }
 	void accept(ShapeVisitor& v) override { v.visitArc(*this); };
+
+   static double degreesToRadians(const double degrees) { return degrees * PI / 180; }
+   static double radiansToDegrees(const double radians) { return radians * 180 / PI; }
 };
 
-#endif //ARC_H
+#endif //  INCLUDED_CADARC_H

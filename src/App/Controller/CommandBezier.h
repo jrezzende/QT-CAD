@@ -1,24 +1,26 @@
 #pragma once
-#ifndef COMMANDBEZIER_H
-#define COMMANDBEZIER_H
+#ifndef INCLUDED_COMMANDBEZIER_H
+#define INCLUDED_COMMANDBEZIER_H
 
 #include "ShapeCommand.h"
-#include "Bezier.h"
-#include "Line.h"
+#include "CADBezier.h"
+#include "CADLine.h"
 
 #include <iostream>
 
 class CommandBezier : public ShapeCommand
 {
-	Bezier* bezier;
-	Line* previewLine;
+	CADBezier* bezier;
+	CADLine* previewLine;
 
 public:
 	~CommandBezier() {}
-	CommandBezier(Model& m) : ShapeCommand(m, BEZIER) { bezier= new Bezier(); bezier->setShape(BEZIER); previewLine= new Line(); }
+	CommandBezier(Model& m) : 
+   ShapeCommand(m, BEZIER) { bezier= new CADBezier(); bezier->setShape(BEZIER); previewLine= new CADLine(); }
 
-	void mousePressEvent(Point& point) override;
-	void mouseMoveEvent(Point& point) override;
-	void mouseReleaseEvent(Point& point) override;
+	void mousePressEvent(const Point& point) override;
+	void mouseMoveEvent(const Point& point) override;
+	void mouseReleaseEvent(const Point& point) override;
 };
-#endif // !COMMANDBEZIER_H
+
+#endif //  INCLUDED_COMMANDBEZIER_H

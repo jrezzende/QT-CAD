@@ -1,6 +1,6 @@
 #pragma once
-#ifndef COMMANDMANAGER_H
-#define COMMANDMANAGER_H
+#ifndef INCLUDED_COMMANDMANAGER_H
+#define INCLUDED_COMMANDMANAGER_H
 
 class Command;
 class ShapeCommand;
@@ -29,9 +29,9 @@ public:
 	void loadFileCmd();
 	void exitFileCmd();
 
-	void mousePressEvent(Point pos);
-	void mouseReleaseEvent(Point pos);
-	void mouseMoveEvent(Point pos);
+	void mousePressEvent(const Point& pos);
+	void mouseReleaseEvent(const Point& pos);
+	void mouseMoveEvent(const Point& pos);
 
 	void lineCommand();
 	void bezierCommand();
@@ -48,4 +48,5 @@ public:
 
 	void runCommand(Command* cmd);
 };
-#endif // !COMMANDMANAGER_H
+
+#endif //  INCLUDED_COMMANDMANAGER_H

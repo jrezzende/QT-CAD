@@ -1,16 +1,16 @@
-#include "Line.h"
+#include "CADLine.h"
 
-std::vector<Point> Line::getCoordinates()
+std::vector<Point> CADLine::getCoordinates()
 {
 	std::vector<Point> points;
 	points.push_back(p1);
 
-	int x= p1.x;
-	int y= p1.y;
+	double x= p1.x;
+	double y= p1.y;
 
-	int verticalDistance= p2.y - p1.y;
-	int horizontalDistance= p2.x - p1.x;
-	int verticalStep, horizontalStep;
+	double verticalDistance= p2.y - p1.y;
+   double horizontalDistance= p2.x - p1.x;
+   double verticalStep, horizontalStep;
 
 	verticalDistance < 0 ? verticalStep= -1 : verticalStep= 1;
 	verticalDistance *= verticalStep;
@@ -19,7 +19,7 @@ std::vector<Point> Line::getCoordinates()
 	horizontalDistance *= horizontalStep;
 
 	if (horizontalDistance > verticalDistance) {
-		for (int fraction = verticalDistance - horizontalDistance; x != p2.x; points.push_back(Point(x, y))) {
+		for (double fraction = verticalDistance - horizontalDistance; x != p2.x; points.push_back(Point(x, y))) {
 			if (fraction >= 0) {
 				y+= verticalStep;
 				fraction-= horizontalDistance;
@@ -29,7 +29,7 @@ std::vector<Point> Line::getCoordinates()
 		}
 	}
 	else {
-		for (int fraction = horizontalDistance - verticalDistance; y != p2.y; points.push_back(Point(x, y))) {
+		for (double fraction = horizontalDistance - verticalDistance; y != p2.y; points.push_back(Point(x, y))) {
 			if (fraction >= 0) {
 				x+= horizontalStep;
 				fraction-= verticalDistance;

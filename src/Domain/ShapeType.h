@@ -1,6 +1,6 @@
 #pragma once
-#ifndef SHAPETYPE_H
-#define SHAPETYPE_H
+#ifndef INCLUDED_SHAPETYPE_H
+#define INCLUDED_SHAPETYPE_H
 
 enum ShapeType
 {
@@ -10,4 +10,4 @@ enum ShapeType
 	ARC
 };
 
-#endif // !SHAPETYPE_H
+#endif //  INCLUDED_SHAPETYPE_H

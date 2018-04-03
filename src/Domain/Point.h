@@ -1,12 +1,10 @@
 #pragma once
-#ifndef POINT_H
-#define POINT_H
-
-#include "qpoint.h"
+#ifndef INCLUDED_POINT_H
+#define INCLUDED_POINT_H
 
 #include <vector>
-#include <math.h>
-#include <cstdlib>
+
+#include <cmath>
 
 class Point
 {
@@ -14,18 +12,15 @@ public:
 	double x;
 	double y;
 
-	~Point() {}
+	~Point()= default;
 	Point() : x(0), y(0) {}
-	Point(QPoint point) : x(point.x()), y(point.y()) {}
-	Point(double x, double y) : x(x), y(y) {}
+	Point(const double _x, const double _y) : x(_x), y(_y) {}
 
-	QPoint toQPoint() { return QPoint(x, y); }
-	static Point toPoint(QPoint pos) { return Point(pos.x(), pos.y()); }
+	bool operator==(const Point& point) const { return std::abs(x - point.x) + std::abs(y - point.y) < 0.00001; }
 
-	bool operator==(const Point& point) const { return std::abs(x - point.x) + std::abs(y - point.y) == 0; }
-
-	static double distanceBetweenTwoPoints(const Point& p1, const Point& p2) 
-	{ return sqrt(pow(p1.x - p2.x, 2) + pow(p1.y - p2.y, 2)); }
+	static double distanceBetweenTwoPoints(const Point& p1, const Point& p2) {
+	   return sqrt(pow(p1.x - p2.x, 2) + pow(p1.y - p2.y, 2)); 
+    }
 };
 
-#endif //POINT_H
+#endif //INCLUDED_POINT_H

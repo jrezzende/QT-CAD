@@ -1,13 +1,13 @@
 #pragma once
-#ifndef CANVAS_H
-#define CANVAS_H
+#ifndef INCLUDED_CANVAS_H
+#define INCLUDED_CANVAS_H
 
 #include "qwidget.h"
 #include "qpainter.h"
 #include "qpixmap.h"
 #include "qtransform.h"
 
-class Shape;
+class CADShape;
 class CommandManager;
 
 class Canvas : public QWidget
@@ -49,9 +49,10 @@ public:
 	void callBezier();
 	void callArc();
 
-	void drawCanvas(Shape& shape);
-	void drawMap(Shape& shape);
+	void drawCanvas(CADShape& shape);
+	void drawMap(CADShape& shape);
 
-	QPainterPath getDrawPath(Shape& shape);
+	QPainterPath getDrawPath(CADShape& shape);
 };
-#endif //!CANVAS_H
+
+#endif //  INCLUDED_CANVAS_H

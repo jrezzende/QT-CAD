@@ -2,20 +2,20 @@ project(domain CXX)
 
 set(
 	DOMAIN_SOURCES
-	Arc.cpp
-	Bezier.cpp
-	Line.cpp
-	File.cpp
+	CADArc.cpp
+	CADBezier.cpp
+	CADLine.cpp
+	CADFile.cpp
 )
 
 set(
 	DOMAIN_HEADERS
 	Point.h
-	Shape.h
-	Arc.h
-	Bezier.h
-	Line.h
-	File.h
+	CADShape.h
+	CADArc.h
+	CADBezier.h
+	CADLine.h
+	CADFile.h
 	ShapeType.h
 )
 

@@ -1,25 +1,26 @@
 #pragma once
-#ifndef BEZIER_H
-#define BEZIER_H
+#ifndef INCLUDED_CADBEZIER_H
+#define INCLUDED_CADBEZIER_H
 
-#include "Shape.h"
+#include "CADShape.h"
 
-class Bezier : public Shape
+class CADBezier : public CADShape
 {
 	Point p3;
 
 public:
-	~Bezier() {}
-	Bezier() : Shape() {}
-	Bezier(const Point firstPoint, const Point secondPoint, const Point thirdPoint) : Shape(firstPoint, secondPoint), p3(thirdPoint)
+	~CADBezier()= default;
+	CADBezier()= default;
+	CADBezier(const Point firstPoint, const Point secondPoint, const Point thirdPoint) : CADShape(firstPoint, secondPoint), p3(thirdPoint)
 	{ type= BEZIER; }
 
 	void setThirdPoint(const Point point) { p3= point;}
 	Point getThirdPoint() const { return p3; }
 
 	std::vector<Point> getCoordinates() override;
+
 	void setShape(const ShapeType _type) override { type= _type; }
 	void accept(ShapeVisitor& v) override { v.visitBezier(*this); };
 };
 
-#endif // !BEZIER_H
+#endif //  INCLUDED_CADBEZIER_H

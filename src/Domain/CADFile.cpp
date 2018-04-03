@@ -1,11 +1,11 @@
-#include "File.h"
+#include "CADFile.h"
 #include "Canvas.h"
 
-void File::addShape(Shape* newShape)
+void CADFile::addShape(CADShape& shape)
 {
-	eraseShape(newShape);
+	eraseShape(shape);
 
-	shapes.push_back(newShape);
+	shapes.push_back(&shape);
 
 	clearRedo();
 
@@ -14,50 +14,50 @@ void File::addShape(Shape* newShape)
 	reprint();
 }
 
-void File::mementoAddShape(Shape* shape)
+void CADFile::mementoAddShape(CADShape& shape)
 {
 	eraseShape(shape);
 	
-	shapes.push_back(shape);
+	shapes.push_back(&shape);
 }
 
-void File::addFromRedo(Shape * shape)
+void CADFile::addFromRedo(CADShape& shape)
 {
 	eraseShape(shape);
 
-	shapes.push_back(shape);
+	shapes.push_back(&shape);
 
 	setStatus(NOTSAVED);
 
 	reprint();
 }
 
-void File::eraseShape(Shape* shape)
+void CADFile::eraseShape(CADShape& shape)
 {
 	for (int i = 0; i < shapes.size(); i++) {
-		if(shapes[i] == shape)
+		if(shapes[i] == &shape)
 			shapes.erase(shapes.begin() + i);
 	}
 
 	reprint();
 }
 
-void File::eraseLastShape()
+void CADFile::eraseLastShape()
 {
-	if(shapes.size() > 0) 
+	if(!(shapes.empty())) 
 		shapes.pop_back();
 
 	reprint();
 }
 
-void File::eraseAllShapes()
+void CADFile::eraseAllShapes()
 {
 	shapes.clear();
 
 	reprint();
 }
 
-void File::reprint()
+void CADFile::reprint()
 {
 	canvas->clearMap();
 

@@ -15,11 +15,11 @@
 
 MainWindow::~MainWindow()
 {
-	delete manager;
-	delete statusbar;
+   delete manager;
+   delete statusbar;
 }
 
-MainWindow::MainWindow(QMainWindow* parent) : QMainWindow(parent), manager(nullptr)
+MainWindow::MainWindow() : QMainWindow(nullptr), manager(nullptr)
 {
 	createToolbarAndConnections();
 	createShortcuts();
@@ -175,15 +175,8 @@ void MainWindow::createToolbarAndConnections()
 		this, SLOT(undo())
 	);
 
-	QObject::connect(
-		redoAction, SIGNAL(triggered()),
-		this, SLOT(redo())
-	);
-
-	QObject::connect(
-		clearAction, SIGNAL(triggered()),
-		this, SLOT(verifyClearAction())
-	);
+	QObject::connect(redoAction, SIGNAL(triggered()),this, SLOT(redo()));
+	QObject::connect(clearAction, SIGNAL(triggered()),this, SLOT(verifyClearAction()));
 }
 
 //////////////////////////////////////
@@ -240,7 +233,9 @@ void MainWindow::exit()
 
 std::string MainWindow::getNewFileName()
 {
-	return QFileDialog::getSaveFileName(this, tr("New File"), "/Users/joao.mathias/cadfiles/untitled.dat", tr("Dat files (*.dat)")).toStdString();
+	return QFileDialog::getSaveFileName(
+      this, tr("New File"), "/Users/joao.mathias/cadfiles/untitled.dat", tr("Dat files (*.dat)")
+   ).toStdString();
 }
 
 std::string MainWindow::getSaveFileName()
@@ -279,7 +274,6 @@ void MainWindow::createShortcuts()
 	connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_X), this), &QShortcut::activated, this, &MainWindow::verifyClearAction);
 
 	connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_T), this), &QShortcut::activated, this, &MainWindow::mouseTrackingAction);
-
 }
 
 void MainWindow::createStatusBar()
@@ -293,15 +287,16 @@ void MainWindow::createStatusBar()
 
 void MainWindow::verifyExitAction() 
 {
-	if(manager->getModel().getCurrentFile()->getShapes().size() == 0)
+	if (manager->getModel().getCurrentFile()->getShapes().empty())
 		exit();
-	else if(manager->getModel().getCurrentFile()->getStatus() == NOTSAVED) {
+
+   if (manager->getModel().getCurrentFile()->getStatus() == NOTSAVED) {
 		if (QMessageBox::question(this, "Quit?", "Are you sure you want to exit?",
 			QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
 			exit();
 	}
 	else
-		exit();
+	   exit();
 }
 
 void MainWindow::mouseTrackingAction()
@@ -313,9 +308,9 @@ void MainWindow::mouseTrackingAction()
 
 void MainWindow::verifyNewFileAction()
 {
-	if(manager->getModel().getCurrentFile()->getShapes().size() == 0)
+	if (manager->getModel().getCurrentFile()->getShapes().empty())
 		newFile();
-	else if(manager->getModel().getCurrentFile()->getStatus() == NOTSAVED) {
+	else if (manager->getModel().getCurrentFile()->getStatus() == NOTSAVED) {
 		if (QMessageBox::question(this, "Discard file?", "Are you sure you want to discard this file?",
 			QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
 			newFile();
@@ -341,15 +336,13 @@ void MainWindow::verifyLoadFileAction()
 
 void MainWindow::verifyClearAction()
 {
-	if(!(manager->getModel().getCurrentFile()->getShapes().size() > 0))
+	if(manager->getModel().getCurrentFile()->getShapes().empty())
 		clear();
 	else if (manager->getModel().getCurrentFile()->getStatus() == NOTSAVED) {
 		if(QMessageBox::question(this, "This action cannot be undone!", "Are you sure you want to clear the file?",
 			QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
 			clear();
 	}
-	else
-		return;
 }
 
 void MainWindow::lineSignal()

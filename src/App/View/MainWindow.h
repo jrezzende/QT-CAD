@@ -1,10 +1,9 @@
 #pragma once
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef INCLUDED_MAINWINDOW_H
+#define INCLUDED_MAINWINDOW_H
 
 #include "qmainwindow.h"
 #include "qdesktopwidget.h"
-
 #include "qfiledialog.h"
 #include "qstatusbar.h"
 
@@ -15,16 +14,16 @@ class MainWindow : public QMainWindow
 {
 	Q_OBJECT
 
-		CommandManager* manager;
-		QDesktopWidget desktop;
-		QStatusBar* statusbar;
+	QStatusBar* statusbar;
+	QDesktopWidget desktop;
+	CommandManager* manager;
 
 public:
 	~MainWindow();
-	MainWindow(QMainWindow* parent = 0);
+	MainWindow();
 
-	CommandManager* getManager() const { return manager; }
-	void setManager(CommandManager& _manager) {manager= &_manager;}
+	CommandManager& getManager() const { return *manager; }
+	void setManager(CommandManager& _manager) { manager= &_manager;}
 
 	QStatusBar* getStatusBar() const { return statusbar; }
 
@@ -58,4 +57,5 @@ public slots:
 	void arcSignal();
 	///////////////////
 };
-#endif // MAINWINDOW_H
+
+#endif //  INCLUDED_MAINWINDOW_H

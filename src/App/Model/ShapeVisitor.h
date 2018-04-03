@@ -1,16 +1,17 @@
 #pragma once
-#ifndef SHAPEVISITOR_H
-#define SHAPEVISITOR_H
+#ifndef INCLUDED_SHAPEVISITOR_H
+#define INCLUDED_SHAPEVISITOR_H
 
-class Line;
-class Bezier;
-class Arc;
+class CADLine;
+class CADBezier;
+class CADArc;
 
 class ShapeVisitor
 {
 public:
-	virtual void visitLine(Line& l) = 0;
-	virtual void visitBezier(Bezier& b) = 0;
-	virtual void visitArc(Arc& a) = 0;
+	virtual void visitLine(CADLine& l) = 0;
+	virtual void visitBezier(CADBezier& b) = 0;
+	virtual void visitArc(CADArc& a) = 0;
 };
-#endif // !SHAPEVISITOR_H
+
+#endif //  INCLUDED_SHAPEVISITOR_H

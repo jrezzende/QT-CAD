@@ -1,21 +1,21 @@
 #pragma once
-#ifndef COMMANDLINE_H
-#define COMMANDLINE_H
+#ifndef INCLUDED_COMMANDLINE_H
+#define INCLUDED_COMMANDLINE_H
 
 #include "ShapeCommand.h"
-#include "Line.h"
+#include "CADLine.h"
 
 class CommandLine : public ShapeCommand
 {
-	Line* line;
+	CADLine* line;
 
 public:
-	~CommandLine() {}
-	CommandLine(Model& m) : ShapeCommand(m, LINE) { line= new Line(); line->setShape(LINE); }
+	~CommandLine()= default;
+	CommandLine(Model& m) : ShapeCommand(m, LINE) { line= new CADLine(); line->setShape(LINE); }
 
-	void mousePressEvent(Point& point) override;
-	void mouseMoveEvent(Point& point) override;
-	void mouseReleaseEvent(Point& point) override;
+	void mousePressEvent(const Point& point) override;
+	void mouseMoveEvent(const Point& point) override;
+	void mouseReleaseEvent(const Point& point) override;
 };
 
-#endif // !COMMANDLINE_H
+#endif //  INCLUDED_COMMANDLINE_H

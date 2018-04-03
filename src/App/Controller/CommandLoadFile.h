@@ -1,16 +1,16 @@
 #pragma once
-#ifndef COMMANDLOADFILE_H
-#define COMMANDLOADFILE_H
+#ifndef INCLUDED_COMMANDLOADFILE_H
+#define INCLUDED_COMMANDLOADFILE_H
 
 #include "Command.h"
 
 class CommandLoadFile : public Command
 {
 public:
-	~CommandLoadFile() {}
-	CommandLoadFile() {}
+	~CommandLoadFile()= default;
+	CommandLoadFile()= default;
 
 	void execute(Model& m, MainWindow& w) override;
 };
 
-#endif // !COMMANDLOADFILE_H
+#endif //  INCLUDED_COMMANDLOADFILE_H

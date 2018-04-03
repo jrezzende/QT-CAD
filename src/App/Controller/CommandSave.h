@@ -1,22 +1,20 @@
 #pragma once
-#ifndef COMMANDSAVE_H
-#define COMMANDSAVE_H
+#ifndef INCLUDED_COMMANDSAVE_H
+#define INCLUDED_COMMANDSAVE_H
 
 #include "Command.h"
 
-#include <fstream>
-
-class Line;
-class Bezier;
-class Arc;
+class CADLine;
+class CADBezier;
+class CADArc;
 
 class CommandSave : public Command
 {
 public: 
-	~CommandSave() {}
-	CommandSave() {}
+	~CommandSave()= default;
+	CommandSave()= default;
 
 	void execute(Model& m, MainWindow& w) override;
 };
 
-#endif // !COMMANDSAVE_H
+#endif //  INCLUDED_COMMANDSAVE_H

@@ -1,15 +1,15 @@
 #include "CommandNewFile.h"
 #include "MainWindow.h"
 #include "Model.h"
-#include "File.h"
+#include "CADFile.h"
 #include "Canvas.h"
 
 #include <sstream>
 
 void CommandNewFile::execute(Model& m, MainWindow& w)
 {
-	auto file= new File("untitled", w.createCanvas());	
-	auto mementoFile= new File("memento", file->getCanvas());
+	const auto file= new CADFile("untitled", w.createCanvas());	
+	const auto mementoFile= new CADFile("memento", file->getCanvas());
 
 	m.setCurrentFile(file);
 	m.addFile(file);

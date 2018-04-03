@@ -4,7 +4,7 @@
 
 void CommandClear::execute(Model & m, MainWindow & w)
 {
-	if(m.getCurrentFile()->getShapes().size() == 0)
+	if(m.getCurrentFile()->getShapes().empty())
 		return;
 	else {
 		for (size_t i = m.getCurrentFile()->getShapes().size() - 1; i > 0; i--)

@@ -1,6 +1,6 @@
 #include "Model.h"
 
-void Model::addFile(File * file)
+void Model::addFile(CADFile* file)
 {
 	files.push_back(file);
 	file->connectClearRedo(std::bind(&Model::clearMemento, this));
@@ -11,7 +11,7 @@ void Model::deleteAllFiles()
 	files.clear();
 }
 
-void Model::addShapeToMemento(Shape* shape)
+void Model::addShapeToMemento(CADShape* shape)
 {
-	mementoFile->mementoAddShape(shape);
+	mementoFile->mementoAddShape(*shape);
 }

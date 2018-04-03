@@ -1,10 +1,9 @@
 #pragma once
-#ifndef SHAPECOMMAND_H
-#define SHAPECOMMAND_H
+#ifndef INCLUDED_SHAPECOMMAND_H
+#define INCLUDED_SHAPECOMMAND_H
 
 #include "Command.h"
-#include "MainWindow.h"
-#include "Shape.h"
+#include "CADShape.h"
 #include "ShapeType.h"
 
 class Model;
@@ -22,15 +21,17 @@ protected:
 	ShapeType shape;
 
 public:
-	virtual ~ShapeCommand() {}
-	ShapeCommand(Model& _model, ShapeType _shape) : model(_model), isDrawing(false), secondClick(false), shape(_shape) {}
+	virtual ~ShapeCommand()= default;
+	ShapeCommand(Model& _model, ShapeType _shape) :
+   model(_model), isDrawing(false), previewDraw(false), secondClick(false), shape(_shape) {}
 
 	bool hasSecondClick() const { return secondClick; }
 
-	ShapeType getShape() { return shape; }
+	ShapeType getShape() const { return shape; }
 
-	virtual void mousePressEvent(Point& point)= 0;
-	virtual void mouseMoveEvent(Point& point) = 0;
-	virtual void mouseReleaseEvent(Point& point) = 0;
+	virtual void mousePressEvent(const Point& point)= 0;
+	virtual void mouseMoveEvent(const Point& point) = 0;
+	virtual void mouseReleaseEvent(const Point& point) = 0;
 }; 
-#endif // !SHAPECOMMAND_H
+
+#endif //  INCLUDED_SHAPECOMMAND_H

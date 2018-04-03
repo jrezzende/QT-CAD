@@ -22,7 +22,8 @@ CommandManager::~CommandManager()
 	delete shapeCommand;
 }
 
-CommandManager::CommandManager(Model& m, MainWindow& w) : model(m), window(w), shapeCommand(nullptr)
+CommandManager::CommandManager(Model& m, MainWindow& w) : 
+model(m), window(w), shapeCommand(nullptr), firstPoint(nullptr), lastPoint(nullptr)
 {
 	lineCommand();
 }
@@ -64,12 +65,12 @@ void CommandManager::exitFileCmd()
 
 //////////////////////////////////////////////
 
-void CommandManager::mousePressEvent(Point pos)
+void CommandManager::mousePressEvent(const Point& pos)
 {
 	shapeCommand->mousePressEvent(pos);
 }
 
-void CommandManager::mouseReleaseEvent(Point pos)
+void CommandManager::mouseReleaseEvent(const Point& pos)
 {
 	shapeCommand->mouseReleaseEvent(pos);
 	
@@ -85,7 +86,7 @@ void CommandManager::mouseReleaseEvent(Point pos)
 	}
 }
 
-void CommandManager::mouseMoveEvent(Point pos)
+void CommandManager::mouseMoveEvent(const Point& pos)
 {
 	shapeCommand->mouseMoveEvent(pos);
 }
@@ -102,7 +103,7 @@ void CommandManager::arcCommand()
 
 void CommandManager::bezierCommand()
 {
-	if(shapeCommand)
+	if (shapeCommand)
 		delete shapeCommand;
 
 	shapeCommand= new CommandBezier(model);

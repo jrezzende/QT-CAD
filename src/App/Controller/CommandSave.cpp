@@ -2,12 +2,11 @@
 #include "Model.h"
 #include "MainWindow.h"
 #include "Canvas.h"
-#include "ShapeType.h"
 #include "ShapeVisitorSaveFile.h"
 
 void CommandSave::execute(Model& m, MainWindow& w)
 {
-	std::vector<Shape*> shapesInFile= m.getCurrentFile()->getShapes();
+	std::vector<CADShape*> shapesInFile= m.getCurrentFile()->getShapes();
 	std::string filePath;
 	std::ofstream os;
 

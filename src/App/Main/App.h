@@ -1,29 +1,32 @@
 #pragma once
-#ifndef APP_H
-#define APP_H
+#ifndef INCLUDED_APP_H
+#define INCLUDED_APP_H
 
-class MainWindow;
 class Model;
+class MainWindow;
 class CommandManager;
 
 class App
 {
 	Model* model;
-	CommandManager* manager;
 	MainWindow* window;
+	CommandManager* manager;
 
 	static App* instance;
-	App() : model(nullptr), manager(nullptr), window(nullptr) {}
+
+	App() : model(nullptr), window(nullptr), manager(nullptr) {}
 
 public:
 	~App();
 
 	Model& getModel() const { return *model; }
-	CommandManager& getManager() const { return *manager; }
 	MainWindow& getWindow() const { return *window; }
-
-	static App& getInstance();
+	CommandManager& getManager() const { return *manager; }
 
 	int start(int argc, char** argv);
+
+public:
+	static App& getInstance();
 };
-#endif // !APP_H
+
+#endif //  INCLUDED_APP_H

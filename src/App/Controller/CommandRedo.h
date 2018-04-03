@@ -1,15 +1,16 @@
 #pragma once
-#ifndef COMMANDREDO_H
-#define COMMANDREDO_H
+#ifndef INCLUDED_COMMANDREDO_H
+#define INCLUDED_COMMANDREDO_H
 
 #include "Command.h"
 
 class CommandRedo : public Command
 {
 public:
-	~CommandRedo() {}
-	CommandRedo() {}
+	~CommandRedo()= default;
+	CommandRedo()= default;
 
 	void execute(Model& m, MainWindow& w) override;
 };
-#endif // !COMMANDREDO_H
+
+#endif //  INCLUDED_COMMANDREDO_H

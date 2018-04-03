@@ -1,23 +1,24 @@
 #pragma once
-#ifndef COMMANDARC_H
-#define COMMANDARC_H
+#ifndef INCLUDED_COMMANDARC_H
+#define INCLUDED_COMMANDARC_H
 
 #include "ShapeCommand.h"
-#include "Arc.h"
-#include "Line.h"
+#include "CADArc.h"
+#include "CADLine.h"
 
 class CommandArc : public ShapeCommand
 {
-	Arc* arc;
-	Line* previewLine;
+	CADArc* arc;
+	CADLine* previewLine;
 
 public: 
-	~CommandArc() {}
-	CommandArc(Model& m) : ShapeCommand(m, ARC) { arc = new Arc(); arc->setShape(ARC); previewLine= new Line(); }
+	~CommandArc()= default;
+	CommandArc(Model& m) 
+   : ShapeCommand(m, ARC) { arc = new CADArc(); arc->setShape(ARC); previewLine= new CADLine(); }
 
-	void mousePressEvent(Point& point) override;
-	void mouseMoveEvent(Point& point) override;
-	void mouseReleaseEvent(Point& point) override;
+	void mousePressEvent(const Point& point) override;
+	void mouseMoveEvent(const Point& point) override;
+	void mouseReleaseEvent(const Point& point) override;
 };
 
-#endif // !COMMANDARC_H
+#endif //  INCLUDED_COMMANDARC_H

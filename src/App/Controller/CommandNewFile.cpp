@@ -1,21 +1,19 @@
 #include "CommandNewFile.h"
 #include "MainWindow.h"
-#include "Model.h"
+#include "CADFileManager.h"
 #include "CADFile.h"
-#include "Canvas.h"
+#include "ViewMediator.h"
 
 #include <sstream>
 
-void CommandNewFile::execute(Model& m, MainWindow& w)
+void CommandNewFile::execute(CADFileManager& m, ViewMediator& mediator)
 {
-	const auto file= new CADFile("untitled", w.createCanvas());	
+	const auto file= new CADFile("untitled", &mediator.getCanvas());	
 	const auto mementoFile= new CADFile("memento", file->getCanvas());
 
 	m.setCurrentFile(file);
-	m.addFile(file);
-	m.addFile(mementoFile);
 	m.setMementoFile(mementoFile);
 
-	w.setCentralWidget(file->getCanvas());
-	w.setWindowTitle(QString::fromStdString(file->getFileName()));
+	mediator.setWindowWidget(file->getCanvas());
+	mediator.setTitle(QString::fromStdString(file->getFileName()));
 }

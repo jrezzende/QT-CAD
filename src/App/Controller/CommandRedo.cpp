@@ -1,18 +1,18 @@
 #include "CommandRedo.h"
-#include "Model.h"
+#include "CADFileManager.h"
 
-void CommandRedo::execute(Model & m, MainWindow & w)
+void CommandRedo::execute(CADFileManager & m, ViewMediator& mediator)
 {
 	if (m.getMementoFile()->getShapes().empty())
 		return;
 
-	if (m.getMementoFlag()) {	
+	if (m.getRedoFlag()) {	
 		for (size_t i = m.getMementoFile()->getShapes().size() - 1; i > 0; i--)
 			m.getCurrentFile()->addFromRedo(*m.getMementoFile()->getShapes().at(i));
 
 		m.getCurrentFile()->addFromRedo(*m.getMementoFile()->getShapes().front());
 		m.getMementoFile()->eraseAllShapes();
-		m.setMementoFlag(false);
+		m.setRedoFlag(false);
 	}
 	else {
 		m.getCurrentFile()->addFromRedo(*m.getMementoFile()->getShapes().back());

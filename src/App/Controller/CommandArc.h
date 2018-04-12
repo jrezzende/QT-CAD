@@ -13,7 +13,7 @@ class CommandArc : public ShapeCommand
 
 public: 
 	~CommandArc()= default;
-	CommandArc(Model& m) 
+	CommandArc(CADFileManager& m)
    : ShapeCommand(m, ARC) { arc = new CADArc(); arc->setShape(ARC); previewLine= new CADLine(); }
 
 	void mousePressEvent(const Point& point) override;

@@ -1,7 +1,7 @@
 #include "CommandLoadFile.h"
 #include "MainWindow.h"
-#include "Model.h"
-#include "Canvas.h"
+#include "ViewMediator.h"
+#include "CADFileManager.h"
 #include "CADFile.h"
 #include "CADLine.h"
 #include "CADBezier.h"
@@ -9,9 +9,9 @@
 
 #include <fstream>
 
-void CommandLoadFile::execute(Model& m, MainWindow& w)
+void CommandLoadFile::execute(CADFileManager& m, ViewMediator& mediator)
 {
-	std::string filePath= w.getOpenFileName();
+	std::string filePath= mediator.retrieveFileLabel(LOAD);
 
 	if(filePath.empty())
 		return;
@@ -21,11 +21,11 @@ void CommandLoadFile::execute(Model& m, MainWindow& w)
 	int type;
 	double p1X, p1Y, p2X, p2Y, p3X, p3Y;
 
-	const auto file= new CADFile(filePath, w.createCanvas());
+	const auto file= new CADFile(filePath, &mediator.getCanvas());
 	const auto mementoFile= new CADFile("memento", file->getCanvas());
 
-	m.addFile(file);
-	m.addFile(mementoFile);
+	//m.addFile(file);
+	//m.addFile(mementoFile);
 
 	is.open(filePath, std::ios::in | std::ios::binary);
 
@@ -71,10 +71,10 @@ void CommandLoadFile::execute(Model& m, MainWindow& w)
 	}
 			m.setCurrentFile(file);
 			m.setMementoFile(mementoFile);
-			m.setMementoFlag(false);
+			m.setRedoFlag(false);
 			m.getCurrentFile()->reprint();
 
-			w.setCentralWidget(file->getCanvas());
-			w.setWindowTitle(QString::fromStdString(file->getFileName()));
+			mediator.setWindowWidget(file->getCanvas());
+			mediator.setTitle(QString::fromStdString(file->getFileName()));
 	}
 }

@@ -7,8 +7,9 @@
 #include "qpixmap.h"
 #include "qtransform.h"
 
+class ViewMediator;
 class CADShape;
-class CommandManager;
+class Manager;
 
 class Canvas : public QWidget
 {
@@ -17,7 +18,7 @@ class Canvas : public QWidget
 	QPainter painter;
 	QPixmap pixmap;
 
-	CommandManager* manager;
+   ViewMediator* mediator;
 
 	bool drawing;
 
@@ -28,26 +29,20 @@ protected:
 	void paintEvent(QPaintEvent* event) override; 
 
 public:
-	~Canvas() {}
-	Canvas(CommandManager* manager, QWidget* parent);
+	~Canvas()= default;
+	Canvas(ViewMediator* _mediator, QWidget* parent);
 
 	QPixmap& getPixmap() { return pixmap;}
 
-	void setDrawing(bool flag) { drawing = flag; }
+   void setDrawing(bool flag) { drawing = flag; }
 
-public slots:
-	void clearMap();
-	void dumpShapes();
-	void dumpLastShape();
-	void toggleTracking();
-	void endPainter();
+	void callLine() const;
+	void callBezier() const;
+	void callArc() const;
 
-public:
-	void saveCurrentFile();
-
-	void callLine();
-	void callBezier();
-	void callArc();
+   void toggleTracking();
+   void clearMap();
+   void endPainter();
 
 	void drawCanvas(CADShape& shape);
 	void drawMap(CADShape& shape);

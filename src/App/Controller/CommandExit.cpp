@@ -1,9 +1,9 @@
 #include "CommandExit.h"
-#include "Model.h"
+#include "CADFileManager.h"
 
-void CommandExit::execute(Model & m, MainWindow & w)
+void CommandExit::execute(CADFileManager& m, ViewMediator& mediator)
 {
-	m.deleteAllFiles();
+	m.deleteFiles();
 
 	exit(0);
 }

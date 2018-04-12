@@ -1,5 +1,5 @@
 #include "CommandLine.h"
-#include "Model.h"
+#include "CADFileManager.h"
 
 void CommandLine::mousePressEvent(const Point& point)
 {
@@ -9,7 +9,7 @@ void CommandLine::mousePressEvent(const Point& point)
 
 void CommandLine::mouseMoveEvent(const Point& point)
 {			
-	model.getCurrentFile()->addShape(*line);
+	m.getCurrentFile()->addShape(*line);
 	line->setSecondPoint(point);
 }
 

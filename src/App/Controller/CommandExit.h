@@ -10,7 +10,7 @@ public:
 	~CommandExit()= default;
 	CommandExit()= default;
 
-	void execute(Model& m, MainWindow& w) override;
+	void execute(CADFileManager& m, ViewMediator& mediator) override;
 };
 
 #endif //  INCLUDED_COMMANDEXIT_H

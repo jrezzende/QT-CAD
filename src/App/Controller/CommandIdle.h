@@ -10,7 +10,7 @@ public:
 	~CommandIdle()= default;
 	CommandIdle()= default;
 
-	void execute(Model& m, MainWindow& w) override;
+	void execute(CADFileManager& m, ViewMediator& mediator) override;
 };
 
 #endif //  INCLUDED_COMMANDIDLE_H

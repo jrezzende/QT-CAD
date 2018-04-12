@@ -2,17 +2,18 @@ project(model CXX)
 
 set(
 	MODEL_SOURCES
-	Model.cpp
-	CommandManager.cpp
+	Manager.cpp
 	ShapeVisitorSaveFile.cpp
+	ViewMediator.cpp
 )
 
 set(
 	MODEL_HEADERS
-	Model.h
-	CommandManager.h
+	Manager.h
+	CADFileManager.h
 	ShapeVisitor.h
 	ShapeVisitorSaveFile.h
+	ViewMediator.h
 )
 
 add_library(model STATIC ${MODEL_SOURCES} ${MODEL_HEADERS})

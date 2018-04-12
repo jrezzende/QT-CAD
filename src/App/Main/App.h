@@ -2,26 +2,23 @@
 #ifndef INCLUDED_APP_H
 #define INCLUDED_APP_H
 
-class Model;
-class MainWindow;
-class CommandManager;
+class CADFileManager;
+class Manager;
 
 class App
 {
-	Model* model;
-	MainWindow* window;
-	CommandManager* manager;
+	CADFileManager* fileManager;
+	Manager* manager;
 
 	static App* instance;
 
-	App() : model(nullptr), window(nullptr), manager(nullptr) {}
+	App() : fileManager(nullptr), manager(nullptr) {}
 
 public:
 	~App();
 
-	Model& getModel() const { return *model; }
-	MainWindow& getWindow() const { return *window; }
-	CommandManager& getManager() const { return *manager; }
+	CADFileManager& getFileManager() const { return *fileManager; }
+	Manager& getManager() const { return *manager; }
 
 	int start(int argc, char** argv);
 

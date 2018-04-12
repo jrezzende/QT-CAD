@@ -14,7 +14,7 @@ public:
 	~CommandSave()= default;
 	CommandSave()= default;
 
-	void execute(Model& m, MainWindow& w) override;
+	void execute(CADFileManager& m, ViewMediator& mediator) override;
 };
 
 #endif //  INCLUDED_COMMANDSAVE_H

@@ -2,8 +2,8 @@
 #ifndef INCLUDED_COMMAND_H
 #define INCLUDED_COMMAND_H
 
-class Model;
-class MainWindow;
+class CADFileManager;
+class ViewMediator;
 
 class Command
 {
@@ -11,7 +11,7 @@ public:
 	virtual ~Command()= default;
 	Command()= default;
 
-	virtual void execute(Model& m, MainWindow& w)= 0;
+	virtual void execute(CADFileManager& m, ViewMediator& mediator)= 0;
 };
 
 #endif //  INCLUDED_COMMAND_H

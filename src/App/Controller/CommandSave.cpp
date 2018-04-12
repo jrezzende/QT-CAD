@@ -1,10 +1,10 @@
 #include "CommandSave.h"
-#include "Model.h"
+#include "CADFileManager.h"
 #include "MainWindow.h"
-#include "Canvas.h"
 #include "ShapeVisitorSaveFile.h"
+#include "ViewMediator.h"
 
-void CommandSave::execute(Model& m, MainWindow& w)
+void CommandSave::execute(CADFileManager& m, ViewMediator& mediator)
 {
 	std::vector<CADShape*> shapesInFile= m.getCurrentFile()->getShapes();
 	std::string filePath;
@@ -14,7 +14,7 @@ void CommandSave::execute(Model& m, MainWindow& w)
 		return;
 
 	if (m.getCurrentFile()->getFilePath().empty()) {
-		filePath = w.getSaveFileName();
+		filePath = mediator.retrieveFileLabel(SAVE);
 		m.getCurrentFile()->setFilePath(filePath);
 	}
 	else

@@ -6,24 +6,23 @@
 #include "CADShape.h"
 #include "ShapeType.h"
 
-class Model;
+class CADFileManager;
 class Point;
 
 class ShapeCommand
 {
 protected:
-	Model& model;
+   CADFileManager& m;
+   ShapeType shape;
 
 	bool isDrawing;
 	bool previewDraw;
-	bool secondClick;
-
-	ShapeType shape;
+	bool secondClick;	
 
 public:
 	virtual ~ShapeCommand()= default;
-	ShapeCommand(Model& _model, ShapeType _shape) :
-   model(_model), isDrawing(false), previewDraw(false), secondClick(false), shape(_shape) {}
+	ShapeCommand(CADFileManager& _m, ShapeType _shape) :
+   m(_m), shape(_shape), isDrawing(false), previewDraw(false), secondClick(false) {}
 
 	bool hasSecondClick() const { return secondClick; }
 

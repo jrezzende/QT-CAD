@@ -1,7 +1,9 @@
-#include "CommandManager.h"
+#include <string>
+
+#include "Manager.h"
 #include "Point.h"
-#include "Model.h"
-#include "Canvas.h"
+#include "CADFileManager.h"
+#include "ViewMediator.h"
 #include "Command.h"
 #include "CommandArc.h"
 #include "CommandBezier.h"
@@ -16,61 +18,65 @@
 #include "CommandExit.h"
 #include "ShapeCommand.h"
 
-CommandManager::~CommandManager()
+Manager::~Manager()
 {
 	delete command;
 	delete shapeCommand;
 }
 
-CommandManager::CommandManager(Model& m, MainWindow& w) : 
-model(m), window(w), shapeCommand(nullptr), firstPoint(nullptr), lastPoint(nullptr)
+Manager::Manager(CADFileManager& m) : 
+fileManager(m), command(nullptr), shapeCommand(nullptr)
 {
-	lineCommand();
+   mediator= new ViewMediator(this);
+   m.setCanvas(mediator->getCanvas());
+   mediator->setWindowWidget(&mediator->getCanvas());
+   
+   lineCommand();
 }
 
-void CommandManager::newFileCmd()
+void Manager::newFileCmd()
 {
 	runCommand(new CommandNewFile());
 }
 
-void CommandManager::saveFileCmd()
+void Manager::saveFileCmd()
 {
 	runCommand(new CommandSave());
 }
 
-void CommandManager::loadFileCmd()
+void Manager::loadFileCmd()
 {
 	runCommand(new CommandLoadFile());
 }
 
-void CommandManager::clearShapes()
+void Manager::clearShapes()
 {
 	runCommand(new CommandClear());
 }
 
-void CommandManager::eraseLastShape()
+void Manager::eraseLastShape()
 {
 	runCommand(new CommandUndo());
 }
 
-void CommandManager::redoShape()
+void Manager::redoShape()
 {
 	runCommand(new CommandRedo());
 }
 
-void CommandManager::exitFileCmd()
+void Manager::exitFileCmd()
 {
 	runCommand(new CommandExit());
 }
 
 //////////////////////////////////////////////
 
-void CommandManager::mousePressEvent(const Point& pos)
+void Manager::mousePressEvent(const Point& pos)
 {
 	shapeCommand->mousePressEvent(pos);
 }
 
-void CommandManager::mouseReleaseEvent(const Point& pos)
+void Manager::mouseReleaseEvent(const Point& pos)
 {
 	shapeCommand->mouseReleaseEvent(pos);
 	
@@ -86,43 +92,51 @@ void CommandManager::mouseReleaseEvent(const Point& pos)
 	}
 }
 
-void CommandManager::mouseMoveEvent(const Point& pos)
+void Manager::mouseMoveEvent(const Point& pos)
 {
 	shapeCommand->mouseMoveEvent(pos);
 }
 
 //////////////////////////////////////////////
 
-void CommandManager::arcCommand()
+void Manager::sendMessageToStatusBar(std::string& msg) const
 {
-	if (shapeCommand)
-		delete shapeCommand;
-
-	shapeCommand = new CommandArc(model);
+   mediator->sendMessage(msg);
 }
 
-void CommandManager::bezierCommand()
+void Manager::arcCommand()
 {
 	if (shapeCommand)
 		delete shapeCommand;
+	shapeCommand = new CommandArc(fileManager);
 
-	shapeCommand= new CommandBezier(model);
+   sendMessageToStatusBar(std::string("Drawing mode selected: Arc."));
 }
 
-void CommandManager::lineCommand()
+void Manager::bezierCommand()
 {
 	if (shapeCommand)
 		delete shapeCommand;
+	shapeCommand= new CommandBezier(fileManager);
 
-	shapeCommand = new CommandLine(model);
+   sendMessageToStatusBar(std::string("Drawing mode selected: Bezier."));
+}
+
+void Manager::lineCommand()
+{
+	if (shapeCommand)
+		delete shapeCommand;
+	shapeCommand = new CommandLine(fileManager);
+
+   sendMessageToStatusBar(std::string("Drawing mode selected: Line."));
 }
 
 //////////////////////////////////////////////
 
-void CommandManager::runCommand(Command* cmd)
+void Manager::runCommand(Command* cmd)
 {
 	command= cmd;
-	command->execute(model, window);
+	command->execute(fileManager, *mediator);
 
 	delete command;
 

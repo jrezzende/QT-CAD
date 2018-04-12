@@ -1,15 +1,16 @@
-#include "Canvas.h"
-#include "Point.h"
-#include "CommandManager.h"
-#include "MainWindow.h"
-#include "CADShape.h"
-
 #include "qevent.h"
 #include "qpainterpath.h"
 
+#include "Canvas.h"
+#include "Point.h"
+#include "Manager.h"
+#include "MainWindow.h"
+#include "CADShape.h"
+#include "ViewMediator.h"
+
 #include <sstream>
 
-Canvas::Canvas(CommandManager* _manager, QWidget* parent) : QWidget(parent), pixmap(parent->size())
+Canvas::Canvas(ViewMediator* _mediator, QWidget* parent) : QWidget(parent), pixmap(1920, 1080), mediator(_mediator)
 {
 	setCursor(QCursor(Qt::ArrowCursor));
 
@@ -20,30 +21,6 @@ Canvas::Canvas(CommandManager* _manager, QWidget* parent) : QWidget(parent), pix
 	setMouseTracking(true);
 
 	drawing= false;
-	manager= _manager;
-
-	callLine();
-}
-
-void Canvas::saveCurrentFile()
-{
-	manager->saveFileCmd();
-}
-
-void Canvas::clearMap()
-{
-	pixmap.fill();
-	update();
-}
-
-void Canvas::dumpShapes()
-{
-	manager->clearShapes();
-}
-
-void Canvas::dumpLastShape()
-{
-	manager->eraseLastShape();
 }
 
 void Canvas::toggleTracking()
@@ -55,24 +32,31 @@ void Canvas::toggleTracking()
 	setMouseTracking(true);
 }
 
+void Canvas::clearMap()
+{
+   pixmap.fill();
+
+   update();
+}
+
 void Canvas::endPainter()
 {
 	painter.end();
 }
 
-void Canvas::callLine()
+void Canvas::callLine() const
 {
-	manager->lineCommand();
+	mediator->sendShapeEvents(LINE);
 }
 
-void Canvas::callBezier()
+void Canvas::callBezier() const
 {
-	manager->bezierCommand();
+	mediator->sendShapeEvents(BEZIER);
 }
 
-void Canvas::callArc()
+void Canvas::callArc() const
 {
-	manager->arcCommand();
+	mediator->sendShapeEvents(ARC);
 }
 
 void Canvas::drawCanvas(CADShape& shape)
@@ -108,12 +92,12 @@ void Canvas::mousePressEvent(QMouseEvent* event)
 	std::ostringstream aux;
 
 	if (event->button() == Qt::LeftButton) {
-		manager->mousePressEvent(Point(event->pos().x(), event->pos().y()));
+		mediator->sendMouseEvents(PRESS, Point(event->pos().x(), event->pos().y()));
 		setDrawing(true);
 
 		aux << "Mouse press event detected: x: " << event->pos().x() << " y: " << event->pos().y();
 
-		manager->getWindow().getStatusBar()->showMessage(QString::fromStdString(aux.str()));
+      mediator->sendMessage(aux.str());
 		event->accept();
 	}
 
@@ -125,11 +109,11 @@ void Canvas::mouseReleaseEvent(QMouseEvent * event)
 	std::ostringstream aux;
 
 	if (event->button() == Qt::LeftButton) {
-		manager->mouseReleaseEvent(Point(event->pos().x(), event->pos().y()));
+		mediator->sendMouseEvents(RELEASE, Point(event->pos().x(), event->pos().y()));
 
 		aux << "Mouse release event detected: x: " << event->pos().x() << " y: " << event->pos().y();
 
-		manager->getWindow().getStatusBar()->showMessage(QString::fromStdString(aux.str()));
+      mediator->sendMessage(aux.str());
 	}
 
 	setDrawing(false);
@@ -144,17 +128,16 @@ void Canvas::mouseMoveEvent(QMouseEvent * event)
 	if (!drawing) {
 		aux << "Mouse tracking mode on. Hover position: x: " << event->pos().x() << " y: " << event->pos().y() << ". Press CTRL + T to turn off.";
 
-		manager->getWindow().getStatusBar()->showMessage(QString::fromStdString(aux.str()));
+      mediator->sendMessage(aux.str());
 	}
 
 	if (drawing) {
-		manager->mouseMoveEvent(Point(event->pos().x(), event->pos().y()));
+		mediator->sendMouseEvents(MOVE, Point(event->pos().x(), event->pos().y()));
 
 		aux << "Mouse move event detected: x: " << event->pos().x() << " y: " << event->pos().y();
 
-		manager->getWindow().getStatusBar()->showMessage(QString::fromStdString(aux.str()));
+		mediator->sendMessage(aux.str());
 	}
-
 
 	event->accept();
 }

@@ -14,8 +14,8 @@ class CommandBezier : public ShapeCommand
 	CADLine* previewLine;
 
 public:
-	~CommandBezier() {}
-	CommandBezier(Model& m) : 
+	~CommandBezier()= default;
+	CommandBezier(CADFileManager& m) :
    ShapeCommand(m, BEZIER) { bezier= new CADBezier(); bezier->setShape(BEZIER); previewLine= new CADLine(); }
 
 	void mousePressEvent(const Point& point) override;

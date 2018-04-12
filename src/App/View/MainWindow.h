@@ -7,7 +7,8 @@
 #include "qfiledialog.h"
 #include "qstatusbar.h"
 
-class CommandManager;
+class Manager;
+class ViewMediator;
 class Canvas;
 
 class MainWindow : public QMainWindow
@@ -16,45 +17,44 @@ class MainWindow : public QMainWindow
 
 	QStatusBar* statusbar;
 	QDesktopWidget desktop;
-	CommandManager* manager;
+
+   Canvas* canvas;
+   ViewMediator* mediator;
+
+   void initializeComponents();
+   void createShortcuts();
 
 public:
 	~MainWindow();
-	MainWindow();
-
-	CommandManager& getManager() const { return *manager; }
-	void setManager(CommandManager& _manager) { manager= &_manager;}
+	MainWindow(ViewMediator* _mediator);
 
 	QStatusBar* getStatusBar() const { return statusbar; }
-
-	void setLayout();
-	void createToolbarAndConnections();
-	void createShortcuts();
-	void createStatusBar();
 
 	std::string getNewFileName();
 	std::string getSaveFileName();
 	std::string getOpenFileName();
-	Canvas* createCanvas();
+
+   Canvas& getCanvas() const { return *canvas; }
 
 public slots:
-	void newFile();
-	void loadFile();
-	void save();
-	void undo();
-	void redo();
-	void clear();
+	void newFile() const;
+	void loadFile() const;
+	void save() const;
+	void undo() const;
+	void redo() const;
+	void clear() const;
+   void exit() const;
+
+   void mouseTrackingAction();
 	void verifyNewFileAction();
 	void verifyLoadFileAction();
 	void verifyClearAction();
-	void verifyExitAction();
-	void mouseTrackingAction();
-	void exit();
-
+	void verifyExitAction();	
+	
 	//////////////////
-	void lineSignal();
-	void bezierSignal(); // SIGNALS
-	void arcSignal();
+	void lineSignal() const;
+	void bezierSignal() const; // SIGNALS
+	void arcSignal() const;
 	///////////////////
 };
 

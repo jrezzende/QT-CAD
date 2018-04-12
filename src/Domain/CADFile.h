@@ -49,6 +49,7 @@ public:
 	void popShape() { shapes.pop_back(); }
 
 	Canvas* getCanvas() const { return canvas; }
+   void setCanvas(Canvas& _canvas) { canvas= &_canvas; }
 
 	void connectClearRedo(std::function<void()> func) { clearRedo = func; }
 

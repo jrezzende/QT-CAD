@@ -10,7 +10,7 @@ public:
 	~CommandNewFile()= default;
 	CommandNewFile()= default;
 
-	void execute(Model& m, MainWindow& w) override;
+	void execute(CADFileManager& m, ViewMediator& mediator) override;
 };
 
 #endif //  INCLUDED_COMMANDNEWFILE_H

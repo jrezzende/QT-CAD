@@ -1,5 +1,5 @@
 #include "CommandBezier.h"
-#include "Model.h"
+#include "CADFileManager.h"
 #include "Canvas.h"
 
 void CommandBezier::mousePressEvent(const Point& point)
@@ -11,7 +11,7 @@ void CommandBezier::mousePressEvent(const Point& point)
 	else {
 		secondClick = true;
 		bezier->setThirdPoint(point);
-		model.getCurrentFile()->eraseShape(*previewLine);
+		m.getCurrentFile()->eraseShape(*previewLine);
 	}
 }
 
@@ -19,11 +19,11 @@ void CommandBezier::mouseMoveEvent(const Point& point)
 {
 	if (!isDrawing) {
 		previewLine->setSecondPoint(point);
-		model.getCurrentFile()->addShape(*previewLine);
+		m.getCurrentFile()->addShape(*previewLine);
 	}
 	else {
 		bezier->setThirdPoint(point);
-		model.getCurrentFile()->addShape(*bezier);
+		m.getCurrentFile()->addShape(*bezier);
 	}
 }
 
@@ -34,8 +34,8 @@ void CommandBezier::mouseReleaseEvent(const Point& point)
 		isDrawing= true;
 	}
 	else {
-		model.getCurrentFile()->addShape(*bezier);
-		model.getCurrentFile()->getCanvas()->setDrawing(false);
+		m.getCurrentFile()->addShape(*bezier);
+		m.getCurrentFile()->getCanvas()->setDrawing(false);
 		delete previewLine;
 	}
 }

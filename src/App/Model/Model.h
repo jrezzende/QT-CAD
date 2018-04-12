@@ -6,7 +6,7 @@
 
 class Model
 {
-	std::vector<CADFile*> files;
+	std::vector<CADFile*> files; // x
 
 	CADFile* currentFile;
 	CADFile* mementoFile;

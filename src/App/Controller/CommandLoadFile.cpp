@@ -24,8 +24,8 @@ void CommandLoadFile::execute(CADFileManager& m, ViewMediator& mediator)
 	const auto file= new CADFile(filePath, &mediator.getCanvas());
 	const auto mementoFile= new CADFile("memento", file->getCanvas());
 
-	//m.addFile(file);
-	//m.addFile(mementoFile);
+   m.setCurrentFile(file);
+   m.setMementoFile(mementoFile);
 
 	is.open(filePath, std::ios::in | std::ios::binary);
 
@@ -69,12 +69,10 @@ void CommandLoadFile::execute(CADFileManager& m, ViewMediator& mediator)
             break;
 		}
 	}
-			m.setCurrentFile(file);
-			m.setMementoFile(mementoFile);
 			m.setRedoFlag(false);
 			m.getCurrentFile()->reprint();
 
-			mediator.setWindowWidget(file->getCanvas());
+         mediator.getCanvas().getPixmap().fill();
 			mediator.setTitle(QString::fromStdString(file->getFileName()));
 	}
 }

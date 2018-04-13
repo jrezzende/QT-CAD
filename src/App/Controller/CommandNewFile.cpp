@@ -8,6 +8,9 @@
 
 void CommandNewFile::execute(CADFileManager& m, ViewMediator& mediator)
 {
+   m.clearShapes();
+   m.deleteFiles();
+
 	const auto file= new CADFile("untitled", &mediator.getCanvas());	
 	const auto mementoFile= new CADFile("memento", file->getCanvas());
 

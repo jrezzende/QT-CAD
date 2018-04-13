@@ -50,6 +50,7 @@ public:
 
    Canvas& getCanvas() const { return window.getCanvas(); }
 
+
    void setTitle(QString& s) { window.setWindowTitle(s); }
    void setWindowWidget(Canvas* canvas) { window.setCentralWidget(canvas); }
 };

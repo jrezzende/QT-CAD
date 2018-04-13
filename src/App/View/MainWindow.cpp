@@ -28,7 +28,7 @@ MainWindow::MainWindow(ViewMediator* _mediator) : QMainWindow(nullptr), statusba
 void MainWindow::initializeComponents()
 {
    QRect _screenSize = desktop.availableGeometry(this);
-   setMinimumSize(QSize(_screenSize.width() * 1.2f, _screenSize.height() * 1.2f));
+   setMinimumSize(QSize(_screenSize.width() * 1.0f, _screenSize.height() * 1.0f));
 
 	auto nav = menuBar();
 	auto fileMenu = new QMenu();
@@ -132,8 +132,6 @@ void MainWindow::initializeComponents()
 
 void MainWindow::newFile() const
 {
-   //manager->getFileManager().getCurrentFile()->getCanvas()->endPainter();
-
 	mediator->sendCommand(NEW);
 
 	statusbar->showMessage(tr("New file action invoked."), 10000);
@@ -162,7 +160,7 @@ void MainWindow::undo() const
 
 void MainWindow::redo() const
 {
-	mediator->sendCommand(UNDO);
+	mediator->sendCommand(REDO);
 
 	statusbar->showMessage(tr("Redo action invoked."), 10000);
 }
@@ -231,7 +229,7 @@ void MainWindow::verifyExitAction()
 
 void MainWindow::mouseTrackingAction()
 {
-	//manager->getFileManager().getCurrentFile()->getCanvas()->toggleTracking(); // canvas in window
+	canvas->toggleTracking();
 
 	statusbar->showMessage(tr("Mouse tracking action invoked."), 10000);
 }
@@ -243,6 +241,7 @@ void MainWindow::verifyNewFileAction()
 	else if (mediator->getManager().getCurrentFileStatus() == NOTSAVED) {
 		if (QMessageBox::question(this, "Discard file?", "Are you sure you want to discard this file?",
 			QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
+         canvas->getPixmap().fill();
 			newFile();
 	}
 	else
@@ -251,17 +250,13 @@ void MainWindow::verifyNewFileAction()
 
 void MainWindow::verifyLoadFileAction()
 {
-	if (mediator->getManager().getCurrentFileStatus() == NOTSAVED) {
+	if (mediator->getManager().getCurrentFileStatus() == NOTSAVED && !(mediator->getManager().getCurrentFileShapes().empty())) {
 		if (QMessageBox::question(this, "Overwrite this file?", "Are you sure you want to discard this file?",
-			QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes) {
-			//manager->getFileManager().getCurrentFile()->getCanvas()->endPainter();
+			QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
 			loadFile();
-		}
 	}
-	else {
-		//manager->getFileManager().getCurrentFile()->getCanvas()->endPainter(); // canvas going to be initialized in window
+	else
 		loadFile();
-	}
 }
 
 void MainWindow::verifyClearAction()

@@ -16,6 +16,8 @@ void CommandLoadFile::execute(CADFileManager& m, ViewMediator& mediator)
 	if(filePath.empty())
 		return;
 
+   mediator.getCanvas().getPixmap().fill();
+
 	std::ifstream is;
 
 	int type;
@@ -52,17 +54,17 @@ void CommandLoadFile::execute(CADFileManager& m, ViewMediator& mediator)
 				break;
 			case LINE:
 			{
-				file->addShape(CADLine(Point(p1X, p1Y), Point(p2X, p2Y)));
+				file->addShape(*new CADLine(Point(p1X, p1Y), Point(p2X, p2Y)));
 				break;
 			}
 			case BEZIER:
          {
-				file->addShape(CADBezier(Point(p1X, p1Y), Point(p2X, p2Y), Point(p3X, p3Y)));
+				file->addShape(*new CADBezier(Point(p1X, p1Y), Point(p2X, p2Y), Point(p3X, p3Y)));
 				break;
 			}
 			case ARC:
 			{
-				file->addShape(CADArc(Point(p1X, p1Y), Point(p2X, p2Y), Point(p3X, p3Y)));
+				file->addShape(*new CADArc(Point(p1X, p1Y), Point(p2X, p2Y), Point(p3X, p3Y)));
 				break;
 			}
          default:
@@ -72,7 +74,6 @@ void CommandLoadFile::execute(CADFileManager& m, ViewMediator& mediator)
 			m.setRedoFlag(false);
 			m.getCurrentFile()->reprint();
 
-         mediator.getCanvas().getPixmap().fill();
 			mediator.setTitle(QString::fromStdString(file->getFileName()));
 	}
 }

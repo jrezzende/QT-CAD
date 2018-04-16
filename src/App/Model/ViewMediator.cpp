@@ -46,6 +46,7 @@ void ViewMediator::sendCommand(WindowActions wa) const
    {
    case NEW:
       manager->newFileCmd();
+      manager->lineCommand();
       break;
    case LOAD:
       manager->loadFileCmd();

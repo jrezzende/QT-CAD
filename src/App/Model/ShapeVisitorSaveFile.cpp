@@ -9,13 +9,13 @@ void ShapeVisitorSaveFile::visitLine(CADLine& l)
 	ShapeType shape = LINE;
 	os.write((char*)&shape, sizeof(int));
 
-	auto x = l.getFirstPoint().x;
-	auto y = l.getFirstPoint().y;
+	auto x = l.firstPoint().x;
+	auto y = l.firstPoint().y;
 	os.write((char*)&x, sizeof(double));
 	os.write((char*)&y, sizeof(double));
 
-	x = l.getSecondPoint().x;
-	y = l.getSecondPoint().y;
+	x = l.secondPoint().x;
+	y = l.secondPoint().y;
 	os.write((char*)&x, sizeof(double));
 	os.write((char*)&y, sizeof(double));
 }
@@ -25,18 +25,18 @@ void ShapeVisitorSaveFile::visitBezier(CADBezier & b)
 	ShapeType shape = BEZIER;
 	os.write((char*)&shape, sizeof(int));
 
-	auto x = b.getFirstPoint().x;
-	auto y = b.getFirstPoint().y;
+	auto x = b.firstPoint().x;
+	auto y = b.firstPoint().y;
 	os.write((char*)&x, sizeof(double));
 	os.write((char*)&y, sizeof(double));
 
-	x = b.getSecondPoint().x;
-	y = b.getSecondPoint().y;
+	x = b.secondPoint().x;
+	y = b.secondPoint().y;
 	os.write((char*)&x, sizeof(double));
 	os.write((char*)&y, sizeof(double));
 
-	x = b.getThirdPoint().x;
-	y = b.getThirdPoint().y;
+	x = b.thirdPoint().x;
+	y = b.thirdPoint().y;
 	os.write((char*)&x, sizeof(double));
 	os.write((char*)&y, sizeof(double));
 }
@@ -46,18 +46,18 @@ void ShapeVisitorSaveFile::visitArc(CADArc & a)
 	ShapeType shape = ARC;
 	os.write((char*)&shape, sizeof(int));
 
-	auto x = a.getFirstPoint().x;
-	auto y = a.getFirstPoint().y;
+	auto x = a.firstPoint().x;
+	auto y = a.firstPoint().y;
 	os.write((char*)&x, sizeof(double));
 	os.write((char*)&y, sizeof(double));
 
-	x = a.getSecondPoint().x;
-	y = a.getSecondPoint().y;
+	x = a.secondPoint().x;
+	y = a.secondPoint().y;
 	os.write((char*)&x, sizeof(double));
 	os.write((char*)&y, sizeof(double));
 
-	x = a.getThirdPoint().x;
-	y = a.getThirdPoint().y;
+	x = a.thirdPoint().x;
+	y = a.thirdPoint().y;
 	os.write((char*)&x, sizeof(double));
 	os.write((char*)&y, sizeof(double));
 }

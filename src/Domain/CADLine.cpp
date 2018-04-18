@@ -1,6 +1,6 @@
 #include "CADLine.h"
 
-std::vector<Point> CADLine::getCoordinates()
+std::vector<Point> CADLine::coordinates()
 {
 	std::vector<Point> points;
 	points.push_back(p1);

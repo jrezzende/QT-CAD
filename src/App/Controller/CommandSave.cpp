@@ -6,15 +6,15 @@
 
 void CommandSave::execute(CADFileManager& m, ViewMediator& mediator)
 {
-	if(m.getCurrentFile()->getStatus())
+	if(m.currentFile()->status())
 		return;
 
-   std::vector<CADShape*> shapesInFile = m.getCurrentFile()->getShapes();
+   std::vector<CADShape*> shapesInFile = m.currentFile()->shapesVector();
    std::ofstream os;
 
-	if (m.getCurrentFile()->getFilePath().empty())
-      m.getCurrentFile()->setFilePath(mediator.retrieveFileLabel(SAVE));
-   const std::string filePath= m.getCurrentFile()->getFilePath();
+	if (m.currentFile()->filePath().empty())
+      m.currentFile()->setFilePath(mediator.retrieveFileLabel(SAVE));
+   const std::string filePath= m.currentFile()->filePath();
 
 	os.open(filePath, std::ios::out | std::ios::binary | std::ios::ate | std::ios::trunc);
 
@@ -25,7 +25,7 @@ void CommandSave::execute(CADFileManager& m, ViewMediator& mediator)
 			shape->accept(v);
 	}
 
-	m.getCurrentFile()->setStatus(SAVED);
+	m.currentFile()->setStatus(SAVED);
 
 	os.close();
 }

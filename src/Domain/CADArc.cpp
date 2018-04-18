@@ -34,7 +34,7 @@ int CADArc::calcArcDivisions(const double angleArcSize)
 	return divisions;
 }
 
-std::vector<Point> CADArc::getCoordinates()
+std::vector<Point> CADArc::coordinates()
 {
 	std::vector<Point> points;
 	const Point p2Aux= translatePoint(p2);

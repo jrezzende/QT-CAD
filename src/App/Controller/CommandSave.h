@@ -4,10 +4,6 @@
 
 #include "Command.h"
 
-class CADLine;
-class CADBezier;
-class CADArc;
-
 class CommandSave : public Command
 {
 public: 

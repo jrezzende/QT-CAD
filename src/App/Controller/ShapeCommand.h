@@ -26,7 +26,7 @@ public:
 
 	bool hasSecondClick() const { return secondClick; }
 
-	ShapeType getShape() const { return shape; }
+	ShapeType type() const { return shape; }
 
 	virtual void mousePressEvent(const Point& point)= 0;
 	virtual void mouseMoveEvent(const Point& point) = 0;

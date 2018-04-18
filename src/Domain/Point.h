@@ -2,8 +2,6 @@
 #ifndef INCLUDED_POINT_H
 #define INCLUDED_POINT_H
 
-#include <vector>
-
 #include <cmath>
 
 class Point

@@ -16,7 +16,7 @@ class Canvas : public QWidget
 	Q_OBJECT
 
 	QPainter painter;
-	QPixmap pixmap;
+	QPixmap pixMap;
 
    ViewMediator* mediator;
 
@@ -32,7 +32,7 @@ public:
 	~Canvas()= default;
 	Canvas(ViewMediator* _mediator, QWidget* parent);
 
-	QPixmap& getPixmap() { return pixmap;}
+	QPixmap& pixmap() { return pixMap;}
 
    void setDrawing(bool flag) { drawing = flag; }
 
@@ -47,7 +47,7 @@ public:
 	void drawCanvas(CADShape& shape);
 	void drawMap(CADShape& shape);
 
-	QPainterPath getDrawPath(CADShape& shape);
+	QPainterPath drawPath(CADShape& shape);
 };
 
 #endif //  INCLUDED_CANVAS_H

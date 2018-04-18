@@ -17,9 +17,12 @@
 MainWindow::~MainWindow()
 {
    delete statusbar;
+   delete windowCanvas;
+   delete mediator;
 }
 
-MainWindow::MainWindow(ViewMediator* _mediator) : QMainWindow(nullptr), statusbar(nullptr), mediator(_mediator), canvas(new Canvas(_mediator, this))
+MainWindow::MainWindow(ViewMediator* _mediator) : QMainWindow(nullptr), statusbar(nullptr), mediator(_mediator),
+windowCanvas(new Canvas(_mediator, this))
 {
 	initializeComponents();
 	createShortcuts();
@@ -179,21 +182,21 @@ void MainWindow::exit() const
 	statusbar->showMessage(tr("Exit action invoked."), 10000);
 }
 
-std::string MainWindow::getNewFileName()
+std::string MainWindow::newFileName()
 {
 	return QFileDialog::getSaveFileName(
       this, tr("New File"), "/Users/joao.mathias/cadfiles/untitled.dat", tr("Dat files (*.dat)")
    ).toStdString();
 }
 
-std::string MainWindow::getSaveFileName()
+std::string MainWindow::saveFileName()
 {
 	return QFileDialog::getSaveFileName(
       this, tr("Save file as..."), "/Users/joao.mathias/cadfiles/untitled.dat", tr("Dat files (*.dat)")
    ).toStdString();
 }
 
-std::string MainWindow::getOpenFileName()
+std::string MainWindow::openFileName()
 {
 	return QFileDialog::getOpenFileName(
       this, tr("Open File"),"/Users/joao.mathias/cadfiles/untitled.dat", tr("Dat files (*.dat)")
@@ -216,10 +219,10 @@ void MainWindow::createShortcuts()
 
 void MainWindow::verifyExitAction() 
 {
-	if (mediator->getManager().getCurrentFileShapes().empty())
+	if (mediator->manager().currentFileShapes().empty())
 		exit();
 
-   if (mediator->getManager().getCurrentFileStatus() == NOTSAVED) {
+   if (mediator->manager().currentFileStatus() == NOTSAVED) {
 		if (QMessageBox::question(this, "Quit?", "Are you sure you want to exit?",
 			QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
 			exit();
@@ -229,19 +232,19 @@ void MainWindow::verifyExitAction()
 
 void MainWindow::mouseTrackingAction()
 {
-	canvas->toggleTracking();
+	windowCanvas->toggleTracking();
 
 	statusbar->showMessage(tr("Mouse tracking action invoked."), 10000);
 }
 
 void MainWindow::verifyNewFileAction()
 {
-	if (mediator->getManager().getCurrentFileShapes().empty())
+	if (mediator->manager().currentFileShapes().empty())
 		newFile();
-	else if (mediator->getManager().getCurrentFileStatus() == NOTSAVED) {
+	else if (mediator->manager().currentFileStatus() == NOTSAVED) {
 		if (QMessageBox::question(this, "Discard file?", "Are you sure you want to discard this file?",
 			QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
-         canvas->getPixmap().fill();
+         windowCanvas->pixmap().fill();
 			newFile();
 	}
 	else
@@ -250,7 +253,7 @@ void MainWindow::verifyNewFileAction()
 
 void MainWindow::verifyLoadFileAction()
 {
-	if (mediator->getManager().getCurrentFileStatus() == NOTSAVED && !(mediator->getManager().getCurrentFileShapes().empty())) {
+	if (mediator->manager().currentFileStatus() == NOTSAVED && !(mediator->manager().currentFileShapes().empty())) {
 		if (QMessageBox::question(this, "Overwrite this file?", "Are you sure you want to discard this file?",
 			QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
 			loadFile();
@@ -261,9 +264,9 @@ void MainWindow::verifyLoadFileAction()
 
 void MainWindow::verifyClearAction()
 {
-	if(mediator->getManager().getCurrentFileShapes().empty())
+	if(mediator->manager().currentFileShapes().empty())
 		clear();
-	else if (mediator->getManager().getCurrentFileStatus() == NOTSAVED) {
+	else if (mediator->manager().currentFileStatus() == NOTSAVED) {
 		if(QMessageBox::question(this, "This action cannot be undone!", "Are you sure you want to clear the file?",
 			QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
 			clear();

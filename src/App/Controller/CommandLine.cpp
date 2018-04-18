@@ -3,13 +3,13 @@
 
 void CommandLine::mousePressEvent(const Point& point)
 {
-	line->setfirstPoint(point);
-	line->setSecondPoint(point);
+   line->setfirstPoint(point);
+   line->setSecondPoint(point);
 }
 
 void CommandLine::mouseMoveEvent(const Point& point)
 {			
-	m.getCurrentFile()->addShape(*line);
+	m.currentFile()->addShape(*line);
 	line->setSecondPoint(point);
 }
 

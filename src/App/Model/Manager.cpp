@@ -20,16 +20,16 @@
 
 Manager::~Manager()
 {
-	delete command;
+	delete currentCmd;
 	delete shapeCommand;
 }
 
 Manager::Manager(CADFileManager& m) : 
-fileManager(m), command(nullptr), shapeCommand(nullptr)
+cadFileManager(m), currentCmd(nullptr), shapeCommand(nullptr)
 {
-   mediator= new ViewMediator(this);
-   m.setCanvas(mediator->getCanvas());
-   mediator->setWindowWidget(&mediator->getCanvas());
+   viewMediator= new ViewMediator(this);
+   m.setCanvas(viewMediator->canvas());
+   viewMediator->setWindowWidget(&viewMediator->canvas());
    
    lineCommand();
 }
@@ -80,14 +80,14 @@ void Manager::mouseReleaseEvent(const Point& pos)
 {
 	shapeCommand->mouseReleaseEvent(pos);
 	
-	if(shapeCommand->getShape() == LINE)
+	if(shapeCommand->type() == LINE)
 		lineCommand();
 
 	else if (shapeCommand->hasSecondClick())
 	{
-		if(shapeCommand->getShape() == BEZIER)
+		if(shapeCommand->type() == BEZIER)
 			bezierCommand();
-		else if(shapeCommand->getShape() == ARC)
+		else if(shapeCommand->type() == ARC)
 			arcCommand();
 	}
 }
@@ -101,14 +101,14 @@ void Manager::mouseMoveEvent(const Point& pos)
 
 void Manager::sendMessageToStatusBar(std::string& msg) const
 {
-   mediator->sendMessage(msg);
+   viewMediator->sendMessage(msg);
 }
 
 void Manager::arcCommand()
 {
 	if (shapeCommand)
 		delete shapeCommand;
-	shapeCommand = new CommandArc(fileManager);
+	shapeCommand = new CommandArc(cadFileManager);
 
    sendMessageToStatusBar(std::string("Drawing mode selected: Arc."));
 }
@@ -117,7 +117,7 @@ void Manager::bezierCommand()
 {
 	if (shapeCommand)
 		delete shapeCommand;
-	shapeCommand= new CommandBezier(fileManager);
+	shapeCommand= new CommandBezier(cadFileManager);
 
    sendMessageToStatusBar(std::string("Drawing mode selected: Bezier."));
 }
@@ -126,7 +126,7 @@ void Manager::lineCommand()
 {
 	if (shapeCommand)
 		delete shapeCommand;
-	shapeCommand = new CommandLine(fileManager);
+	shapeCommand = new CommandLine(cadFileManager);
 
    sendMessageToStatusBar(std::string("Drawing mode selected: Line."));
 }
@@ -135,10 +135,10 @@ void Manager::lineCommand()
 
 void Manager::runCommand(Command* cmd)
 {
-	command= cmd;
-	command->execute(fileManager, *mediator);
+	currentCmd= cmd;
+   currentCmd->execute(cadFileManager, *viewMediator);
 
-	delete command;
+	delete currentCmd;
 
-	command= new CommandIdle();
+   currentCmd = new CommandIdle();
 }

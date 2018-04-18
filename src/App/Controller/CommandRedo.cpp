@@ -3,21 +3,21 @@
 
 void CommandRedo::execute(CADFileManager & m, ViewMediator& mediator)
 {
-	if (m.getMementoFile()->getShapes().empty())
+	if (m.mementoFile()->shapesVector().empty())
 		return;
 
-	if (m.getRedoFlag()) {	
-		for (size_t i = m.getMementoFile()->getShapes().size() - 1; i > 0; i--)
-			m.getCurrentFile()->addFromRedo(*m.getMementoFile()->getShapes().at(i));
+	if (m.redo()) {	
+		for (size_t i = m.mementoFile()->shapesVector().size() - 1; i > 0; i--)
+			m.currentFile()->addFromRedo(*m.mementoFile()->shapesVector().at(i));
 
-		m.getCurrentFile()->addFromRedo(*m.getMementoFile()->getShapes().front());
-		m.getMementoFile()->eraseAllShapes();
+		m.currentFile()->addFromRedo(*m.mementoFile()->shapesVector().front());
+		m.mementoFile()->eraseAllShapes();
 		m.setRedoFlag(false);
 	}
 	else {
-		m.getCurrentFile()->addFromRedo(*m.getMementoFile()->getShapes().back());
-		m.getMementoFile()->eraseLastShape();
+		m.currentFile()->addFromRedo(*m.mementoFile()->shapesVector().back());
+		m.mementoFile()->eraseLastShape();
 	}
 		
-	m.getCurrentFile()->reprint();
+	m.currentFile()->reprint();
 }

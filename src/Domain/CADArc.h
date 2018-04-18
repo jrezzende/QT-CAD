@@ -26,9 +26,9 @@ public:
 	CADArc(const Point& _p1, const Point& _p2, const Point& _p3) : CADShape(_p1, _p2), p3(_p3) { type= ARC; }
 
 	void setThirdPoint(const Point& _p3) { p3 = _p3; }
-	Point getThirdPoint() const { return p3; }
+	Point thirdPoint() const { return p3; }
 
-	std::vector<Point> getCoordinates() override;
+	std::vector<Point> coordinates() override;
 	void setShape(const ShapeType _type) override { type= _type; }
 	void accept(ShapeVisitor& v) override { v.visitArc(*this); };
 

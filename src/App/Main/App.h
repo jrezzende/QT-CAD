@@ -10,20 +10,17 @@ class App
 	CADFileManager* fileManager;
 	Manager* manager;
 
-	static App* instance;
+	static App* appInstance;
 
 	App() : fileManager(nullptr), manager(nullptr) {}
 
 public:
 	~App();
 
-	CADFileManager& getFileManager() const { return *fileManager; }
-	Manager& getManager() const { return *manager; }
-
 	int start(int argc, char** argv);
 
 public:
-	static App& getInstance();
+	static App& instance();
 };
 
-#endif //  INCLUDED_APP_H
+#endif //INCLUDED_APP_H

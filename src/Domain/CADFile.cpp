@@ -7,18 +7,14 @@ void CADFile::addShape(CADShape& shape)
 
 	shapes.push_back(&shape);
 
+   if(this->fileName() == "memento")
+      return;
+
 	clearRedo();
 
 	setStatus(NOTSAVED);
 
 	reprint();
-}
-
-void CADFile::mementoAddShape(CADShape& shape)
-{
-	eraseShape(shape);
-	
-	shapes.push_back(&shape);
 }
 
 void CADFile::addFromRedo(CADShape& shape)
@@ -28,8 +24,6 @@ void CADFile::addFromRedo(CADShape& shape)
 	shapes.push_back(&shape);
 
 	setStatus(NOTSAVED);
-
-	reprint();
 }
 
 void CADFile::eraseShape(CADShape& shape)
@@ -38,6 +32,9 @@ void CADFile::eraseShape(CADShape& shape)
 		if(shapes[i] == &shape)
 			shapes.erase(shapes.begin() + i);
 	}
+
+   if(this->fileName() == "memento")
+      return;
 
 	reprint();
 }
@@ -59,10 +56,10 @@ void CADFile::eraseAllShapes()
 
 void CADFile::reprint()
 {
-	canvas->clearMap();
+	drawArea->clearMap();
 
 	for(auto shape : shapes)
-		canvas->drawMap(*shape);
+      drawArea->drawMap(*shape);
 	
-	canvas->update();
+   drawArea->update();
 }

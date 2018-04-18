@@ -12,7 +12,7 @@ public:
 	CADLine()= default;
 	CADLine(const Point firstPoint, const Point lastPoint) : CADShape(firstPoint, lastPoint) { type= LINE; }
 
-	std::vector<Point> getCoordinates() override;
+	std::vector<Point> coordinates() override;
 
 	void setShape(const ShapeType _type) override { type= _type; }
 	void accept(ShapeVisitor& v) override { v.visitLine(*this); };

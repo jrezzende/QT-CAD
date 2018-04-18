@@ -3,9 +3,8 @@
 #include "App.h"
 #include "CADFileManager.h"
 #include "Manager.h"
-#include "ViewMediator.h"
 
-App* App::instance= nullptr;
+App* App::appInstance = nullptr;
 
 App::~App()
 {
@@ -23,10 +22,10 @@ int App::start(int argc, char** argv)
 	return app.exec();
 }
 
-App& App::getInstance()
+App& App::instance()
 {
-	if(!instance)
-		instance= new App;
+	if(!appInstance)
+      appInstance = new App;
 
-	return *instance;
+	return *appInstance;
 }

@@ -16,15 +16,15 @@ void CommandLoadFile::execute(CADFileManager& m, ViewMediator& mediator)
 	if(filePath.empty())
 		return;
 
-   mediator.getCanvas().getPixmap().fill();
+   mediator.canvas().pixmap().fill();
 
 	std::ifstream is;
 
 	int type;
 	double p1X, p1Y, p2X, p2Y, p3X, p3Y;
 
-	const auto file= new CADFile(filePath, &mediator.getCanvas());
-	const auto mementoFile= new CADFile("memento", file->getCanvas());
+	const auto file= new CADFile(filePath, &mediator.canvas());
+	const auto mementoFile= new CADFile("memento", file->canvas());
 
    m.setCurrentFile(file);
    m.setMementoFile(mementoFile);
@@ -72,8 +72,8 @@ void CommandLoadFile::execute(CADFileManager& m, ViewMediator& mediator)
 		}
 	}
 			m.setRedoFlag(false);
-			m.getCurrentFile()->reprint();
+			m.currentFile()->reprint();
 
-			mediator.setTitle(QString::fromStdString(file->getFileName()));
+			mediator.setTitle(QString::fromStdString(file->fileName()));
 	}
 }

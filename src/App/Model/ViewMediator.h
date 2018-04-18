@@ -32,27 +32,24 @@ enum WindowActions
 
 class ViewMediator
 {
-   Manager* manager;
-   MainWindow window;
+   Manager* _manager;
+   MainWindow _window;
 
 public:
    ~ViewMediator()= default;
-   ViewMediator(Manager* _manager) : manager(_manager), window(this) { window.show(); }
+   ViewMediator(Manager* _manager) : _manager(_manager), _window(this) { _window.show(); }
 
-   Manager& getManager() const { return *manager; }
+   Manager& manager() const { return *_manager; }
+   Canvas& canvas() const { return _window.canvas(); }
+
+   std::string retrieveFileLabel(WindowActions wa);
 
    void sendMouseEvents(MouseEvent me, Point& p) const;
    void sendShapeEvents(ShapeType st) const;
    void sendMessage(std::string& s) const;
    void sendCommand(WindowActions wa) const;
-
-   std::string retrieveFileLabel(WindowActions wa);
-
-   Canvas& getCanvas() const { return window.getCanvas(); }
-
-
-   void setTitle(QString& s) { window.setWindowTitle(s); }
-   void setWindowWidget(Canvas* canvas) { window.setCentralWidget(canvas); }
+   void setTitle(QString& s) { _window.setWindowTitle(s); }
+   void setWindowWidget(Canvas* canvas) { _window.setCentralWidget(canvas); }
 };
 
 #endif // INCLUDED_VIEWMEDIATOR_H

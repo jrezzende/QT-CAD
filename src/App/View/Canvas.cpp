@@ -10,13 +10,13 @@
 
 #include <sstream>
 
-Canvas::Canvas(ViewMediator* _mediator, QWidget* parent) : QWidget(parent), pixmap(1920, 1080), mediator(_mediator)
+Canvas::Canvas(ViewMediator* _mediator, QWidget* parent) : QWidget(parent), pixMap(1920, 1080), mediator(_mediator)
 {
 	setCursor(QCursor(Qt::ArrowCursor));
 
-	pixmap.fill();
+	pixMap.fill();
 
-	painter.begin(&pixmap);
+	painter.begin(&pixMap);
 
 	setMouseTracking(true);
 
@@ -34,7 +34,7 @@ void Canvas::toggleTracking()
 
 void Canvas::clearMap()
 {
-   pixmap.fill();
+   pixMap.fill();
 
    update();
 }
@@ -66,9 +66,9 @@ void Canvas::drawCanvas(CADShape& shape)
 	update();
 }
 
-QPainterPath Canvas::getDrawPath(CADShape& shape)
+QPainterPath Canvas::drawPath(CADShape& shape)
 {
-	auto shapePoints= shape.getCoordinates();
+	auto shapePoints= shape.coordinates();
 
 	QPainterPath path;
 
@@ -82,7 +82,7 @@ QPainterPath Canvas::getDrawPath(CADShape& shape)
 
 void Canvas::drawMap(CADShape& shape)
 {
-	painter.drawPath(getDrawPath(shape));
+	painter.drawPath(drawPath(shape));
 }
 
 ////////////////////////////////////////////////
@@ -146,7 +146,7 @@ void Canvas::paintEvent(QPaintEvent* event)
 {
 	QPainter shapePainter(this);
 
-	shapePainter.drawPixmap(painter.viewport(), pixmap);
+	shapePainter.drawPixmap(painter.viewport(), pixMap);
 
 	event->accept();
 }

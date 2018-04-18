@@ -1,18 +1,18 @@
 #include "ViewMediator.h"
 #include "Manager.h"
 
-void ViewMediator::sendMouseEvents(MouseEvent me, Point & p) const
+void ViewMediator::sendMouseEvents(MouseEvent me, Point &p) const
 {
    switch(me)
    {
    case PRESS:
-      manager->mousePressEvent(p);
+      _manager->mousePressEvent(p);
       break;
    case MOVE:
-      manager->mouseMoveEvent(p);
+      _manager->mouseMoveEvent(p);
       break;
    case RELEASE:
-      manager->mouseReleaseEvent(p);
+      _manager->mouseReleaseEvent(p);
       break;
    }
 }
@@ -22,13 +22,13 @@ void ViewMediator::sendShapeEvents(ShapeType st) const
    switch(st)
    {
    case LINE:
-      manager->lineCommand();
+      _manager->lineCommand();
       break;
    case BEZIER:
-      manager->bezierCommand();
+      _manager->bezierCommand();
       break;
    case ARC:
-      manager->arcCommand();
+      _manager->arcCommand();
       break;
    case UNDEFINED:
       return;
@@ -37,7 +37,7 @@ void ViewMediator::sendShapeEvents(ShapeType st) const
 
 void ViewMediator::sendMessage(std::string& s) const
 {
-   window.getStatusBar()->showMessage(QString::fromStdString(s), 1000);
+   _window.statusBar()->showMessage(QString::fromStdString(s), 1000);
 }
 
 void ViewMediator::sendCommand(WindowActions wa) const
@@ -45,26 +45,26 @@ void ViewMediator::sendCommand(WindowActions wa) const
    switch(wa)
    {
    case NEW:
-      manager->newFileCmd();
-      manager->lineCommand();
+      _manager->newFileCmd();
+      _manager->lineCommand();
       break;
    case LOAD:
-      manager->loadFileCmd();
+      _manager->loadFileCmd();
       break;
    case SAVE:
-      manager->saveFileCmd();
+      _manager->saveFileCmd();
       break;
    case UNDO:
-      manager->eraseLastShape();
+      _manager->eraseLastShape();
       break;
    case REDO:
-      manager->redoShape();
+      _manager->redoShape();
       break;
    case CLEAR:
-      manager->clearShapes();
+      _manager->clearShapes();
       break;
    case EXIT:
-      manager->exitFileCmd();
+      _manager->exitFileCmd();
       break;
    }
 }
@@ -74,11 +74,11 @@ std::string ViewMediator::retrieveFileLabel(WindowActions wa)
    switch(wa)
    {
    case NEW:
-      return std::string(window.getNewFileName());
+      return std::string(_window.newFileName());
    case LOAD:
-      return std::string(window.getOpenFileName());
+      return std::string(_window.openFileName());
    case SAVE:
-      return std::string(window.getSaveFileName());
+      return std::string(_window.saveFileName());
    default:
       return "";
    }

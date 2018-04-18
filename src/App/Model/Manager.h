@@ -15,10 +15,10 @@ class ViewMediator;
 
 class Manager
 {
-   CADFileManager& fileManager;
-   ViewMediator* mediator;
+   CADFileManager& cadFileManager;
+   ViewMediator* viewMediator;
    
-	Command* command;
+	Command* currentCmd;
 	ShapeCommand* shapeCommand;
 
 public:
@@ -42,13 +42,13 @@ public:
 	void eraseLastShape();
 	void redoShape();
 
-	ShapeCommand& getCommandShape() const { return *shapeCommand; }
-	Command& getCommand() const { return *command; }
-   CADFileManager& getFileManager() const { return fileManager; }
-   ViewMediator& getMediator() const { return *mediator; }
+	ShapeCommand& commandShape() const { return *shapeCommand; }
+	Command& command() const { return *currentCmd; }
+   CADFileManager& fileManager() const { return cadFileManager; }
+   ViewMediator& mediator() const { return *viewMediator; }
 
-   bool getCurrentFileStatus() const { return fileManager.getCurrentFile()->getStatus(); }
-   std::vector<CADShape*> getCurrentFileShapes() const { return fileManager.getCurrentFile()->getShapes(); }
+   bool currentFileStatus() const { return cadFileManager.currentFile()->status(); }
+   std::vector<CADShape*> currentFileShapes() const { return cadFileManager.currentFile()->shapesVector(); }
 
    void sendMessageToStatusBar(std::string& msg) const;
 	void runCommand(Command* cmd);

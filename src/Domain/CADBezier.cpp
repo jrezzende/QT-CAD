@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-std::vector<Point> CADBezier:: getCoordinates()
+std::vector<Point> CADBezier::coordinates()
 {
 	std::vector<Point> points;
 

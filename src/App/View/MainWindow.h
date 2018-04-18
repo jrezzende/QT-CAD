@@ -18,7 +18,7 @@ class MainWindow : public QMainWindow
 	QStatusBar* statusbar;
 	QDesktopWidget desktop;
 
-   Canvas* canvas;
+   Canvas* windowCanvas;
    ViewMediator* mediator;
 
    void initializeComponents();
@@ -28,13 +28,13 @@ public:
 	~MainWindow();
 	MainWindow(ViewMediator* _mediator);
 
-	QStatusBar* getStatusBar() const { return statusbar; }
+	QStatusBar* status() const { return statusbar; }
 
-	std::string getNewFileName();
-	std::string getSaveFileName();
-	std::string getOpenFileName();
+	std::string newFileName();
+	std::string saveFileName();
+	std::string openFileName();
 
-   Canvas& getCanvas() const { return *canvas; }
+   Canvas& canvas() const { return *windowCanvas; }
 
 public slots:
 	void newFile() const;

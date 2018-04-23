@@ -45,8 +45,8 @@ public:
    CADFileManager& fileManager() const { return cadFileManager; }
    ViewMediator& mediator() const { return *viewMediator; }
 
-   bool currentFileStatus() const { return cadFileManager.currentFile()->status(); }
-   std::vector<CADShape*> currentFileShapes() const { return cadFileManager.currentFile()->shapesVector(); }
+   bool currentFileStatus() const { return cadFileManager.currentFile().status(); }
+   std::vector<std::shared_ptr<CADShape>> currentFileShapes() const { return cadFileManager.currentFile().shapesVector(); }
 
    void sendMessageToStatusBar(std::string& msg) const;
 	void runCommand(Command* cmd);

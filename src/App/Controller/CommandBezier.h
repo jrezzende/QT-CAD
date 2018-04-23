@@ -2,19 +2,22 @@
 #ifndef INCLUDED_COMMANDBEZIER_H
 #define INCLUDED_COMMANDBEZIER_H
 
+#include <memory>
+
 #include "ShapeCommand.h"
 #include "CADBezier.h"
 #include "CADLine.h"
 
 class CommandBezier : public ShapeCommand
 {
-	CADBezier* bezier;
-	CADLine* previewLine;
+	std::shared_ptr<CADBezier> bezier;
+	std::shared_ptr<CADLine> previewLine;
 
 public:
 	~CommandBezier()= default;
 	CommandBezier(CADFileManager& m) :
-   ShapeCommand(m, BEZIER) { bezier= new CADBezier(); bezier->setShape(BEZIER); previewLine= new CADLine(); }
+   ShapeCommand(m, BEZIER) { bezier = std::make_shared<CADBezier>(); bezier->setShape(BEZIER);
+	   previewLine= std::make_shared<CADLine>(); }
 
 	void mousePressEvent(const Point& point) override;
 	void mouseMoveEvent(const Point& point) override;

@@ -1,7 +1,7 @@
 #include "ViewMediator.h"
 #include "Handler.h"
 
-void ViewMediator::sendMouseEvents(MouseEvent me, Point &p) const
+void ViewMediator::sendMouseEvents(MouseEvent me, Point& p) const
 {
    switch(me)
    {
@@ -17,7 +17,7 @@ void ViewMediator::sendMouseEvents(MouseEvent me, Point &p) const
    }
 }
 
-void ViewMediator::sendShapeEvents(ShapeType st) const
+void ViewMediator::sendShapeEvents(const ShapeType st) const
 {
    switch(st)
    {

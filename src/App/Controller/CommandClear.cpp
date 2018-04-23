@@ -4,13 +4,13 @@
 
 void CommandClear::execute(CADFileManager& m, ViewMediator& mediator)
 {
-	if(m.currentFile()->shapesVector().empty())
+	if(m.currentFile().shapesVector().empty())
 		return;
 
-	for (size_t i = m.currentFile()->shapesVector().size() - 1; i > 0; i--)
-		m.mementoFile()->addShape(*m.currentFile()->shapesVector().at(i));
+	for (size_t i = m.currentFile().shapesVector().size() - 1; i > 0; i--)
+		m.mementoFile().addShape(m.currentFile().shapesVector().at(i));
 
-	m.mementoFile()->addShape(*m.currentFile()->shapesVector().front());
-	m.currentFile()->eraseAllShapes();
+	m.mementoFile().addShape(m.currentFile().shapesVector().front());
+	m.currentFile().eraseAllShapes();
 	m.setRedoFlag(true);
 }

@@ -44,8 +44,8 @@ public:
 
    std::string fileLabel(WindowActions wa);
 
-   void sendMouseEvents(MouseEvent me, Point& p) const;
-   void sendShapeEvents(ShapeType st) const;
+   void sendMouseEvents(const MouseEvent me, Point& p) const;
+   void sendShapeEvents(const ShapeType st) const;
    void sendMessage(std::string& s) const;
    void sendCommand(WindowActions wa) const;
    void setTitle(QString& s) { _window.setWindowTitle(s); }

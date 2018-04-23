@@ -1,11 +1,11 @@
 #include "CADFile.h"
 #include "Canvas.h"
 
-void CADFile::addShape(CADShape& shape)
+void CADFile::addShape(std::shared_ptr<CADShape> shape)
 {
 	eraseShape(shape);
 
-	shapes.push_back(&shape);
+	shapes.push_back(shape);
 
    if(this->fileName() == "memento")
       return;
@@ -17,23 +17,23 @@ void CADFile::addShape(CADShape& shape)
 	reprint();
 }
 
-void CADFile::addFromRedo(CADShape& shape)
+void CADFile::addFromRedo(std::shared_ptr<CADShape> shape)
 {
 	eraseShape(shape);
 
-	shapes.push_back(&shape);
+	shapes.push_back(shape);
 
 	setStatus(NOTSAVED);
 }
 
-void CADFile::eraseShape(CADShape& shape)
+void CADFile::eraseShape(std::shared_ptr<CADShape> shape)
 {
 	for (int i = 0; i < shapes.size(); i++) {
-		if(shapes[i] == &shape)
+		if (shapes[i] == shape)
 			shapes.erase(shapes.begin() + i);
 	}
 
-   if(this->fileName() == "memento")
+   if (this->fileName() == "memento")
       return;
 
 	reprint();
@@ -41,7 +41,7 @@ void CADFile::eraseShape(CADShape& shape)
 
 void CADFile::eraseLastShape()
 {
-	if(!(shapes.empty())) 
+	if (!(shapes.empty())) 
 		shapes.pop_back();
 
 	reprint();
@@ -58,7 +58,7 @@ void CADFile::reprint()
 {
 	drawArea->clearMap();
 
-	for(auto shape : shapes)
+	for(const auto shape : shapes)
       drawArea->drawMap(*shape);
 	
    drawArea->update();

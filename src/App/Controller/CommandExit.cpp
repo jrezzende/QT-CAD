@@ -3,7 +3,5 @@
 
 void CommandExit::execute(CADFileManager& m, ViewMediator& mediator)
 {
-   m.deleteFiles();
-
    exit(0);
 }

@@ -7,7 +7,7 @@
 #include "qfiledialog.h"
 #include "qstatusbar.h"
 
-class Manager;
+class Handler;
 class ViewMediator;
 class Canvas;
 
@@ -16,7 +16,7 @@ class MainWindow : public QMainWindow
 	Q_OBJECT
 
 	QStatusBar* statusbar;
-	QDesktopWidget desktop;
+	QDesktopWidget* desktop;
 
    Canvas* windowCanvas;
    ViewMediator* mediator;

@@ -2,20 +2,20 @@
 #ifndef INCLUDED_APP_H
 #define INCLUDED_APP_H
 
+#include <memory>
+
 class CADFileManager;
-class Manager;
+class Handler;
 
 class App
 {
-	CADFileManager* fileManager;
-	Manager* manager;
+	std::unique_ptr<CADFileManager> fileManager;
+	std::unique_ptr<Handler> handler;
 
 	static App* appInstance;
 
-	App() : fileManager(nullptr), manager(nullptr) {}
-
 public:
-	~App();
+	~App()= default;
 
 	int start(int argc, char** argv);
 

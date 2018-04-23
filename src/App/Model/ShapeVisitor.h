@@ -9,6 +9,7 @@ class CADArc;
 class ShapeVisitor
 {
 public:
+   virtual ~ShapeVisitor()= default;
 	virtual void visitLine(CADLine& l) = 0;
 	virtual void visitBezier(CADBezier& b) = 0;
 	virtual void visitArc(CADArc& a) = 0;

@@ -18,17 +18,20 @@ class CADArc : public CADShape
 	Point translatePoint(Point& p);
 	Point retranslatePoint(Point& p);
 
-	int calcArcDivisions(double angleArcSize);
+	int calcArcDivisions(double angleSize);
 
 public:
 	~CADArc()= default;
-	CADArc() : p3(Point(0, 0)) {}
-	CADArc(const Point& _p1, const Point& _p2, const Point& _p3) : CADShape(_p1, _p2), p3(_p3) { type= ARC; }
+	CADArc() : p3(Point(0, 0)), initialAngle(0.0), finalAngle(0.0), incrementAngle(0.0), radius(0.0), arcDivisions(0) {}
+
+	CADArc(const Point& _p1, const Point& _p2, const Point& _p3) : CADShape(_p1, _p2), p3(_p3), initialAngle(0.0), finalAngle(0.0),
+   incrementAngle(0.0), radius(0.0), arcDivisions(0) { type= ARC; }
 
 	void setThirdPoint(const Point& _p3) { p3 = _p3; }
 	Point thirdPoint() const { return p3; }
 
 	std::vector<Point> coordinates() override;
+
 	void setShape(const ShapeType _type) override { type= _type; }
 	void accept(ShapeVisitor& v) override { v.visitArc(*this); };
 

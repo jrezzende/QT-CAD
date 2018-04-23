@@ -1,9 +1,9 @@
 #include "qevent.h"
 #include "qpainterpath.h"
+#include "qdebug.h"
 
 #include "Canvas.h"
 #include "Point.h"
-#include "Manager.h"
 #include "MainWindow.h"
 #include "CADShape.h"
 #include "ViewMediator.h"
@@ -92,7 +92,7 @@ void Canvas::mousePressEvent(QMouseEvent* event)
 	std::ostringstream aux;
 
 	if (event->button() == Qt::LeftButton) {
-		mediator->sendMouseEvents(PRESS, Point(event->pos().x(), event->pos().y()));
+		mediator->sendMouseEvents(PRESS, *new Point(event->pos().x(), event->pos().y()));
 		setDrawing(true);
 
 		aux << "Mouse press event detected: x: " << event->pos().x() << " y: " << event->pos().y();
@@ -109,7 +109,7 @@ void Canvas::mouseReleaseEvent(QMouseEvent * event)
 	std::ostringstream aux;
 
 	if (event->button() == Qt::LeftButton) {
-		mediator->sendMouseEvents(RELEASE, Point(event->pos().x(), event->pos().y()));
+		mediator->sendMouseEvents(RELEASE, *new Point(event->pos().x(), event->pos().y()));
 
 		aux << "Mouse release event detected: x: " << event->pos().x() << " y: " << event->pos().y();
 
@@ -126,13 +126,14 @@ void Canvas::mouseMoveEvent(QMouseEvent * event)
 	std::ostringstream aux;
 
 	if (!drawing) {
-		aux << "Mouse tracking mode on. Hover position: x: " << event->pos().x() << " y: " << event->pos().y() << ". Press CTRL + T to turn off.";
+		aux << "Mouse tracking mode on. Hover position: x: " << event->pos().x() << " y: " << event->pos().y() 
+	   << ". Press CTRL + T to turn off.";
 
       mediator->sendMessage(aux.str());
 	}
 
 	if (drawing) {
-		mediator->sendMouseEvents(MOVE, Point(event->pos().x(), event->pos().y()));
+		mediator->sendMouseEvents(MOVE, *new Point(event->pos().x(), event->pos().y()));
 
 		aux << "Mouse move event detected: x: " << event->pos().x() << " y: " << event->pos().y();
 
@@ -141,6 +142,23 @@ void Canvas::mouseMoveEvent(QMouseEvent * event)
 
 	event->accept();
 }
+
+void Canvas::wheelEvent(QWheelEvent * event)
+{
+   if(drawing)
+      return;
+
+   std::ostringstream aux;
+
+   qDebug() << event->delta() / 120;
+   //if(event->delta() / 120) // mouse ticks = zoom quantity as in
+
+   if((event->delta() / 120) != 0) {
+      aux << "Mouse wheel event detected: x:" << event->pos().x() << " y: " << event->pos().y(); 
+      mediator->sendMessage(aux.str());
+   }
+}
+
 
 void Canvas::paintEvent(QPaintEvent* event)
 {

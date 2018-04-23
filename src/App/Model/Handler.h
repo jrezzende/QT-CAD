@@ -1,6 +1,6 @@
 #pragma once
-#ifndef INCLUDED_MANAGER_H
-#define INCLUDED_MANAGER_H
+#ifndef INCLUDED_HANDLER_H
+#define INCLUDED_HANDLER_H
 
 class Command;
 class ShapeCommand;
@@ -9,11 +9,9 @@ class Point;
 class Canvas;
 class ViewMediator;
 
-#include <string>
-
 #include "CADFileManager.h"
 
-class Manager
+class Handler
 {
    CADFileManager& cadFileManager;
    ViewMediator* viewMediator;
@@ -22,8 +20,8 @@ class Manager
 	ShapeCommand* shapeCommand;
 
 public:
-	~Manager();
-	Manager(CADFileManager& m);
+	~Handler();
+	Handler(CADFileManager& m);
 
 	void newFileCmd();
 	void saveFileCmd();
@@ -54,4 +52,4 @@ public:
 	void runCommand(Command* cmd);
 };
 
-#endif //  INCLUDED_MANAGER_H
+#endif //  INCLUDED_HANDLER_H

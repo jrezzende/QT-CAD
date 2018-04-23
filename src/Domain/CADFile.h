@@ -28,7 +28,7 @@ class CADFile
 
 public:
 	~CADFile()= default;
-	CADFile(const std::string _fileName) : name(_fileName), fileStatus(NOTSAVED), drawArea(nullptr) {}
+	explicit CADFile(const std::string _fileName) : name(_fileName), fileStatus(NOTSAVED), drawArea(nullptr) {}
 	CADFile(const std::string _fileName, Canvas* _canvas) : name(_fileName), fileStatus(NOTSAVED), drawArea(_canvas) {}
 	CADFile(
       const std::string _fileName, const std::string _filePath, Canvas* _canvas

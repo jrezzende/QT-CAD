@@ -11,7 +11,7 @@
 
 void CommandLoadFile::execute(CADFileManager& m, ViewMediator& mediator)
 {
-	std::string filePath= mediator.retrieveFileLabel(LOAD);
+	std::string filePath= mediator.fileLabel(LOAD);
 
 	if(filePath.empty())
 		return;
@@ -35,35 +35,32 @@ void CommandLoadFile::execute(CADFileManager& m, ViewMediator& mediator)
 		is.seekg(0);
 
 		while (!is.eof()) {
-			is.read((char*)&type, sizeof(int));
+			is.read(reinterpret_cast<char*>(&type), sizeof(int));
 
-			is.read((char*)&p1X, sizeof(double));
-			is.read((char*)&p1Y, sizeof(double));
+			is.read(reinterpret_cast<char*>(&p1X), sizeof(double));
+			is.read(reinterpret_cast<char*>(&p1Y), sizeof(double));
 
-			is.read((char*)&p2X, sizeof(double));
-			is.read((char*)&p2Y, sizeof(double));
+			is.read(reinterpret_cast<char*>(&p2X), sizeof(double));
+			is.read(reinterpret_cast<char*>(&p2Y), sizeof(double));
 
 			if (type > 1) {
-				is.read((char*)&p3X, sizeof(double));
-				is.read((char*)&p3Y, sizeof(double));
+				is.read(reinterpret_cast<char*>(&p3X), sizeof(double));
+				is.read(reinterpret_cast<char*>(&p3Y), sizeof(double));
 			}
 
 			switch (type) 
 			{
 			case UNDEFINED:
 				break;
-			case LINE:
-			{
+			case LINE: {
 				file->addShape(*new CADLine(Point(p1X, p1Y), Point(p2X, p2Y)));
 				break;
 			}
-			case BEZIER:
-         {
+         case BEZIER: {
 				file->addShape(*new CADBezier(Point(p1X, p1Y), Point(p2X, p2Y), Point(p3X, p3Y)));
 				break;
 			}
-			case ARC:
-			{
+			case ARC: {
 				file->addShape(*new CADArc(Point(p1X, p1Y), Point(p2X, p2Y), Point(p3X, p3Y)));
 				break;
 			}

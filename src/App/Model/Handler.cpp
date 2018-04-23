@@ -1,6 +1,6 @@
 #include <string>
 
-#include "Manager.h"
+#include "Handler.h"
 #include "Point.h"
 #include "CADFileManager.h"
 #include "ViewMediator.h"
@@ -18,13 +18,13 @@
 #include "CommandExit.h"
 #include "ShapeCommand.h"
 
-Manager::~Manager()
+Handler::~Handler()
 {
 	delete currentCmd;
 	delete shapeCommand;
 }
 
-Manager::Manager(CADFileManager& m) : 
+Handler::Handler(CADFileManager& m) : 
 cadFileManager(m), currentCmd(nullptr), shapeCommand(nullptr)
 {
    viewMediator= new ViewMediator(this);
@@ -34,49 +34,49 @@ cadFileManager(m), currentCmd(nullptr), shapeCommand(nullptr)
    lineCommand();
 }
 
-void Manager::newFileCmd()
+void Handler::newFileCmd()
 {
 	runCommand(new CommandNewFile());
 }
 
-void Manager::saveFileCmd()
+void Handler::saveFileCmd()
 {
 	runCommand(new CommandSave());
 }
 
-void Manager::loadFileCmd()
+void Handler::loadFileCmd()
 {
 	runCommand(new CommandLoadFile());
 }
 
-void Manager::clearShapes()
+void Handler::clearShapes()
 {
 	runCommand(new CommandClear());
 }
 
-void Manager::eraseLastShape()
+void Handler::eraseLastShape()
 {
 	runCommand(new CommandUndo());
 }
 
-void Manager::redoShape()
+void Handler::redoShape()
 {
 	runCommand(new CommandRedo());
 }
 
-void Manager::exitFileCmd()
+void Handler::exitFileCmd()
 {
 	runCommand(new CommandExit());
 }
 
 //////////////////////////////////////////////
 
-void Manager::mousePressEvent(const Point& pos)
+void Handler::mousePressEvent(const Point& pos)
 {
 	shapeCommand->mousePressEvent(pos);
 }
 
-void Manager::mouseReleaseEvent(const Point& pos)
+void Handler::mouseReleaseEvent(const Point& pos)
 {
 	shapeCommand->mouseReleaseEvent(pos);
 	
@@ -92,19 +92,19 @@ void Manager::mouseReleaseEvent(const Point& pos)
 	}
 }
 
-void Manager::mouseMoveEvent(const Point& pos)
+void Handler::mouseMoveEvent(const Point& pos)
 {
 	shapeCommand->mouseMoveEvent(pos);
 }
 
 //////////////////////////////////////////////
 
-void Manager::sendMessageToStatusBar(std::string& msg) const
+void Handler::sendMessageToStatusBar(std::string& msg) const
 {
    viewMediator->sendMessage(msg);
 }
 
-void Manager::arcCommand()
+void Handler::arcCommand()
 {
 	if (shapeCommand)
 		delete shapeCommand;
@@ -113,7 +113,7 @@ void Manager::arcCommand()
    sendMessageToStatusBar(std::string("Drawing mode selected: Arc."));
 }
 
-void Manager::bezierCommand()
+void Handler::bezierCommand()
 {
 	if (shapeCommand)
 		delete shapeCommand;
@@ -122,7 +122,7 @@ void Manager::bezierCommand()
    sendMessageToStatusBar(std::string("Drawing mode selected: Bezier."));
 }
 
-void Manager::lineCommand()
+void Handler::lineCommand()
 {
 	if (shapeCommand)
 		delete shapeCommand;
@@ -133,7 +133,7 @@ void Manager::lineCommand()
 
 //////////////////////////////////////////////
 
-void Manager::runCommand(Command* cmd)
+void Handler::runCommand(Command* cmd)
 {
 	currentCmd= cmd;
    currentCmd->execute(cadFileManager, *viewMediator);

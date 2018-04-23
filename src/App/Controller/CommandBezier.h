@@ -6,8 +6,6 @@
 #include "CADBezier.h"
 #include "CADLine.h"
 
-#include <iostream>
-
 class CommandBezier : public ShapeCommand
 {
 	CADBezier* bezier;

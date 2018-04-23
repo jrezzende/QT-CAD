@@ -2,7 +2,6 @@
 #ifndef INCLUDED_CADLINE_H
 #define INCLUDED_CADLINE_H
 
-#include "Point.h"
 #include "CADShape.h"
 
 class CADLine : public CADShape

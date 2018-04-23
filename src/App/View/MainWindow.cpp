@@ -11,18 +11,18 @@
 #include "MainWindow.h"
 #include "Canvas.h"
 #include "ViewMediator.h"
-#include "Manager.h"
+#include "Handler.h"
 #include "Model.h"
 
 MainWindow::~MainWindow()
 {
    delete statusbar;
+   delete desktop;
    delete windowCanvas;
    delete mediator;
 }
 
-MainWindow::MainWindow(ViewMediator* _mediator) : QMainWindow(nullptr), statusbar(nullptr), mediator(_mediator),
-windowCanvas(new Canvas(_mediator, this))
+MainWindow::MainWindow(ViewMediator* _mediator) : QMainWindow(nullptr), statusbar(nullptr), desktop(nullptr), windowCanvas(new Canvas(_mediator, this)), mediator(_mediator)
 {
 	initializeComponents();
 	createShortcuts();
@@ -30,8 +30,8 @@ windowCanvas(new Canvas(_mediator, this))
 
 void MainWindow::initializeComponents()
 {
-   QRect _screenSize = desktop.availableGeometry(this);
-   setMinimumSize(QSize(_screenSize.width() * 1.0f, _screenSize.height() * 1.0f));
+   QRect screenSize = desktop->availableGeometry(this);
+   setMinimumSize(QSize(screenSize.width() * 1.0f, screenSize.height() * 1.0f));
 
 	auto nav = menuBar();
 	auto fileMenu = new QMenu();

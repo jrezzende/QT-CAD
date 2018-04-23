@@ -1,5 +1,5 @@
 #include "ViewMediator.h"
-#include "Manager.h"
+#include "Handler.h"
 
 void ViewMediator::sendMouseEvents(MouseEvent me, Point &p) const
 {
@@ -69,7 +69,7 @@ void ViewMediator::sendCommand(WindowActions wa) const
    }
 }
 
-std::string ViewMediator::retrieveFileLabel(WindowActions wa)
+std::string ViewMediator::fileLabel(WindowActions wa)
 {
    switch(wa)
    {

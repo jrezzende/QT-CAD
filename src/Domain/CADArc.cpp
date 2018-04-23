@@ -18,17 +18,17 @@ Point CADArc::retranslatePoint(Point& p)
 	return Point(retranslatedX, retranslatedY);
 }
 
-int CADArc::calcArcDivisions(const double angleArcSize)
+int CADArc::calcArcDivisions(const double angleSize)
 {
 	int divisions= 0;
 
-	if (angleArcSize <= 90)
+	if (angleSize <= 90)
 		divisions = 50;
-	else if (angleArcSize >= 90 && angleArcSize <= 180)
+	else if (angleSize >= 90 && angleSize <= 180)
 		divisions = 100;
-	else if (angleArcSize >= 180 && angleArcSize <= 270)
+	else if (angleSize >= 180 && angleSize <= 270)
 		divisions = 150;
-	else if (angleArcSize >= 270 && angleArcSize <= 360)
+	else if (angleSize >= 270 && angleSize <= 360)
 		divisions = 200;
 
 	return divisions;

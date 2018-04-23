@@ -5,11 +5,10 @@
 #include "qwidget.h"
 #include "qpainter.h"
 #include "qpixmap.h"
-#include "qtransform.h"
 
 class ViewMediator;
 class CADShape;
-class Manager;
+class Handler;
 
 class Canvas : public QWidget
 {
@@ -26,6 +25,7 @@ protected:
 	void mousePressEvent(QMouseEvent* event) override;
 	void mouseMoveEvent(QMouseEvent* event) override;
 	void mouseReleaseEvent(QMouseEvent* event) override;
+   void wheelEvent(QWheelEvent* event) override;
 	void paintEvent(QPaintEvent* event) override; 
 
 public:

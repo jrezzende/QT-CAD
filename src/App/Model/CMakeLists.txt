@@ -2,14 +2,14 @@ project(model CXX)
 
 set(
 	MODEL_SOURCES
-	Manager.cpp
+	Handler.cpp
 	ShapeVisitorSaveFile.cpp
 	ViewMediator.cpp
 )
 
 set(
 	MODEL_HEADERS
-	Manager.h
+	Handler.h
 	CADFileManager.h
 	ShapeVisitor.h
 	ShapeVisitorSaveFile.h

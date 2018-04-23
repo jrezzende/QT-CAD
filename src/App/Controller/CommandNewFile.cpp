@@ -4,8 +4,6 @@
 #include "CADFile.h"
 #include "ViewMediator.h"
 
-#include <sstream>
-
 void CommandNewFile::execute(CADFileManager& m, ViewMediator& mediator)
 {
    m.clearShapes();

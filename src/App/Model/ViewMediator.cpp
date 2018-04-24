@@ -6,13 +6,13 @@ void ViewMediator::sendMouseEvents(MouseEvent me, Point& p) const
    switch(me)
    {
    case PRESS:
-      _manager->mousePressEvent(p);
+      handler->mousePressEvent(p);
       break;
    case MOVE:
-      _manager->mouseMoveEvent(p);
+      handler->mouseMoveEvent(p);
       break;
    case RELEASE:
-      _manager->mouseReleaseEvent(p);
+      handler->mouseReleaseEvent(p);
       break;
    }
 }
@@ -22,13 +22,13 @@ void ViewMediator::sendShapeEvents(const ShapeType st) const
    switch(st)
    {
    case LINE:
-      _manager->lineCommand();
+      handler->lineCommand();
       break;
    case BEZIER:
-      _manager->bezierCommand();
+      handler->bezierCommand();
       break;
    case ARC:
-      _manager->arcCommand();
+      handler->arcCommand();
       break;
    case UNDEFINED:
       return;
@@ -45,26 +45,26 @@ void ViewMediator::sendCommand(WindowActions wa) const
    switch(wa)
    {
    case NEW:
-      _manager->newFileCmd();
-      _manager->lineCommand();
+      handler->newFileCmd();
+      handler->lineCommand();
       break;
    case LOAD:
-      _manager->loadFileCmd();
+      handler->loadFileCmd();
       break;
    case SAVE:
-      _manager->saveFileCmd();
+      handler->saveFileCmd();
       break;
    case UNDO:
-      _manager->eraseLastShape();
+      handler->eraseLastShape();
       break;
    case REDO:
-      _manager->redoShape();
+      handler->redoShape();
       break;
    case CLEAR:
-      _manager->clearShapes();
+      handler->clearShapes();
       break;
    case EXIT:
-      _manager->exitFileCmd();
+      handler->exitFileCmd();
       break;
    }
 }

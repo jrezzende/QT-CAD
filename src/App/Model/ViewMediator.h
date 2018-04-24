@@ -32,14 +32,14 @@ enum WindowActions
 
 class ViewMediator
 {
-   Handler* _manager;
+   Handler* handler;
    MainWindow _window;
 
 public:
    ~ViewMediator()= default;
-   ViewMediator(Handler* _manager) : _manager(_manager), _window(this) { _window.show(); }
+   explicit ViewMediator(Handler* _handler) : handler(_handler), _window(this) { _window.show(); }
 
-   Handler& manager() const { return *_manager; }
+   Handler& manager() const { return *handler; }
    Canvas& canvas() const { return _window.canvas(); }
 
    std::string fileLabel(WindowActions wa);

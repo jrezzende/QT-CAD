@@ -26,7 +26,7 @@ class MainWindow : public QMainWindow
 
 public:
 	~MainWindow();
-	MainWindow(ViewMediator* _mediator);
+	explicit MainWindow(ViewMediator* _mediator);
 
 	QStatusBar* status() const { return statusbar; }
 

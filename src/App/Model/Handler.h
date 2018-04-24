@@ -21,7 +21,7 @@ class Handler
 
 public:
 	~Handler();
-	Handler(CADFileManager& m);
+	explicit Handler(CADFileManager& m);
 
 	void newFileCmd();
 	void saveFileCmd();

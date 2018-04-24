@@ -13,7 +13,7 @@ class ShapeVisitorSaveFile : public ShapeVisitor
 public:
 	virtual ~ShapeVisitorSaveFile()= default;
 
-	ShapeVisitorSaveFile(std::ostream& _os) : os(_os) {};
+	explicit ShapeVisitorSaveFile(std::ostream& _os) : os(_os) {};
 
 	void visitLine(CADLine& l) override;
 	void visitBezier(CADBezier& b) override;

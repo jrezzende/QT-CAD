@@ -2,6 +2,8 @@ project(domain CXX)
 
 set(
 	DOMAIN_SOURCES
+	PointMapper.cpp
+	Rect.cpp
 	CADArc.cpp
 	CADBezier.cpp
 	CADLine.cpp
@@ -11,12 +13,15 @@ set(
 set(
 	DOMAIN_HEADERS
 	Point.h
+	PointMapper.h
+	Rect.h
+	ZoomFactor.h
+	ShapeType.h
 	CADShape.h
 	CADArc.h
 	CADBezier.h
 	CADLine.h
 	CADFile.h
-	ShapeType.h
 )
 
 add_library(domain STATIC ${DOMAIN_SOURCES} ${DOMAIN_HEADERS})

@@ -15,7 +15,7 @@ class CommandBezier : public ShapeCommand
 
 public:
 	~CommandBezier()= default;
-	CommandBezier(CADFileManager& m) :
+	explicit CommandBezier(CADFileManager& m) :
    ShapeCommand(m, BEZIER) { bezier = std::make_shared<CADBezier>(); bezier->setShape(BEZIER);
 	   previewLine= std::make_shared<CADLine>(); }
 

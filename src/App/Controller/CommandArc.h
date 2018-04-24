@@ -15,7 +15,7 @@ class CommandArc : public ShapeCommand
 
 public: 
 	~CommandArc()= default;
-	CommandArc(CADFileManager& m): 
+	explicit CommandArc(CADFileManager& m): 
    ShapeCommand(m, ARC) { arc= std::make_shared<CADArc>(); arc->setShape(ARC); previewLine = std::make_shared<CADLine>();}
 
 	void mousePressEvent(const Point& point) override;

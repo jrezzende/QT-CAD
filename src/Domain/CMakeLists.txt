@@ -3,7 +3,6 @@ project(domain CXX)
 set(
 	DOMAIN_SOURCES
 	PointMapper.cpp
-	Rect.cpp
 	CADArc.cpp
 	CADBezier.cpp
 	CADLine.cpp
@@ -15,6 +14,7 @@ set(
 	Point.h
 	PointMapper.h
 	Rect.h
+	Size.h
 	ZoomFactor.h
 	ShapeType.h
 	CADShape.h

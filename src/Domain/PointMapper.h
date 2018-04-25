@@ -1,3 +1,4 @@
+#pragma once
 #ifndef INCLUDED_POINTMAPER_H
 #define INCLUDED_POINTMAPER_H
 
@@ -24,8 +25,8 @@ public:
    virtual ~PointMapper()= default;
    PointMapper(Point& p1, Point& p2, int height, int width);
 
-   Point& mapWorldToDevice();
-   Point& mapDeviceToWorld();
+   Point& mapWorldToDevice(Point& devicePoint);
+   Point& mapDeviceToWorld(Point& worldPoint);
    
    void zoom();
    void translateWorldPoints();

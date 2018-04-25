@@ -3,16 +3,16 @@
 PointMapper::PointMapper(Point & p1, Point & p2, int height, int width) :
    worldP1(p1), worldP2(p2), deviceHeight(height), deviceWidth(width)
 {
-   //get deltas
+   calcDeltas();
    setDeviceSize(deviceHeight, deviceWidth);
 }
 
-Point & PointMapper::mapWorldToDevice()
+Point & PointMapper::mapWorldToDevice(Point& devicePoint)
 {
    // TODO: insert return statement here
 }
 
-Point & PointMapper::mapDeviceToWorld()
+Point & PointMapper::mapDeviceToWorld(Point& worldPoint)
 {
    // TODO: insert return statement here
 }

@@ -1,3 +1,4 @@
+#pragma once
 #ifndef INCLUDED_ZOOMFACTOR_H
 #define INCLUDED_ZOOMFACTOR_H
 

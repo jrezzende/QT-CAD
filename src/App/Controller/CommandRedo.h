@@ -10,7 +10,7 @@ public:
 	~CommandRedo()= default;
 	CommandRedo()= default;
 
-	void execute(CADFileManager& m, ViewMediator& mediator) override;
+	void execute(CADFileManager& fmanager, ViewMediator& vmediator) override;
 };
 
 #endif //  INCLUDED_COMMANDREDO_H

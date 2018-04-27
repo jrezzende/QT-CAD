@@ -1,5 +1,6 @@
 #include "ViewMediator.h"
 #include "Handler.h"
+#include "Canvas.h"
 
 void ViewMediator::sendMouseEvents(MouseEvent me, Point& p) const
 {
@@ -22,13 +23,13 @@ void ViewMediator::sendShapeEvents(const ShapeType st) const
    switch(st)
    {
    case LINE:
-      handler->lineCommand();
+      handler->createLineCommand();
       break;
    case BEZIER:
-      handler->bezierCommand();
+      handler->createBezierCommand();
       break;
    case ARC:
-      handler->arcCommand();
+      handler->createArcCommand();
       break;
    case UNDEFINED:
       return;
@@ -40,19 +41,19 @@ void ViewMediator::sendMessage(std::string& s) const
    _window.statusBar()->showMessage(QString::fromStdString(s), 1000);
 }
 
-void ViewMediator::sendCommand(WindowActions wa) const
+void ViewMediator::sendCommand(const WindowActions wa) const
 {
    switch(wa)
    {
    case NEW:
-      handler->newFileCmd();
-      handler->lineCommand();
+      handler->createNewFileCmd();
+      handler->createLineCommand();
       break;
    case LOAD:
-      handler->loadFileCmd();
+      handler->createLoadFileCmd();
       break;
    case SAVE:
-      handler->saveFileCmd();
+      handler->createSaveFileCmd();
       break;
    case UNDO:
       handler->eraseLastShape();
@@ -64,9 +65,14 @@ void ViewMediator::sendCommand(WindowActions wa) const
       handler->clearShapes();
       break;
    case EXIT:
-      handler->exitFileCmd();
+      handler->createExitFileCmd();
       break;
    }
+}
+
+void ViewMediator::zoomFocus(Point& p) const
+{
+   handler->createZoomCmd(p, canvas().zoomFactor());
 }
 
 std::string ViewMediator::fileLabel(WindowActions wa)

@@ -3,7 +3,6 @@
 #define INCLUDED_CADFile_H
 
 #include <functional>
-#include <memory>
 
 #include "CADShape.h"
 
@@ -20,7 +19,7 @@ class CADFile
 	std::string name;
 	std::string path;
 
-	std::vector<std::shared_ptr<CADShape>> shapes;
+	std::vector<CADShape*> shapes;
 
 	Status fileStatus;
 	Canvas* drawArea;
@@ -44,8 +43,8 @@ public:
 	void setFilePath(const std::string& _filePath) { path = _filePath; }
 	std::string filePath() const {return path;}
 	
-	std::vector<std::shared_ptr<CADShape>> shapesVector() const { return shapes; }
-	std::shared_ptr<CADShape> lastShape() const { return shapes.back();}
+	std::vector<CADShape*>shapesVector() const { return shapes; }
+	CADShape& lastShape() const { return *shapes.back();}
 	
 	void popShape() { shapes.pop_back(); }
 
@@ -56,9 +55,9 @@ public:
 
 	////////////////////////////
 
-	void addShape(std::shared_ptr<CADShape> shape);
-	void addFromRedo(std::shared_ptr<CADShape> shape);
-	void eraseShape(std::shared_ptr<CADShape> shape);
+	void addShape(CADShape& shape);
+	void addFromRedo(CADShape& shape);
+	void eraseShape(CADShape& shape);
 	void eraseLastShape();
 	void eraseAllShapes();
 	void reprint();

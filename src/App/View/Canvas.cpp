@@ -2,6 +2,7 @@
 #include "qpainterpath.h"
 #include "qdebug.h"
 
+#include "Rect.h"
 #include "Canvas.h"
 #include "Point.h"
 #include "MainWindow.h"
@@ -10,7 +11,8 @@
 
 #include <sstream>
 
-Canvas::Canvas(ViewMediator* _mediator, QWidget* parent) : QWidget(parent), pixMap(1920, 1080), mediator(_mediator)
+Canvas::Canvas(ViewMediator* _mediator, QWidget* parent) : QWidget(parent), pixMap(1920, 1080), mediator(_mediator),
+drawing(false), zFactor(1.0)
 {
 	setCursor(QCursor(Qt::ArrowCursor));
 
@@ -19,8 +21,6 @@ Canvas::Canvas(ViewMediator* _mediator, QWidget* parent) : QWidget(parent), pixM
 	painter.begin(&pixMap);
 
 	setMouseTracking(true);
-
-	drawing= false;
 }
 
 void Canvas::toggleTracking()
@@ -104,7 +104,7 @@ void Canvas::mousePressEvent(QMouseEvent* event)
 	event->ignore();	
 }
 
-void Canvas::mouseReleaseEvent(QMouseEvent * event)
+void Canvas::mouseReleaseEvent(QMouseEvent* event)
 {
 	std::ostringstream aux;
 
@@ -121,7 +121,7 @@ void Canvas::mouseReleaseEvent(QMouseEvent * event)
 	event->accept();
 }
 
-void Canvas::mouseMoveEvent(QMouseEvent * event)
+void Canvas::mouseMoveEvent(QMouseEvent* event)
 {
 	std::ostringstream aux;
 
@@ -143,20 +143,29 @@ void Canvas::mouseMoveEvent(QMouseEvent * event)
 	event->accept();
 }
 
-void Canvas::wheelEvent(QWheelEvent * event)
+void Canvas::wheelEvent(QWheelEvent* event)
 {
+   std::ostringstream aux;
+
    if(drawing)
       return;
 
-   std::ostringstream aux;
-
-   qDebug() << event->delta() / 120;
-   //if(event->delta() / 120) // mouse ticks = zoom quantity as in
-
-   if((event->delta() / 120) != 0) {
-      aux << "Mouse wheel event detected: x:" << event->pos().x() << " y: " << event->pos().y(); 
-      mediator->sendMessage(aux.str());
+   if ((event->delta() / 120) > 0) {
+      if (zFactor < 1.90f)
+         zFactor += 0.10f;
+   } else {
+      if (zFactor > 0.10f)
+         zFactor -= 0.10f;
    }
+
+   aux << "Mouse wheel event detected: x:" << event->pos().x() << " y: " << event->pos().y(); 
+   mediator->sendMessage(aux.str());
+   mediator->zoomFocus(Point(event->pos().x(), event->pos().y()));
+}
+
+void Canvas::resizeScene(Rect& newArea)
+{
+   //pixmap copy > pixmap with new rect area
 }
 
 

@@ -10,7 +10,7 @@ public:
 	~CommandUndo()= default;
 	CommandUndo()= default;
 
-	void execute(CADFileManager& m, ViewMediator& mediator) override;
+	void execute(CADFileManager& fmanager, ViewMediator& vmediator) override;
 };
 
 #endif //  INCLUDED_COMMANDUNDO_H

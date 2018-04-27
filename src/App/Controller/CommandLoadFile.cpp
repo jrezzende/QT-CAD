@@ -53,15 +53,15 @@ void CommandLoadFile::execute(CADFileManager& m, ViewMediator& mediator)
 			case UNDEFINED:
 				break;
 			case LINE: {
-				file->addShape(std::make_shared<CADLine>(Point(p1X, p1Y), Point(p2X, p2Y)));
+				file->addShape(*new CADLine(Point(p1X, p1Y), Point(p2X, p2Y)));
 				break;
 			}
          case BEZIER: {
-				file->addShape(std::make_shared<CADBezier>(Point(p1X, p1Y), Point(p2X, p2Y), Point(p3X, p3Y)));
+				file->addShape(*new CADBezier(Point(p1X, p1Y), Point(p2X, p2Y), Point(p3X, p3Y)));
 				break;
 			}
 			case ARC: {
-				file->addShape(std::make_shared<CADArc>(Point(p1X, p1Y), Point(p2X, p2Y), Point(p3X, p3Y)));
+				file->addShape(*new CADArc(Point(p1X, p1Y), Point(p2X, p2Y), Point(p3X, p3Y)));
 				break;
 			}
          default:

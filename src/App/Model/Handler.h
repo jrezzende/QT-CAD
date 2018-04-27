@@ -23,18 +23,20 @@ public:
 	~Handler();
 	explicit Handler(CADFileManager& m);
 
-	void newFileCmd();
-	void saveFileCmd();
-	void loadFileCmd();
-	void exitFileCmd();
+	void createNewFileCmd();
+	void createSaveFileCmd();
+	void createLoadFileCmd();
+	void createExitFileCmd();
+
+   void createZoomCmd(Point& pos, float zf);
 
 	void mousePressEvent(const Point& pos);
 	void mouseReleaseEvent(const Point& pos);
 	void mouseMoveEvent(const Point& pos);
 
-	void lineCommand();
-	void bezierCommand();
-	void arcCommand();
+	void createLineCommand();
+	void createBezierCommand();
+	void createArcCommand();
 
 	void clearShapes();
 	void eraseLastShape();
@@ -46,7 +48,7 @@ public:
    ViewMediator& mediator() const { return *viewMediator; }
 
    bool currentFileStatus() const { return cadFileManager.currentFile().status(); }
-   std::vector<std::shared_ptr<CADShape>> currentFileShapes() const { return cadFileManager.currentFile().shapesVector(); }
+   std::vector<CADShape*> currentFileShapes() const { return cadFileManager.currentFile().shapesVector(); }
 
    void sendMessageToStatusBar(std::string& msg) const;
 	void runCommand(Command* cmd);

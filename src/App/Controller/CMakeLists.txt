@@ -5,6 +5,7 @@ set(
 	CommandArc.cpp
 	CommandBezier.cpp
 	CommandLine.cpp
+	CommandZoom.cpp
 	CommandIdle.cpp
 	CommandNewFile.cpp
 	CommandLoadFile.cpp
@@ -22,6 +23,7 @@ set(
 	CommandArc.h
 	CommandBezier.h
 	CommandLine.h
+	CommandZoom.h
 	CommandNewFile.h
 	CommandLoadFile.h
 	CommandSave.h

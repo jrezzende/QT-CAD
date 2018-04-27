@@ -4,6 +4,7 @@
 
 #include "Command.h"
 #include "CADShape.h"
+#include "ViewMediator.h"
 #include "ShapeType.h"
 
 class CADFileManager;
@@ -12,7 +13,8 @@ class Point;
 class ShapeCommand
 {
 protected:
-   CADFileManager& m;
+   CADFileManager& fileManager;
+   ViewMediator& viewMediator;
    ShapeType shape;
 
 	bool isDrawing;
@@ -21,8 +23,9 @@ protected:
 
 public:
 	virtual ~ShapeCommand()= default;
-	ShapeCommand(CADFileManager& _m, ShapeType _shape) :
-   m(_m), shape(_shape), isDrawing(false), previewDraw(false), secondClick(false) {}
+	ShapeCommand(CADFileManager& _fileManager, ViewMediator& _viewMediator, ShapeType _shape) :
+   fileManager(_fileManager), viewMediator(_viewMediator), shape(_shape), isDrawing(false),
+   previewDraw(false), secondClick(false) {}
 
 	bool hasSecondClick() const { return secondClick; }
 

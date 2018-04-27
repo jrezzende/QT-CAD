@@ -6,6 +6,7 @@
 #include "qpainter.h"
 #include "qpixmap.h"
 
+class Rect;
 class ViewMediator;
 class CADShape;
 class Handler;
@@ -20,6 +21,7 @@ class Canvas : public QWidget
    ViewMediator* mediator;
 
 	bool drawing;
+   float zFactor;
 
 protected:
 	void mousePressEvent(QMouseEvent* event) override;
@@ -30,9 +32,13 @@ protected:
 
 public:
 	~Canvas()= default;
-	Canvas(ViewMediator* _mediator, QWidget* parent);
+   Canvas(ViewMediator* _mediator, QWidget* parent);
 
 	QPixmap& pixmap() { return pixMap;}
+
+   float zoomFactor() const { return zFactor; };
+
+   void resizeScene(Rect& newArea);
 
    void setDrawing(bool flag) { drawing = flag; }
 

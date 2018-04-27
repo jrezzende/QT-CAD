@@ -7,36 +7,39 @@ PointMapper::PointMapper(Point & p1, Point & p2, int height, int width) :
    setDeviceSize(deviceHeight, deviceWidth);
 }
 
-Point & PointMapper::mapWorldToDevice(Point& devicePoint)
+Point& PointMapper::mapWorldToDevice(Point& devicePoint)
 {
-   // TODO: insert return statement here
+   return Point(devicePoint.x, devicePoint.y);
 }
 
-Point & PointMapper::mapDeviceToWorld(Point& worldPoint)
+Point& PointMapper::mapDeviceToWorld(Point& worldPoint)
 {
-   // TODO: insert return statement here
+   return Point(worldPoint.x, worldPoint.y);
 }
 
 void PointMapper::calcDeltas()
 {
+   return;
 }
 
 void PointMapper::adjustProportions()
 {
+   return;
 }
 
 void PointMapper::zoom()
 {
+   return;
 }
 
 void PointMapper::translateWorldPoints()
 {
-
+   return;
 }
 
 void PointMapper::setWorldSize()
 {
-   /////////
+   return;
 }
 
 void PointMapper::setDeviceSize(int height, int width)

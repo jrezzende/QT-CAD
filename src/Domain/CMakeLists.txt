@@ -15,7 +15,6 @@ set(
 	PointMapper.h
 	Rect.h
 	Size.h
-	ZoomFactor.h
 	ShapeType.h
 	CADShape.h
 	CADArc.h

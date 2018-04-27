@@ -11,7 +11,7 @@ public:
 	virtual ~Command()= default;
 	Command()= default;
 
-	virtual void execute(CADFileManager& m, ViewMediator& mediator)= 0;
+	virtual void execute(CADFileManager& fmanager, ViewMediator& viewm)= 0;
 };
 
 #endif //  INCLUDED_COMMAND_H

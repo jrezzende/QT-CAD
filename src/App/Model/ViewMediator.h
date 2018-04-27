@@ -14,9 +14,7 @@ enum MouseEvent
 {
    PRESS,
    MOVE,
-   RELEASE,
-   WHEELUP,
-   WHEELDOWN
+   RELEASE
 };
 
 enum WindowActions
@@ -47,7 +45,8 @@ public:
    void sendMouseEvents(const MouseEvent me, Point& p) const;
    void sendShapeEvents(const ShapeType st) const;
    void sendMessage(std::string& s) const;
-   void sendCommand(WindowActions wa) const;
+   void sendCommand(const WindowActions wa) const;
+   void zoomFocus(Point& p) const;
    void setTitle(QString& s) { _window.setWindowTitle(s); }
    void setWindowWidget(Canvas* canvas) { _window.setCentralWidget(canvas); }
 };

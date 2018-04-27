@@ -9,7 +9,7 @@ void CommandSave::execute(CADFileManager& m, ViewMediator& mediator)
 	if(m.currentFile().status())
 		return;
 
-   std::vector<std::shared_ptr<CADShape>> shapesInFile = m.currentFile().shapesVector();
+   std::vector<CADShape*> shapesInFile = m.currentFile().shapesVector();
    std::ofstream os;
 
 	if (m.currentFile().filePath().empty())

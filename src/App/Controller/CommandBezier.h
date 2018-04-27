@@ -10,14 +10,14 @@
 
 class CommandBezier : public ShapeCommand
 {
-	std::shared_ptr<CADBezier> bezier;
-	std::shared_ptr<CADLine> previewLine;
+	CADBezier* bezier;
+	CADLine* previewLine;
 
 public:
 	~CommandBezier()= default;
-	explicit CommandBezier(CADFileManager& m) :
-   ShapeCommand(m, BEZIER) { bezier = std::make_shared<CADBezier>(); bezier->setShape(BEZIER);
-	   previewLine= std::make_shared<CADLine>(); }
+	explicit CommandBezier(CADFileManager& _fileManager, ViewMediator& _viewMediator) :
+   ShapeCommand(_fileManager, _viewMediator, BEZIER) 
+   { bezier = new CADBezier(); bezier->setShape(BEZIER); previewLine= new CADLine(); }
 
 	void mousePressEvent(const Point& point) override;
 	void mouseMoveEvent(const Point& point) override;

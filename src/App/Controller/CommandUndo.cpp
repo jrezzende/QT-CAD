@@ -5,7 +5,7 @@
 void CommandUndo::execute(CADFileManager& m, ViewMediator& mediator)
 {
 	if (!m.currentFile().shapesVector().empty()) {
-		m.mementoFile().addShape(m.currentFile().shapesVector().back());
+		m.mementoFile().addShape(*m.currentFile().shapesVector().back());
 		m.currentFile().eraseLastShape();
 	}
 }

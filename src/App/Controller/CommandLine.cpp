@@ -9,7 +9,7 @@ void CommandLine::mousePressEvent(const Point& point)
 
 void CommandLine::mouseMoveEvent(const Point& point)
 {			
-	m.currentFile().addShape(line);
+   fileManager.currentFile().addShape(*line);
 	line->setSecondPoint(point);
 }
 

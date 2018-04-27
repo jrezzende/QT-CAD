@@ -9,11 +9,12 @@
 
 class CommandLine : public ShapeCommand
 {
-	std::shared_ptr<CADLine> line;
+	CADLine* line;
 
 public:
 	~CommandLine()= default;
-   explicit CommandLine(CADFileManager& m) : ShapeCommand(m, LINE) { line= std::make_shared<CADLine>(); }
+   explicit CommandLine(CADFileManager& _fileManager, ViewMediator& _viewMediator) :
+      ShapeCommand(_fileManager, _viewMediator, LINE) { line= new CADLine(); }
 
 	void mousePressEvent(const Point& point) override;
 	void mouseMoveEvent(const Point& point) override;

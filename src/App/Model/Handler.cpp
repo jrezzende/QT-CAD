@@ -10,6 +10,7 @@
 #include "CommandClear.h"
 #include "CommandIdle.h"
 #include "CommandLine.h"
+#include "CommandZoom.h"
 #include "CommandLoadFile.h"
 #include "CommandNewFile.h"
 #include "CommandSave.h"
@@ -31,20 +32,20 @@ cadFileManager(m), currentCmd(nullptr), shapeCommand(nullptr)
    m.setCanvas(viewMediator->canvas());
    viewMediator->setWindowWidget(&viewMediator->canvas());
    
-   lineCommand();
+   createLineCommand();
 }
 
-void Handler::newFileCmd()
+void Handler::createNewFileCmd()
 {
 	runCommand(new CommandNewFile());
 }
 
-void Handler::saveFileCmd()
+void Handler::createSaveFileCmd()
 {
 	runCommand(new CommandSave());
 }
 
-void Handler::loadFileCmd()
+void Handler::createLoadFileCmd()
 {
 	runCommand(new CommandLoadFile());
 }
@@ -64,7 +65,7 @@ void Handler::redoShape()
 	runCommand(new CommandRedo());
 }
 
-void Handler::exitFileCmd()
+void Handler::createExitFileCmd()
 {
 	runCommand(new CommandExit());
 }
@@ -81,20 +82,25 @@ void Handler::mouseReleaseEvent(const Point& pos)
 	shapeCommand->mouseReleaseEvent(pos);
 	
 	if(shapeCommand->type() == LINE)
-		lineCommand();
+		createLineCommand();
 
 	else if (shapeCommand->hasSecondClick())
 	{
 		if(shapeCommand->type() == BEZIER)
-			bezierCommand();
+			createBezierCommand();
 		else if(shapeCommand->type() == ARC)
-			arcCommand();
+			createArcCommand();
 	}
 }
 
 void Handler::mouseMoveEvent(const Point& pos)
 {
 	shapeCommand->mouseMoveEvent(pos);
+}
+
+void Handler::createZoomCmd(Point& pos, float zf)
+{
+   runCommand(new CommandZoom(pos, zf));
 }
 
 //////////////////////////////////////////////
@@ -104,29 +110,29 @@ void Handler::sendMessageToStatusBar(std::string& msg) const
    viewMediator->sendMessage(msg);
 }
 
-void Handler::arcCommand()
+void Handler::createArcCommand()
 {
 	if (shapeCommand)
 		delete shapeCommand;
-	shapeCommand = new CommandArc(cadFileManager);
+	shapeCommand = new CommandArc(cadFileManager, *viewMediator);
 
    sendMessageToStatusBar(std::string("Drawing mode selected: Arc."));
 }
 
-void Handler::bezierCommand()
+void Handler::createBezierCommand()
 {
 	if (shapeCommand)
 		delete shapeCommand;
-	shapeCommand= new CommandBezier(cadFileManager);
+	shapeCommand= new CommandBezier(cadFileManager, *viewMediator);
 
    sendMessageToStatusBar(std::string("Drawing mode selected: Bezier."));
 }
 
-void Handler::lineCommand()
+void Handler::createLineCommand()
 {
 	if (shapeCommand)
 		delete shapeCommand;
-	shapeCommand = new CommandLine(cadFileManager);
+	shapeCommand = new CommandLine(cadFileManager, *viewMediator);
 
    sendMessageToStatusBar(std::string("Drawing mode selected: Line."));
 }

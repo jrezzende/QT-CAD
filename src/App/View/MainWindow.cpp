@@ -11,7 +11,7 @@
 #include "MainWindow.h"
 #include "Canvas.h"
 #include "ViewMediator.h"
-#include "Handler.h"
+#include "CommandHandler.h"
 #include "Model.h"
 
 MainWindow::~MainWindow()

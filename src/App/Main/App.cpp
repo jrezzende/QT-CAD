@@ -2,7 +2,7 @@
 
 #include "App.h"
 #include "CADFileManager.h"
-#include "Handler.h"
+#include "CommandHandler.h"
 
 App* App::appInstance = nullptr;
 
@@ -19,7 +19,7 @@ int App::start(int argc, char** argv)
 	QApplication app(argc, argv);
 	
 	fileManager= std::make_unique<CADFileManager>();
-   handler= std::make_unique<Handler>(*fileManager);
+   handler= std::make_unique<CommandHandler>(*fileManager);
    
 	return app.exec();
 }

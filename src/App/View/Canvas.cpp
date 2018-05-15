@@ -9,12 +9,10 @@
 #include "CADShape.h"
 #include "ViewMediator.h"
 
-#include <sstream>
-
 Canvas::Canvas(ViewMediator* _mediator, QWidget* parent) : QWidget(parent), pixMap(1920, 1080), mediator(_mediator),
 drawing(false), zFactor(1.0)
 {
-	setCursor(QCursor(Qt::ArrowCursor));
+	setCursor(QCursor(Qt::CrossCursor));
 
 	pixMap.fill();
 
@@ -89,33 +87,21 @@ void Canvas::drawMap(CADShape& shape)
 
 void Canvas::mousePressEvent(QMouseEvent* event)
 {
-	std::ostringstream aux;
+	if (event->button() != Qt::LeftButton) 
+      event->ignore();
 
-	if (event->button() == Qt::LeftButton) {
-		mediator->sendMouseEvents(PRESS, *new Point(event->pos().x(), event->pos().y()));
-		setDrawing(true);
+   mediator->sendMouseEvents(PRESS, *new Point(event->pos().x(), event->pos().y()));
+   setDrawing(true);
 
-		aux << "Mouse press event detected: x: " << event->pos().x() << " y: " << event->pos().y();
-
-      mediator->sendMessage(aux.str());
-		event->accept();
-	}
-
-	event->ignore();	
+	event->accept();
 }
 
 void Canvas::mouseReleaseEvent(QMouseEvent* event)
 {
-	std::ostringstream aux;
+	if (event->button() != Qt::LeftButton)
+      event->ignore();
 
-	if (event->button() == Qt::LeftButton) {
-		mediator->sendMouseEvents(RELEASE, *new Point(event->pos().x(), event->pos().y()));
-
-		aux << "Mouse release event detected: x: " << event->pos().x() << " y: " << event->pos().y();
-
-      mediator->sendMessage(aux.str());
-	}
-
+   mediator->sendMouseEvents(RELEASE, *new Point(event->pos().x(), event->pos().y()));
 	setDrawing(false);
 
 	event->accept();
@@ -123,30 +109,17 @@ void Canvas::mouseReleaseEvent(QMouseEvent* event)
 
 void Canvas::mouseMoveEvent(QMouseEvent* event)
 {
-	std::ostringstream aux;
+   if (!drawing) {
+      mediator->sendMouseEvents(TRACKING, *new Point(event->pos().x(), event->pos().y()));
+      return;
+   }
 
-	if (!drawing) {
-		aux << "Mouse tracking mode on. Hover position: x: " << event->pos().x() << " y: " << event->pos().y() 
-	   << ". Press CTRL + T to turn off.";
-
-      mediator->sendMessage(aux.str());
-	}
-
-	if (drawing) {
-		mediator->sendMouseEvents(MOVE, *new Point(event->pos().x(), event->pos().y()));
-
-		aux << "Mouse move event detected: x: " << event->pos().x() << " y: " << event->pos().y();
-
-		mediator->sendMessage(aux.str());
-	}
-
+   mediator->sendMouseEvents(MOVE, *new Point(event->pos().x(), event->pos().y()));
 	event->accept();
 }
 
 void Canvas::wheelEvent(QWheelEvent* event)
 {
-   std::ostringstream aux;
-
    if(drawing)
       return;
 
@@ -158,9 +131,7 @@ void Canvas::wheelEvent(QWheelEvent* event)
          zFactor -= 0.10f;
    }
 
-   aux << "Mouse wheel event detected: x:" << event->pos().x() << " y: " << event->pos().y(); 
-   mediator->sendMessage(aux.str());
-   mediator->zoomFocus(Point(event->pos().x(), event->pos().y()));
+   mediator->sendMouseEvents(WHEEL, *new Point(event->pos().x(), event->pos().y()));
 }
 
 void Canvas::resizeScene(Rect& newArea)

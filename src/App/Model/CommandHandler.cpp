@@ -1,6 +1,6 @@
 #include <string>
 
-#include "Handler.h"
+#include "CommandHandler.h"
 #include "Point.h"
 #include "CADFileManager.h"
 #include "ViewMediator.h"
@@ -19,13 +19,13 @@
 #include "CommandExit.h"
 #include "ShapeCommand.h"
 
-Handler::~Handler()
+CommandHandler::~CommandHandler()
 {
 	delete currentCmd;
 	delete shapeCommand;
 }
 
-Handler::Handler(CADFileManager& m) : 
+CommandHandler::CommandHandler(CADFileManager& m) :
 cadFileManager(m), currentCmd(nullptr), shapeCommand(nullptr)
 {
    viewMediator= new ViewMediator(this);
@@ -35,49 +35,49 @@ cadFileManager(m), currentCmd(nullptr), shapeCommand(nullptr)
    createLineCommand();
 }
 
-void Handler::createNewFileCmd()
+void CommandHandler::createNewFileCmd()
 {
 	runCommand(new CommandNewFile());
 }
 
-void Handler::createSaveFileCmd()
+void CommandHandler::createSaveFileCmd()
 {
 	runCommand(new CommandSave());
 }
 
-void Handler::createLoadFileCmd()
+void CommandHandler::createLoadFileCmd()
 {
 	runCommand(new CommandLoadFile());
 }
 
-void Handler::clearShapes()
+void CommandHandler::clearShapes()
 {
 	runCommand(new CommandClear());
 }
 
-void Handler::eraseLastShape()
+void CommandHandler::eraseLastShape()
 {
 	runCommand(new CommandUndo());
 }
 
-void Handler::redoShape()
+void CommandHandler::redoShape()
 {
 	runCommand(new CommandRedo());
 }
 
-void Handler::createExitFileCmd()
+void CommandHandler::createExitFileCmd()
 {
 	runCommand(new CommandExit());
 }
 
 //////////////////////////////////////////////
 
-void Handler::mousePressEvent(const Point& pos)
+void CommandHandler::mousePressEvent(const Point& pos)
 {
 	shapeCommand->mousePressEvent(pos);
 }
 
-void Handler::mouseReleaseEvent(const Point& pos)
+void CommandHandler::mouseReleaseEvent(const Point& pos)
 {
 	shapeCommand->mouseReleaseEvent(pos);
 	
@@ -93,24 +93,24 @@ void Handler::mouseReleaseEvent(const Point& pos)
 	}
 }
 
-void Handler::mouseMoveEvent(const Point& pos)
+void CommandHandler::mouseMoveEvent(const Point& pos)
 {
 	shapeCommand->mouseMoveEvent(pos);
 }
 
-void Handler::createZoomCmd(Point& pos, float zf)
+void CommandHandler::createZoomCmd(Point& pos, float zf)
 {
    runCommand(new CommandZoom(pos, zf));
 }
 
 //////////////////////////////////////////////
 
-void Handler::sendMessageToStatusBar(std::string& msg) const
+void CommandHandler::sendMessageToStatusBar(std::string& msg) const
 {
    viewMediator->sendMessage(msg);
 }
 
-void Handler::createArcCommand()
+void CommandHandler::createArcCommand()
 {
 	if (shapeCommand)
 		delete shapeCommand;
@@ -119,7 +119,7 @@ void Handler::createArcCommand()
    sendMessageToStatusBar(std::string("Drawing mode selected: Arc."));
 }
 
-void Handler::createBezierCommand()
+void CommandHandler::createBezierCommand()
 {
 	if (shapeCommand)
 		delete shapeCommand;
@@ -128,7 +128,7 @@ void Handler::createBezierCommand()
    sendMessageToStatusBar(std::string("Drawing mode selected: Bezier."));
 }
 
-void Handler::createLineCommand()
+void CommandHandler::createLineCommand()
 {
 	if (shapeCommand)
 		delete shapeCommand;
@@ -139,7 +139,7 @@ void Handler::createLineCommand()
 
 //////////////////////////////////////////////
 
-void Handler::runCommand(Command* cmd)
+void CommandHandler::runCommand(Command* cmd)
 {
 	currentCmd= cmd;
    currentCmd->execute(cadFileManager, *viewMediator);

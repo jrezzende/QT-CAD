@@ -22,10 +22,4 @@ void CommandZoom::execute(CADFileManager& fmanager, ViewMediator& vmediator)
 
    auto distanceLeft= posX * dX;
    auto distanceUp= posY * dY;
-
-   Rect* zoomedRect= viewRect;
-   zoomedRect->x += distanceLeft;
-   zoomedRect->y += distanceUp;
-   zoomedRect->width -= dX;
-   zoomedRect->height -= dY;
 }

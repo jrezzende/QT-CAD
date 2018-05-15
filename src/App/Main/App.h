@@ -5,12 +5,12 @@
 #include <memory>
 
 class CADFileManager;
-class Handler;
+class CommandHandler;
 
 class App
 {
 	std::unique_ptr<CADFileManager> fileManager;
-	std::unique_ptr<Handler> handler;
+	std::unique_ptr<CommandHandler> handler;
 
 	static App* appInstance;
 

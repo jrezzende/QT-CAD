@@ -9,12 +9,11 @@ class Rect;
 
 class CommandZoom : public Command
 {
-   Point& focus;
    float zoomFactor;
 
 public:
    ~CommandZoom()= default;
-   CommandZoom(Point& _focus, float _zf) : focus(_focus), zoomFactor(_zf) {}
+   CommandZoom(float zf) : zoomFactor(zf) {}
    
    void execute(CADFileManager& fmanager, ViewMediator& vmediator);
 };

@@ -20,6 +20,19 @@ public:
 	static double distanceBetweenTwoPoints(const Point& p1, const Point& p2) {
 	   return sqrt(pow(p1.x - p2.x, 2) + pow(p1.y - p2.y, 2)); 
     }
+
+   Point Point::operator+(const Point& toAdd) const 
+   { return Point(x + toAdd.x, y + toAdd.y); }
+
+   Point Point::operator-(const Point& toSubtract) const 
+   { return Point(x - toSubtract.x, y - toSubtract.y); }
+
+   Point Point::operator*(double value) const 
+   { return Point(x * value, y * value); }
+
+   Point Point::operator/(double value) const 
+   { return Point(x / value, y / value); }
+
 };
 
 #endif //INCLUDED_POINT_H

@@ -50,6 +50,11 @@ void Canvas::drawCanvas(CADShape& shape)
 	update();
 }
 
+void Canvas::drawPixmap(CADShape& shape)
+{
+   painter.drawPath(drawPath(shape));
+}
+
 QPainterPath Canvas::drawPath(CADShape& shape)
 {
 	auto shapePoints= shape.coordinates();
@@ -62,11 +67,6 @@ QPainterPath Canvas::drawPath(CADShape& shape)
 		path.lineTo(point.x, point.y);
 
 	return path;
-}
-
-void Canvas::drawPixmap(CADShape& shape)
-{
-	painter.drawPath(drawPath(shape));
 }
 
 ////////////////////////////////////////////////

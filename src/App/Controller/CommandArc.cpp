@@ -5,8 +5,8 @@
 void CommandArc::mousePressEvent(const Point& point)
 {
 	if (!isDrawing) {
-		arc->setfirstPoint(point);
-		previewLine->setfirstPoint(point);
+		arc->setFirstPoint(point);
+		previewLine->setFirstPoint(point);
 	}
 	else {
 		secondClick = true;

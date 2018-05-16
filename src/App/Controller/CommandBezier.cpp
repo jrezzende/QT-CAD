@@ -5,8 +5,8 @@
 void CommandBezier::mousePressEvent(const Point& point)
 {
 	if (!isDrawing) {
-		bezier->setfirstPoint(point);
-		previewLine->setfirstPoint(point);
+		bezier->setFirstPoint(point);
+		previewLine->setFirstPoint(point);
 	}
 	else {
 		secondClick = true;

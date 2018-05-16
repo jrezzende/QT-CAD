@@ -6,15 +6,19 @@
 
 #include "ShapeCommand.h"
 #include "CADLine.h"
+#include "PointMapper.h"
 
 class CommandLine : public ShapeCommand
 {
+   Point p1, p2;
 	CADLine* line;
+
+   PointMapper mapper;
 
 public:
 	~CommandLine()= default;
    explicit CommandLine(CADFileManager& _fileManager, ViewMediator& _viewMediator) :
-      ShapeCommand(_fileManager, _viewMediator, LINE) { line= new CADLine(); }
+      ShapeCommand(_fileManager, _viewMediator, LINE), mapper(PointMapper()) { line= new CADLine(); }
 
 	void mousePressEvent(const Point& point) override;
 	void mouseMoveEvent(const Point& point) override;

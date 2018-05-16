@@ -19,10 +19,10 @@ public:
    PointMapper() : zoomFactor(1), upperLeftPoint(Point(0, 0)) {}
 
    std::vector<CADShape*> transformShapes(CADFile& currentFile, float zoom);
-   std::vector<Point&> recalculateShapePoints(CADShape& shape);
+   std::vector<Point> recalculateShapePoints(std::vector<Point> points);
    
-   void recalculatePointsFromView(std::vector<Point&> points);
-   void recalculatePointsFromFile(std::vector<Point&> points);
+   void recalculatePointToFile(Point& point);
+   void recalculatePointToView(Point& point);
 };
 
 #endif // INCLUDED_POINTMAPER_H

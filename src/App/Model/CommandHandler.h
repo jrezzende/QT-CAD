@@ -28,7 +28,7 @@ public:
 	void createLoadFileCmd();
 	void createExitFileCmd();
 
-   void createZoomCmd(Point& pos, float zf);
+   void createZoomCmd(float zf);
 
 	void mousePressEvent(const Point& pos);
 	void mouseReleaseEvent(const Point& pos);

@@ -21,6 +21,7 @@ void ViewMediator::sendMouseEvents(MouseEvent me, Point& p) const
       sendMouseMessages(RELEASE, p);
       break;
    case WHEEL:
+      handler->createZoomCmd(_window.canvas().zoomFactor());
       sendMouseMessages(WHEEL, p);
       break;
    case TRACKING:

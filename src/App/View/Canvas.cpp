@@ -17,6 +17,7 @@ drawing(false), zFactor(1.0)
 	pixMap.fill();
 
 	painter.begin(&pixMap);
+   painter.setPen(QPen(Qt::black, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
 
 	setMouseTracking(true);
 }
@@ -42,24 +43,9 @@ void Canvas::endPainter()
 	painter.end();
 }
 
-void Canvas::callLine() const
-{
-	mediator->sendShapeEvents(LINE);
-}
-
-void Canvas::callBezier() const
-{
-	mediator->sendShapeEvents(BEZIER);
-}
-
-void Canvas::callArc() const
-{
-	mediator->sendShapeEvents(ARC);
-}
-
 void Canvas::drawCanvas(CADShape& shape)
 {
-	drawMap(shape);
+   drawPixmap(shape);
 
 	update();
 }
@@ -78,7 +64,7 @@ QPainterPath Canvas::drawPath(CADShape& shape)
 	return path;
 }
 
-void Canvas::drawMap(CADShape& shape)
+void Canvas::drawPixmap(CADShape& shape)
 {
 	painter.drawPath(drawPath(shape));
 }
@@ -134,12 +120,6 @@ void Canvas::wheelEvent(QWheelEvent* event)
    mediator->sendMouseEvents(WHEEL, *new Point(event->pos().x(), event->pos().y()));
 }
 
-void Canvas::resizeScene(Rect& newArea)
-{
-   //pixmap copy > pixmap with new rect area
-}
-
-
 void Canvas::paintEvent(QPaintEvent* event)
 {
 	QPainter shapePainter(this);
@@ -147,4 +127,21 @@ void Canvas::paintEvent(QPaintEvent* event)
 	shapePainter.drawPixmap(painter.viewport(), pixMap);
 
 	event->accept();
+}
+
+/////////////////////////////////////////////////////////
+
+void Canvas::callLine() const
+{
+   mediator->sendShapeEvents(LINE);
+}
+
+void Canvas::callBezier() const
+{
+   mediator->sendShapeEvents(BEZIER);
+}
+
+void Canvas::callArc() const
+{
+   mediator->sendShapeEvents(ARC);
 }

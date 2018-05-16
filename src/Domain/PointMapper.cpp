@@ -1,54 +1,45 @@
 #include "PointMapper.h"
 
-PointMapper::PointMapper(Point & p1, Point & p2, int height, int width) :
-   worldP1(p1), worldP2(p2), deviceHeight(height), deviceWidth(width)
+#include "CADFile.h"
+#include "CADBezier.h"
+#include "CADArc.h"
+
+std::vector<CADShape*> PointMapper::transformShapes(CADFile& currentFile, float zoom)
 {
-   calcDeltas();
-   setDeviceSize(deviceHeight, deviceWidth);
+   if ((zoomFactor + zoom) >= 1)
+      zoomFactor+= zoom;
+
+   std::vector<CADShape*> shapes= currentFile.shapesVector();
+
+   for (auto shape : shapes) {
+      std::vector<Point&> points;
+      points.push_back(shape->firstPoint());
+      points.push_back(shape->secondPoint());
+      
+      switch (shape->shapeType()) {
+      case BEZIER:
+         auto bezier= dynamic_cast<CADBezier*>(shape);
+         points.push_back(bezier->thirdPoint());
+         break;
+      case ARC:
+         auto arc= dynamic_cast<CADArc*>(shape); 
+         points.push_back(arc->thirdPoint());
+         break;
+      }
+      points= recalculateShapePoints(*shape);
+   }
+   return shapes;
 }
 
-Point& PointMapper::mapWorldToDevice(Point& devicePoint)
+std::vector<Point&> PointMapper::recalculateShapePoints(CADShape& shape)
 {
-   return Point(devicePoint.x, devicePoint.y);
+   return std::vector<Point&>();
 }
 
-Point& PointMapper::mapDeviceToWorld(Point& worldPoint)
+void PointMapper::recalculatePointsFromView(std::vector<Point&> points)
 {
-   return Point(worldPoint.x, worldPoint.y);
 }
 
-void PointMapper::calcDeltas()
+void PointMapper::recalculatePointsFromFile(std::vector<Point&> points)
 {
-   return;
-}
-
-void PointMapper::adjustProportions()
-{
-   return;
-}
-
-void PointMapper::zoom()
-{
-   return;
-}
-
-void PointMapper::translateWorldPoints()
-{
-   return;
-}
-
-void PointMapper::setWorldSize()
-{
-   return;
-}
-
-void PointMapper::setDeviceSize(int height, int width)
-{
-   if(height <= 0 || width <= 0)
-      return;
-
-   deviceHeight= height;
-   deviceWidth= width;
-
-   adjustProportions();
 }

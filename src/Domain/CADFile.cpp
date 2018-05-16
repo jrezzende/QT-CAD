@@ -59,5 +59,5 @@ void CADFile::reprint()
 	drawArea->clearMap();
 
 	for(const auto shape : shapes)
-      drawArea->drawMap(*shape);
+      drawArea->drawPixmap(*shape);
 }

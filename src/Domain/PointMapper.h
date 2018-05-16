@@ -2,37 +2,27 @@
 #ifndef INCLUDED_POINTMAPER_H
 #define INCLUDED_POINTMAPER_H
 
+#include <vector>
+
 #include "Point.h"
+
+class CADShape;
+class CADFile;
 
 class PointMapper
 {
-   Point worldP1;
-   Point worldP2;
-
-   int deviceHeight;
-   int deviceWidth;
-
-   double deltaY;
-   double deltaX;
-
-   double worldDeltaY;
-   double worldDeltaX;
-
-   void calcDeltas();
-   void adjustProportions();
+   float zoomFactor;
+   Point upperLeftPoint;
 
 public:
    virtual ~PointMapper()= default;
-   PointMapper(Point& p1, Point& p2, int height, int width);
+   PointMapper() : zoomFactor(1), upperLeftPoint(Point(0, 0)) {}
 
-   Point& mapWorldToDevice(Point& devicePoint);
-   Point& mapDeviceToWorld(Point& worldPoint);
+   std::vector<CADShape*> transformShapes(CADFile& currentFile, float zoom);
+   std::vector<Point&> recalculateShapePoints(CADShape& shape);
    
-   void zoom();
-   void translateWorldPoints();
-
-   void setWorldSize();
-   void setDeviceSize(int height, int width);
+   void recalculatePointsFromView(std::vector<Point&> points);
+   void recalculatePointsFromFile(std::vector<Point&> points);
 };
 
 #endif // INCLUDED_POINTMAPER_H

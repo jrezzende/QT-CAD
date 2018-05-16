@@ -49,7 +49,6 @@ public:
    void sendMouseMessages(const MouseEvent me, const Point& p) const;
    void sendMessage(std::string msg);
    void sendCommand(const WindowActions wa) const;
-   void zoomFocus(Point& p) const;
    void setTitle(QString& s) { _window.setWindowTitle(s); }
    void setWindowWidget(Canvas* canvas) { _window.setCentralWidget(canvas); }
 };

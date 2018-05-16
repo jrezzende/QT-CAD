@@ -34,11 +34,9 @@ public:
 	~Canvas()= default;
    Canvas(ViewMediator* _mediator, QWidget* parent);
 
-	QPixmap& pixmap() { return pixMap;}
+   QPixmap& pixmap() { return pixMap; }
 
-   float zoomFactor() const { return zFactor; };
-
-   void resizeScene(Rect& newArea);
+   const float zoomFactor() { return zFactor; }
 
    void setDrawing(bool flag) { drawing = flag; }
 
@@ -51,7 +49,7 @@ public:
    void endPainter();
 
 	void drawCanvas(CADShape& shape);
-	void drawMap(CADShape& shape);
+	void drawPixmap(CADShape& shape);
 
 	QPainterPath drawPath(CADShape& shape);
 };

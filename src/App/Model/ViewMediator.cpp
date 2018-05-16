@@ -107,11 +107,6 @@ void ViewMediator::sendCommand(const WindowActions wa) const
    }
 }
 
-void ViewMediator::zoomFocus(Point& p) const
-{
-   handler->createZoomCmd(p, canvas().zoomFactor());
-}
-
 std::string ViewMediator::fileLabel(WindowActions wa)
 {
    switch(wa)

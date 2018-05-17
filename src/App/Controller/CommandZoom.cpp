@@ -6,6 +6,7 @@
 void CommandZoom::execute(CADFileManager& fmanager, ViewMediator& vmediator)
 {
    PointMapper mapper;
+   mapper.setZoomFactor(vmediator.canvas().zoomFactor());
 
    auto shapes= mapper.transformShapes(fmanager.currentFile(), zoomFactor);
    vmediator.canvas().clearMap();

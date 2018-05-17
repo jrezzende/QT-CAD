@@ -4,16 +4,16 @@
 
 Point CADArc::translatePoint(Point& p)
 {
-	 const double translatedX= p.x - p1.x;
-	 const double translatedY= p.y - p1.y;
+	 const int translatedX= p.x - p1.x;
+	 const int translatedY= p.y - p1.y;
 
 	 return Point(translatedX, translatedY);
 }
 
 Point CADArc::retranslatePoint(Point& p)
 {
-	const double retranslatedX= p.x + p1.x;
-	const double retranslatedY= p.y + p1.y;
+	const int retranslatedX= p.x + p1.x;
+	const int retranslatedY= p.y + p1.y;
 
 	return Point(retranslatedX, retranslatedY);
 }
@@ -58,8 +58,8 @@ std::vector<Point> CADArc::coordinates()
 	for (auto i = initialAngle; i <= finalAngle; i += incrementAngle) {
 		Point point;
 
-		point.x = radius * cos(i);
-		point.y = radius * sin(i);
+		point.x = (int)(radius * cos(i));
+		point.y = (int)(radius * sin(i));
 
 		point= retranslatePoint(point);
 		points.push_back(point);

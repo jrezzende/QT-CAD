@@ -73,7 +73,7 @@ QPainterPath Canvas::drawPath(CADShape& shape)
 
 void Canvas::mousePressEvent(QMouseEvent* event)
 {
-	if (event->button() != Qt::LeftButton) 
+   if (event->button() != Qt::LeftButton)
       event->ignore();
 
    mediator->sendMouseEvents(PRESS, *new Point(event->pos().x(), event->pos().y()));
@@ -110,12 +110,14 @@ void Canvas::wheelEvent(QWheelEvent* event)
       return;
 
    if ((event->delta() / 120) > 0) {
-      if (zFactor < 1.90f)
-         zFactor += 0.10f;
+      if (zFactor < 2.00)
+         zFactor += 0.25f;
    } else {
       if (zFactor > 0.10f)
-         zFactor -= 0.10f;
+         zFactor -= 0.25f;
    }
+
+   qDebug() << zFactor;
 
    mediator->sendMouseEvents(WHEEL, *new Point(event->pos().x(), event->pos().y()));
 }

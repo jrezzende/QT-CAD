@@ -7,13 +7,12 @@
 class Point
 {
 public:
-	double x;
-	double y;
+	int x;
+   int y;
 
 	~Point()= default;
 	Point() : x(0), y(0) {}
    Point(const int _x, const int _y) : x(_x), y(_y) {}
-	Point(const double _x, const double _y) : x(_x), y(_y) {}
    
 	bool operator==(const Point& point) const { return std::abs(x - point.x) + std::abs(y - point.y) < 0.00001; }
 
@@ -27,10 +26,10 @@ public:
    Point Point::operator-(const Point& toSubtract) const 
    { return Point(x - toSubtract.x, y - toSubtract.y); }
 
-   Point Point::operator*(double value) const 
+   Point Point::operator*(const double value) const 
    { return Point(x * value, y * value); }
 
-   Point Point::operator/(double value) const 
+   Point Point::operator/(const double value) const
    { return Point(x / value, y / value); }
 
 };

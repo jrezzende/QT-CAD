@@ -6,9 +6,6 @@
 
 std::vector<CADShape*> PointMapper::transformShapes(CADFile& currentFile, float zoom)
 {
-   if ((zoomFactor + zoom) >= 1)
-      zoomFactor+= zoom;
-
    std::vector<CADShape*> shapes= currentFile.shapesVector();
 
    for (auto shape : shapes) {
@@ -27,27 +24,44 @@ std::vector<CADShape*> PointMapper::transformShapes(CADFile& currentFile, float 
          points.push_back(arc->thirdPoint());
          break;
       }
-      }
+   }
       points= recalculateShapePoints(points);
+
+      shape->setFirstPoint(points.at(0));
+      shape->setSecondPoint(points.at(1));
+
+      switch (shape->shapeType()) {
+      case BEZIER: {
+         auto bezier= dynamic_cast<CADBezier*>(shape);
+         bezier->setThirdPoint(points.at(2));
+         break;
+      }
+      case ARC: {
+         auto arc= dynamic_cast<CADArc*>(shape);
+         arc->setThirdPoint(points.at(2));
+         break;
+      }
+      }
    }
    return shapes;
 }
 
 std::vector<Point> PointMapper::recalculateShapePoints(std::vector<Point> points)
 {
-   for (auto& point : points)
-      point= (point + upperLeftPoint) * zoomFactor;
+   std::vector<Point> recalculatedPoints;
+
+   for (auto point : points)
+      recalculatedPoints.push_back(Point((point + upperLeftPoint) * zoomFactor));
    
-   return points;
+   return recalculatedPoints;
 }
 
 void PointMapper::recalculatePointToFile(Point& p)
 {
-   p= (p - (upperLeftPoint * zoomFactor)) * zoomFactor;
+   p= (p - (upperLeftPoint * zoomFactor)) / zoomFactor;
 }
 
 void PointMapper::recalculatePointToView(Point& p)
 {
    p= (p + upperLeftPoint) * zoomFactor;
 }
-

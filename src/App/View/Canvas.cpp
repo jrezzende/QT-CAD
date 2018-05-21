@@ -10,7 +10,7 @@
 #include "ViewMediator.h"
 
 Canvas::Canvas(ViewMediator* _mediator, QWidget* parent) : QWidget(parent), pixMap(1920, 1080), mediator(_mediator),
-drawing(false), zFactor(1.0)
+drawing(false), currentFactor(0)
 {
 	setCursor(QCursor(Qt::CrossCursor));
 
@@ -109,15 +109,9 @@ void Canvas::wheelEvent(QWheelEvent* event)
    if(drawing)
       return;
 
-   if ((event->delta() / 120) > 0) {
-      if (zFactor < 2.00)
-         zFactor += 0.25f;
-   } else {
-      if (zFactor > 0.10f)
-         zFactor -= 0.25f;
-   }
+   currentFactor= event->delta() / 120;
 
-   qDebug() << zFactor;
+   mediator->sendDeltaFactor(currentFactor);
 
    mediator->sendMouseEvents(WHEEL, *new Point(event->pos().x(), event->pos().y()));
 }

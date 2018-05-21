@@ -1,5 +1,6 @@
 #include "CommandLine.h"
 #include "CADFileManager.h"
+#include "PointMapper.h"
 
 void CommandLine::mousePressEvent(const Point& point)
 {
@@ -15,8 +16,14 @@ void CommandLine::mouseMoveEvent(const Point& point)
    Point p1_= p1;
    p2= point;
 
-   mapper.recalculatePointToView(p1_);
-   mapper.recalculatePointToView(p2);
+   if (mapper->delta() >= 0) {
+   mapper->recalculatePointDeltaPositive(p1_);
+   mapper->recalculatePointDeltaPositive(p2);
+   }
+   else {
+      mapper->recalculatePointDeltaNegative(p1_);
+      mapper->recalculatePointDeltaNegative(p2);
+   }
 
    line->setFirstPoint(p1_);
    line->setSecondPoint(p2);
@@ -29,8 +36,14 @@ void CommandLine::mouseReleaseEvent(const Point& point)
 {
    p2= point;
 
-   mapper.recalculatePointToView(p1);
-   mapper.recalculatePointToView(p2);
+   if (mapper->delta() > 0) {
+      mapper->recalculatePointDeltaPositive(p1);
+      mapper->recalculatePointDeltaPositive(p2);
+   }
+   else {
+      mapper->recalculatePointDeltaNegative(p1);
+      mapper->recalculatePointDeltaNegative(p2);
+   }
 
    line->setFirstPoint(p1);
    line->setSecondPoint(p2);

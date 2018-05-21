@@ -8,6 +8,7 @@ class MainWindow;
 class Point;
 class Canvas;
 class ViewMediator;
+class PointMapper;
 
 #include "CADFileManager.h"
 
@@ -19,6 +20,8 @@ class CommandHandler
 	Command* currentCmd;
 	ShapeCommand* shapeCommand;
 
+   PointMapper* mapper;
+
 public:
 	~CommandHandler();
 	explicit CommandHandler(CADFileManager& m);
@@ -28,7 +31,7 @@ public:
 	void createLoadFileCmd();
 	void createExitFileCmd();
 
-   void createZoomCmd(float zf);
+   void createZoomCmd(const int factor);
 
 	void mousePressEvent(const Point& pos);
 	void mouseReleaseEvent(const Point& pos);
@@ -37,7 +40,7 @@ public:
 	void createLineCommand();
 	void createBezierCommand();
 	void createArcCommand();
-
+   
 	void clearShapes();
 	void eraseLastShape();
 	void redoShape();
@@ -46,6 +49,7 @@ public:
 	Command& command() const { return *currentCmd; }
    CADFileManager& fileManager() const { return cadFileManager; }
    ViewMediator& mediator() const { return *viewMediator; }
+   PointMapper& pointMapper() const { return *mapper; }
 
    bool currentFileStatus() const { return cadFileManager.currentFile().status(); }
    std::vector<CADShape*> currentFileShapes() const { return cadFileManager.currentFile().shapesVector(); }

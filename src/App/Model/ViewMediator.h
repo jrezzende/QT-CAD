@@ -47,6 +47,7 @@ public:
    void sendMouseEvents(const MouseEvent me, Point& p) const;
    void sendShapeEvents(const ShapeType st) const;
    void sendMouseMessages(const MouseEvent me, const Point& p) const;
+   void sendDeltaFactor(const int zoomFactor);
    void sendMessage(std::string msg);
    void sendCommand(const WindowActions wa) const;
    void setTitle(QString& s) { _window.setWindowTitle(s); }

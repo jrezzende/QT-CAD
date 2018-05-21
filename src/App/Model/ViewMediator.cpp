@@ -3,6 +3,7 @@
 #include "ViewMediator.h"
 #include "CommandHandler.h"
 #include "Canvas.h"
+#include "PointMapper.h"
 
 void ViewMediator::sendMouseEvents(MouseEvent me, Point& p) const
 {
@@ -21,7 +22,6 @@ void ViewMediator::sendMouseEvents(MouseEvent me, Point& p) const
       sendMouseMessages(RELEASE, p);
       break;
    case WHEEL:
-      handler->createZoomCmd(_window.canvas().zoomFactor());
       sendMouseMessages(WHEEL, p);
       break;
    case TRACKING:
@@ -72,6 +72,12 @@ void ViewMediator::sendMouseMessages(const MouseEvent me, const Point& p) const
       break;
    }
    _window.status()->showMessage(QString::fromStdString(aux.str()), 1000);
+}
+
+void ViewMediator::sendDeltaFactor(int deltaFactor)
+{
+   handler->pointMapper().setDelta(deltaFactor);
+   handler->createZoomCmd(deltaFactor);
 }
 
 void ViewMediator::sendMessage(std::string msg)

@@ -21,7 +21,7 @@ class Canvas : public QWidget
    ViewMediator* mediator;
 
 	bool drawing;
-   float zFactor;
+   int currentFactor;
 
 protected:
 	void mousePressEvent(QMouseEvent* event) override;
@@ -35,8 +35,6 @@ public:
    Canvas(ViewMediator* _mediator, QWidget* parent);
 
    QPixmap& pixmap() { return pixMap; }
-
-   const float zoomFactor() { return zFactor; }
 
    void setDrawing(bool flag) { drawing = flag; }
 

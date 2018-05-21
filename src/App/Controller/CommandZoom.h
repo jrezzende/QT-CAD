@@ -4,16 +4,17 @@
 
 #include "Command.h"
 
-class Point;
-class Rect;
+class PointMapper;
 
 class CommandZoom : public Command
 {
-   float zoomFactor;
+   PointMapper& mapper;
+
+   int deltaFactor;
 
 public:
    ~CommandZoom()= default;
-   CommandZoom(float zf) : zoomFactor(zf) {}
+   CommandZoom(PointMapper* p, const int factor) : mapper(*p), deltaFactor(factor) {}
    
    void execute(CADFileManager& fmanager, ViewMediator& vmediator);
 };

@@ -18,6 +18,7 @@
 #include "CommandRedo.h"
 #include "CommandExit.h"
 #include "ShapeCommand.h"
+#include "PointMapper.h"
 
 CommandHandler::~CommandHandler()
 {
@@ -26,7 +27,7 @@ CommandHandler::~CommandHandler()
 }
 
 CommandHandler::CommandHandler(CADFileManager& m) :
-cadFileManager(m), currentCmd(nullptr), shapeCommand(nullptr)
+cadFileManager(m), currentCmd(nullptr), shapeCommand(nullptr), mapper(new PointMapper())
 {
    viewMediator= new ViewMediator(this);
    m.setCanvas(viewMediator->canvas());
@@ -98,9 +99,9 @@ void CommandHandler::mouseMoveEvent(const Point& pos)
 	shapeCommand->mouseMoveEvent(pos);
 }
 
-void CommandHandler::createZoomCmd(float zf)
+void CommandHandler::createZoomCmd(const int factor)
 {
-   runCommand(new CommandZoom(zf));
+   runCommand(new CommandZoom(mapper, factor));
 }
 
 //////////////////////////////////////////////

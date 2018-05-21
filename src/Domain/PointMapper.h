@@ -1,6 +1,6 @@
 #pragma once
-#ifndef INCLUDED_POINTMAPER_H
-#define INCLUDED_POINTMAPER_H
+#ifndef INCLUDED_POINTMAPPER_H
+#define INCLUDED_POINTMAPPER_H
 
 #include <vector>
 
@@ -9,22 +9,29 @@
 
 class CADShape;
 
+static const double constantFactor = 0.25;
+
 class PointMapper
 {
-   float zoomFactor;
    Point upperLeftPoint;
+
+   int wheelDelta;
 
 public:
    virtual ~PointMapper()= default;
-   PointMapper() : zoomFactor(1.0), upperLeftPoint(Point(0, 0)) {}
+   PointMapper() : upperLeftPoint(Point(0, 0)), wheelDelta(0) {}
 
-   std::vector<CADShape*> transformShapes(CADFile& currentFile, float zoom);
+   std::vector<CADShape*> transformShapes(CADFile& currentFile, int zoom);
    std::vector<Point> recalculateShapePoints(std::vector<Point> points);
    
-   void recalculatePointToFile(Point& point);
-   void recalculatePointToView(Point& point);
+   void recalculatePointDeltaPositive(Point& point);
+   void recalculatePointDeltaNegative(Point& point);
 
-   void setZoomFactor(float zf) { zoomFactor= zf; }
+   void setDelta(const int deltaFactor) { wheelDelta= deltaFactor; }
+   const int delta() { return wheelDelta; }
+
+   //void setZoomFactor(const int factor) { zf= factor; }
+   //const int zoomFactor() { return zf; }
 };
 
-#endif // INCLUDED_POINTMAPER_H
+#endif // INCLUDED_POINTMAPPER_H

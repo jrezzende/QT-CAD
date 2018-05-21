@@ -4,7 +4,7 @@
 #include "CADBezier.h"
 #include "CADArc.h"
 
-std::vector<CADShape*> PointMapper::transformShapes(CADFile& currentFile, float zoom)
+std::vector<CADShape*> PointMapper::transformShapes(CADFile& currentFile, int delta)
 {
    std::vector<CADShape*> shapes= currentFile.shapesVector();
 
@@ -51,17 +51,17 @@ std::vector<Point> PointMapper::recalculateShapePoints(std::vector<Point> points
    std::vector<Point> recalculatedPoints;
 
    for (auto point : points)
-      recalculatedPoints.push_back(Point((point + upperLeftPoint) * zoomFactor));
+      recalculatedPoints.push_back(Point(point + upperLeftPoint) * 1);
    
    return recalculatedPoints;
 }
 
-void PointMapper::recalculatePointToFile(Point& p)
+void PointMapper::recalculatePointDeltaPositive(Point& p)
 {
-   p= (p - (upperLeftPoint * zoomFactor)) / zoomFactor;
+   p= p + (p * constantFactor);
 }
 
-void PointMapper::recalculatePointToView(Point& p)
+void PointMapper::recalculatePointDeltaNegative(Point& p)
 {
-   p= (p + upperLeftPoint) * zoomFactor;
+   p= p - (p * constantFactor);
 }

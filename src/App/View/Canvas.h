@@ -21,7 +21,7 @@ class Canvas : public QWidget
    ViewMediator* mediator;
 
 	bool drawing;
-   int currentFactor;
+   int currentDelta;
 
 protected:
 	void mousePressEvent(QMouseEvent* event) override;

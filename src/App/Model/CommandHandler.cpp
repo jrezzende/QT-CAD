@@ -99,9 +99,9 @@ void CommandHandler::mouseMoveEvent(const Point& pos)
 	shapeCommand->mouseMoveEvent(pos);
 }
 
-void CommandHandler::createZoomCmd(const int factor)
+void CommandHandler::createZoomCmd()
 {
-   runCommand(new CommandZoom(mapper, factor));
+   runCommand(new CommandZoom(mapper));
 }
 
 //////////////////////////////////////////////

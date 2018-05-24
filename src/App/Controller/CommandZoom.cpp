@@ -5,7 +5,7 @@
 
 void CommandZoom::execute(CADFileManager& fmanager, ViewMediator& vmediator)
 {
-   auto shapes= mapper.transformShapes(fmanager.currentFile(), deltaFactor);
+   auto shapes= mapper.transformShapes(fmanager.currentFile());
    vmediator.canvas().clearMap();
 
    for (auto& shape : shapes) {

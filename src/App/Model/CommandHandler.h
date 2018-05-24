@@ -31,7 +31,7 @@ public:
 	void createLoadFileCmd();
 	void createExitFileCmd();
 
-   void createZoomCmd(const int factor);
+   void createZoomCmd();
 
 	void mousePressEvent(const Point& pos);
 	void mouseReleaseEvent(const Point& pos);

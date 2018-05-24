@@ -43,7 +43,10 @@ public:
 	void setFilePath(const std::string& _filePath) { path = _filePath; }
 	std::string filePath() const {return path;}
 	
-	std::vector<CADShape*>shapesVector() const { return shapes; }
+   std::vector<CADShape*>shapesVector() { return shapes; }
+   std::vector<CADShape*>::const_iterator shapesBegin() const { return shapes.begin(); }
+   std::vector<CADShape*>::const_iterator shapesEnd() const { return shapes.end(); }
+
 	CADShape& lastShape() const { return *shapes.back();}
 	
 	void popShape() { shapes.pop_back(); }

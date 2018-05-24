@@ -21,6 +21,7 @@ public:
 
 	void setShape(const ShapeType _type) override { type= _type; }
 	void accept(ShapeVisitor& v) override { v.visitBezier(*this); };
+   CADBezier* clone() const override { return new CADBezier(*this); }
 };
 
 #endif //INCLUDED_CADBEZIER_H

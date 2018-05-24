@@ -10,11 +10,9 @@ class CommandZoom : public Command
 {
    PointMapper& mapper;
 
-   int deltaFactor;
-
 public:
    ~CommandZoom()= default;
-   CommandZoom(PointMapper* p, const int factor) : mapper(*p), deltaFactor(factor) {}
+   CommandZoom(PointMapper* p) : mapper(*p) {}
    
    void execute(CADFileManager& fmanager, ViewMediator& vmediator);
 };

@@ -22,12 +22,13 @@ public:
 	virtual std::vector<Point> coordinates()= 0;
 	virtual void setShape(const ShapeType _type)= 0;
 	virtual void accept(ShapeVisitor& v)= 0;
+   virtual CADShape* clone() const= 0;
 
-	void setFirstPoint(const Point& _p1) { p1 = _p1; }
-	void setSecondPoint(const Point& _p2) { p2 = _p2; }
+	void setFirstPoint(const Point _p1) { p1 = _p1; }
+	void setSecondPoint(const Point _p2) { p2 = _p2; }
 
-	Point& firstPoint() { return p1; }
-	Point& secondPoint() { return p2; }
+	Point firstPoint() { return p1; }
+	Point secondPoint() { return p2; }
 
 	ShapeType shapeType() const { return type; }
 };

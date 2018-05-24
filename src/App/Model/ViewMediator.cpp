@@ -74,10 +74,10 @@ void ViewMediator::sendMouseMessages(const MouseEvent me, const Point& p) const
    _window.status()->showMessage(QString::fromStdString(aux.str()), 1000);
 }
 
-void ViewMediator::sendDeltaFactor(int deltaFactor)
+void ViewMediator::sendDeltaFactor(const int factor)
 {
-   handler->pointMapper().setDelta(deltaFactor);
-   handler->createZoomCmd(deltaFactor);
+   handler->pointMapper().setDeltaFactor(factor);
+   handler->createZoomCmd();
 }
 
 void ViewMediator::sendMessage(std::string msg)

@@ -10,7 +10,7 @@
 #include "ViewMediator.h"
 
 Canvas::Canvas(ViewMediator* _mediator, QWidget* parent) : QWidget(parent), pixMap(1920, 1080), mediator(_mediator),
-drawing(false), currentFactor(0)
+drawing(false), currentDelta(0)
 {
 	setCursor(QCursor(Qt::CrossCursor));
 
@@ -109,9 +109,9 @@ void Canvas::wheelEvent(QWheelEvent* event)
    if(drawing)
       return;
 
-   currentFactor= event->delta() / 120;
+   currentDelta = event->delta() / 120;
 
-   mediator->sendDeltaFactor(currentFactor);
+   mediator->sendDeltaFactor(currentDelta);
 
    mediator->sendMouseEvents(WHEEL, *new Point(event->pos().x(), event->pos().y()));
 }

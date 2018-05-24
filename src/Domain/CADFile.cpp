@@ -7,7 +7,7 @@ void CADFile::addShape(CADShape& shape)
 
 	shapes.push_back(&shape);
 
-   if(this->fileName() == "memento")
+   if(this->fileName() == "stashFile")
       return;
 
 	clearRedo();
@@ -33,7 +33,7 @@ void CADFile::eraseShape(CADShape& shape)
 			shapes.erase(shapes.begin() + i);
 	}
 
-   if (this->fileName() == "memento")
+   if (this->fileName() == "stashFile")
       return;
 
 	reprint();

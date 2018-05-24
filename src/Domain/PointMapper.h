@@ -27,11 +27,11 @@ public:
    PointMapper() : upperLeftPoint(Point(0, 0)), zFactor(DEFAULT), dFactor(0) {}
 
    std::vector<CADShape*> transformShapes(CADFile& currentFile);
-   std::vector<Point> recalculateShapePoints(std::vector<Point> points);
+   std::vector<Point> recalculatePointsInShape(std::vector<Point> points);
    
-   void recalculatePointDeltaPositive(Point& point);
-   void recalculatePointDeltaNegative(Point& point);
+   void recalculatePoint(Point& point);
 
+   void reset() { dFactor= 0; zFactor= DEFAULT; }
    void setDeltaFactor(const int factor) { dFactor = factor; setZoomFactor(); }
    void setZoomFactor();
 

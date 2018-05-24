@@ -5,12 +5,12 @@
 void CommandBezier::mousePressEvent(const Point& point)
 {
 	if (!isDrawing) {
-		bezier->setFirstPoint(point);
+      bezier->setFirstPoint(point);
 		previewLine->setFirstPoint(point);
 	}
 	else {
 		secondClick = true;
-		bezier->setThirdPoint(point);
+      bezier->setThirdPoint(point);
       fileManager.currentFile().eraseShape(*previewLine);
 	}
 }
@@ -30,7 +30,7 @@ void CommandBezier::mouseMoveEvent(const Point& point)
 void CommandBezier::mouseReleaseEvent(const Point& point)
 {
 	if (!secondClick) {
-		bezier->setSecondPoint(point);
+      bezier->setSecondPoint(point);
 		isDrawing= true;
 	}
 	else {

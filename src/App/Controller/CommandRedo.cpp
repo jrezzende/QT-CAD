@@ -1,5 +1,7 @@
 #include "CommandRedo.h"
 #include "CADFileManager.h"
+#include "ViewMediator.h"
+#include "CommandHandler.h"
 
 void CommandRedo::execute(CADFileManager & m, ViewMediator& mediator)
 {
@@ -18,6 +20,7 @@ void CommandRedo::execute(CADFileManager & m, ViewMediator& mediator)
 		m.currentFile().addFromRedo(*m.mementoFile().shapesVector().back());
 		m.mementoFile().eraseLastShape();
 	}
-		
+	
+   mediator.manager().resetMapper();
 	m.currentFile().reprint();
 }

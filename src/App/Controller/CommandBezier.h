@@ -2,8 +2,6 @@
 #ifndef INCLUDED_COMMANDBEZIER_H
 #define INCLUDED_COMMANDBEZIER_H
 
-#include <memory>
-
 #include "ShapeCommand.h"
 #include "CADBezier.h"
 #include "CADLine.h"

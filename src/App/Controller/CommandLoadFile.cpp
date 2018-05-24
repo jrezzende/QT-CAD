@@ -24,10 +24,10 @@ void CommandLoadFile::execute(CADFileManager& m, ViewMediator& mediator)
 	double p1X, p1Y, p2X, p2Y, p3X, p3Y;
 
 	const auto file= new CADFile(filePath, &mediator.canvas());
-	const auto mementoFile= new CADFile("memento", file->canvas());
+	const auto stashFile= new CADFile("stashFile", file->canvas());
 
    m.setCurrentFile(file);
-   m.setMementoFile(mementoFile);
+   m.setStashFile(stashFile);
 
 	is.open(filePath, std::ios::in | std::ios::binary);
 

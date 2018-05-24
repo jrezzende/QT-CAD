@@ -39,30 +39,30 @@ std::vector<CADShape*> PointMapper::transformShapes(CADFile& currentFile)
       
       switch (shape->shapeType()) {
       case BEZIER: {
-         auto bezier = dynamic_cast<CADBezier&>(*shape);
-         points.push_back(bezier.thirdPoint());
+         auto bezier = dynamic_cast<CADBezier*>(shape);
+         points.push_back(bezier->thirdPoint());
          break;
       }
       case ARC: {
-         auto arc= dynamic_cast<CADArc&>(*shape); 
-         points.push_back(arc.thirdPoint());
+         auto arc= dynamic_cast<CADArc*>(shape); 
+         points.push_back(arc->thirdPoint());
          break;
       }
    }
-      points= recalculateShapePoints(points);
+      points= recalculatePointsInShape(points);
 
       shape->setFirstPoint(points.at(0));
       shape->setSecondPoint(points.at(1));
 
       switch (shape->shapeType()) {
       case BEZIER: {
-         auto bezier= dynamic_cast<CADBezier&>(*shape);
-         bezier.setThirdPoint(points.at(2));
+         auto bezier= dynamic_cast<CADBezier*>(shape);
+         bezier->setThirdPoint(points.at(2));
          break;
       }
       case ARC: {
-         auto arc= dynamic_cast<CADArc&>(*shape);
-         arc.setThirdPoint(points.at(2));
+         auto arc= dynamic_cast<CADArc*>(shape);
+         arc->setThirdPoint(points.at(2));
          break;
       }
       }
@@ -71,7 +71,7 @@ std::vector<CADShape*> PointMapper::transformShapes(CADFile& currentFile)
    return newShapes;
 }
 
-std::vector<Point> PointMapper::recalculateShapePoints(std::vector<Point> points)
+std::vector<Point> PointMapper::recalculatePointsInShape(std::vector<Point> points)
 {
    std::vector<Point> recalculatedPoints;
 
@@ -81,14 +81,9 @@ std::vector<Point> PointMapper::recalculateShapePoints(std::vector<Point> points
    return recalculatedPoints;
 }
 
-void PointMapper::recalculatePointDeltaPositive(Point& p)
+void PointMapper::recalculatePoint(Point& p)
 {
    p= (p + (upperLeftPoint)) * zFactor;
-}
-
-void PointMapper::recalculatePointDeltaNegative(Point& p)
-{
-   p= (p - (upperLeftPoint * zFactor)) * zFactor;
 }
 
 void PointMapper::setZoomFactor()

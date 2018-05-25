@@ -2,32 +2,31 @@
 #include "MainWindow.h"
 #include "ViewMediator.h"
 #include "CADFileManager.h"
-#include "CADFile.h"
 #include "CADLine.h"
 #include "CADBezier.h"
 #include "CADArc.h"
 
 #include <fstream>
 
-void CommandLoadFile::execute(CADFileManager& m, ViewMediator& mediator)
+void CommandLoadFile::execute(CADFileManager& fileManager, ViewMediator& viewMediator)
 {
-	std::string filePath= mediator.fileLabel(LOAD);
+	std::string filePath= viewMediator.fileLabel(LOAD);
 
 	if(filePath.empty())
 		return;
 
-   mediator.canvas().pixmap().fill();
+   viewMediator.canvas().pixmap().fill();
 
 	std::ifstream is;
 
 	int type;
-	double p1X, p1Y, p2X, p2Y, p3X, p3Y;
+	int p1X, p1Y, p2X, p2Y, p3X, p3Y;
 
-	const auto file= new CADFile(filePath, &mediator.canvas());
+	const auto file= new CADFile(filePath, &viewMediator.canvas());
 	const auto stashFile= new CADFile("stashFile", file->canvas());
 
-   m.setCurrentFile(file);
-   m.setStashFile(stashFile);
+   fileManager.setCurrentFile(file);
+   fileManager.setStashFile(stashFile);
 
 	is.open(filePath, std::ios::in | std::ios::binary);
 
@@ -37,15 +36,15 @@ void CommandLoadFile::execute(CADFileManager& m, ViewMediator& mediator)
 		while (!is.eof()) {
 			is.read(reinterpret_cast<char*>(&type), sizeof(int));
 
-			is.read(reinterpret_cast<char*>(&p1X), sizeof(double));
-			is.read(reinterpret_cast<char*>(&p1Y), sizeof(double));
+			is.read(reinterpret_cast<char*>(&p1X), sizeof(int));
+			is.read(reinterpret_cast<char*>(&p1Y), sizeof(int));
 
-			is.read(reinterpret_cast<char*>(&p2X), sizeof(double));
-			is.read(reinterpret_cast<char*>(&p2Y), sizeof(double));
+			is.read(reinterpret_cast<char*>(&p2X), sizeof(int));
+			is.read(reinterpret_cast<char*>(&p2Y), sizeof(int));
 
 			if (type > 1) {
-				is.read(reinterpret_cast<char*>(&p3X), sizeof(double));
-				is.read(reinterpret_cast<char*>(&p3Y), sizeof(double));
+				is.read(reinterpret_cast<char*>(&p3X), sizeof(int));
+				is.read(reinterpret_cast<char*>(&p3Y), sizeof(int));
 			}
 
 			switch (type) 
@@ -68,9 +67,9 @@ void CommandLoadFile::execute(CADFileManager& m, ViewMediator& mediator)
             break;
 		}
 	}
-			m.setRedoFlag(false);
-			m.currentFile().reprint();
+			fileManager.setRedoFlag(false);
+			fileManager.currentFile().reprint();
 
-			mediator.setTitle(QString::fromStdString(file->fileName()));
+         viewMediator.setTitle(QString::fromStdString(file->fileName()));
 	}
 }

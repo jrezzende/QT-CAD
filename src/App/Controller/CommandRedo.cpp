@@ -3,24 +3,24 @@
 #include "ViewMediator.h"
 #include "CommandHandler.h"
 
-void CommandRedo::execute(CADFileManager & m, ViewMediator& mediator)
+void CommandRedo::execute(CADFileManager& fileManager, ViewMediator& viewMediator)
 {
-	if (m.mementoFile().shapesVector().empty())
+	if (fileManager.stash().shapesVector().empty())
 		return;
 
-	if (m.redo()) {	
-		for (size_t i = m.mementoFile().shapesVector().size() - 1; i > 0; i--)
-			m.currentFile().addFromRedo(*m.mementoFile().shapesVector().at(i));
+	if (fileManager.redo()) {
+		for (size_t i = fileManager.stash().shapesVector().size() - 1; i > 0; i--)
+         fileManager.currentFile().addFromRedo(*fileManager.stash().shapesVector().at(i));
 
-		m.currentFile().addFromRedo(*m.mementoFile().shapesVector().front());
-		m.mementoFile().eraseAllShapes();
-		m.setRedoFlag(false);
+		fileManager.currentFile().addFromRedo(*fileManager.stash().shapesVector().front());
+		fileManager.stash().eraseAllShapes();
+		fileManager.setRedoFlag(false);
 	}
 	else {
-		m.currentFile().addFromRedo(*m.mementoFile().shapesVector().back());
-		m.mementoFile().eraseLastShape();
+		fileManager.currentFile().addFromRedo(*fileManager.stash().shapesVector().back());
+		fileManager.stash().eraseLastShape();
 	}
 	
-   mediator.manager().resetMapper();
-	m.currentFile().reprint();
+   viewMediator.manager().resetMapper();
+	fileManager.currentFile().reprint();
 }

@@ -4,7 +4,7 @@
 
 #include "CADShape.h"
 
-class CADBezier : public CADShape
+class CADBezier final : public CADShape
 {
 	Point p3;
 

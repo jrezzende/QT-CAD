@@ -5,6 +5,7 @@ set(
 	CommandHandler.cpp
 	ShapeVisitorSaveFile.cpp
 	ViewMediator.cpp
+	PointMapper.cpp
 )
 
 set(
@@ -14,6 +15,7 @@ set(
 	ShapeVisitor.h
 	ShapeVisitorSaveFile.h
 	ViewMediator.h
+	PointMapper.h
 )
 
 add_library(model STATIC ${MODEL_SOURCES} ${MODEL_HEADERS})

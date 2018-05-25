@@ -2,7 +2,6 @@
 #include "qpainterpath.h"
 #include "qdebug.h"
 
-#include "Rect.h"
 #include "Canvas.h"
 #include "Point.h"
 #include "MainWindow.h"

@@ -11,8 +11,9 @@ class CommandLine : public ShapeCommand
 
 public:
 	~CommandLine()= default;
-   CommandLine(CADFileManager& _fileManager, ViewMediator& _viewMediator) :
-      ShapeCommand(_fileManager, _viewMediator, LINE) { line= new CADLine();  }
+   CommandLine(CADFileManager& fileManager, ViewMediator& viewMediator) :
+   ShapeCommand(fileManager, viewMediator, LINE) 
+   { line= new CADLine();  }
 
 	void mousePressEvent(const Point& point) override;
 	void mouseMoveEvent(const Point& point) override;

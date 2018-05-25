@@ -11,10 +11,10 @@ class CommandZoom : public Command
    PointMapper& mapper;
 
 public:
-   ~CommandZoom()= default;
-   CommandZoom(PointMapper* p) : mapper(*p) {}
+   virtual ~CommandZoom()= default;
+   CommandZoom(PointMapper* pointMapper) : mapper(*pointMapper) {}
    
-   void execute(CADFileManager& fmanager, ViewMediator& vmediator);
+   void execute(CADFileManager& fileManager, ViewMediator& viewMediator);
 };
 
 #endif // INCLUDED_COMMANDZOOM_H

@@ -2,11 +2,11 @@ project(controller CXX)
 
 set(
 	CONTROLLER_SOURCES
+	CommandIdle.cpp
 	CommandArc.cpp
 	CommandBezier.cpp
 	CommandLine.cpp
 	CommandZoom.cpp
-	CommandIdle.cpp
 	CommandNewFile.cpp
 	CommandLoadFile.cpp
 	CommandSave.cpp

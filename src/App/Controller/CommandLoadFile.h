@@ -7,10 +7,10 @@
 class CommandLoadFile : public Command
 {
 public:
-	~CommandLoadFile()= default;
+	virtual ~CommandLoadFile()= default;
 	CommandLoadFile()= default;
 
-	void execute(CADFileManager& fmanager, ViewMediator& vmediator) override;
+	void execute(CADFileManager& fileManager, ViewMediator& viewMediator) override;
 };
 
 #endif //  INCLUDED_COMMANDLOADFILE_H

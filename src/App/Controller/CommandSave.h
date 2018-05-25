@@ -7,10 +7,10 @@
 class CommandSave : public Command
 {
 public: 
-	~CommandSave()= default;
+	virtual ~CommandSave()= default;
 	CommandSave()= default;
 
-	void execute(CADFileManager& fmanager, ViewMediator& vmediator) override;
+	void execute(CADFileManager& fileManager, ViewMediator& viewMediator) override;
 };
 
 #endif //  INCLUDED_COMMANDSAVE_H

@@ -21,7 +21,3 @@ void CommandTranslateCanvas::mouseMoveEvent(const Point & point)
 
    viewMediator.manager().pointMapper().setUpperLeftPoint(Point(0, 0));
 }
-
-void CommandTranslateCanvas::mouseReleaseEvent(const Point & point)
-{
-}

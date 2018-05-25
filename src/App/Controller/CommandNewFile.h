@@ -7,10 +7,10 @@
 class CommandNewFile : public Command
 {
 public:
-	~CommandNewFile()= default;
+	virtual ~CommandNewFile()= default;
 	CommandNewFile()= default;
 
-	void execute(CADFileManager& fmanager, ViewMediator& viewMediator) override;
+	void execute(CADFileManager& fileManager, ViewMediator& viewMediator) override;
 };
 
 #endif //  INCLUDED_COMMANDNEWFILE_H

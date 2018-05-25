@@ -1,5 +1,5 @@
 #include "CommandIdle.h"
 
-void CommandIdle::execute(CADFileManager& m, ViewMediator& mediator)
+void CommandIdle::execute(CADFileManager & fileManager, ViewMediator & viewMediator)
 {
 }

@@ -3,12 +3,13 @@
 #include "CADFileManager.h"
 #include "ViewMediator.h"
 
-void CommandZoom::execute(CADFileManager& fmanager, ViewMediator& vmediator)
+void CommandZoom::execute(CADFileManager& fileManager, ViewMediator& viewMediator)
 {
-   auto shapes= mapper.transformShapes(fmanager.currentFile());
-   vmediator.canvas().clearMap();
+   auto zoomedShapes= mapper.transformShapes(fileManager.currentFile());
 
-   for (auto& shape : shapes) {
-      vmediator.canvas().drawCanvas(*shape);
+   viewMediator.canvas().clearMap();
+
+   for (auto& shape : zoomedShapes) {
+      viewMediator.canvas().drawCanvas(*shape);
    }
 }

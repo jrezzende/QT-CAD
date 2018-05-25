@@ -4,18 +4,18 @@
 #include "ShapeVisitorSaveFile.h"
 #include "ViewMediator.h"
 
-void CommandSave::execute(CADFileManager& m, ViewMediator& mediator)
+void CommandSave::execute(CADFileManager& fileManager, ViewMediator& viewMediator)
 {
-	if(m.currentFile().status())
+	if(fileManager.currentFile().status())
 		return;
 
-   std::vector<CADShape*> shapesInFile = m.currentFile().shapesVector();
+   std::vector<CADShape*> shapesInFile = fileManager.currentFile().shapesVector();
    std::ofstream os;
 
-	if (m.currentFile().filePath().empty())
-      m.currentFile().setFilePath(mediator.fileLabel(SAVE));
+	if (fileManager.currentFile().filePath().empty())
+      fileManager.currentFile().setFilePath(viewMediator.fileLabel(SAVE));
 
-   const std::string filePath= m.currentFile().filePath();
+   const std::string filePath= fileManager.currentFile().filePath();
 
 	os.open(filePath, std::ios::out | std::ios::binary | std::ios::ate | std::ios::trunc);
 
@@ -26,7 +26,7 @@ void CommandSave::execute(CADFileManager& m, ViewMediator& mediator)
 			shape->accept(v);
 	}
 
-	m.currentFile().setStatus(SAVED);
+   fileManager.currentFile().setStatus(SAVED);
 
 	os.close();
 }

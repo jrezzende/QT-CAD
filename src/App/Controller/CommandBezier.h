@@ -13,8 +13,8 @@ class CommandBezier : public ShapeCommand
 
 public:
 	~CommandBezier()= default;
-	explicit CommandBezier(CADFileManager& _fileManager, ViewMediator& _viewMediator) :
-   ShapeCommand(_fileManager, _viewMediator, BEZIER) 
+	CommandBezier(CADFileManager& fileManager, ViewMediator& viewMediator) :
+   ShapeCommand(fileManager, viewMediator, BEZIER)
    { bezier = new CADBezier(); bezier->setShape(BEZIER); previewLine= new CADLine(); }
 
 	void mousePressEvent(const Point& point) override;

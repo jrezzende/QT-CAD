@@ -7,10 +7,10 @@
 class CommandRedo : public Command
 {
 public:
-	~CommandRedo()= default;
+	virtual ~CommandRedo()= default;
 	CommandRedo()= default;
 
-	void execute(CADFileManager& fmanager, ViewMediator& vmediator) override;
+	void execute(CADFileManager& fileManager, ViewMediator& viewMediator) override;
 };
 
 #endif //  INCLUDED_COMMANDREDO_H

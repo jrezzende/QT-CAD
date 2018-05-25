@@ -7,10 +7,10 @@
 class CommandExit : public Command
 {
 public:
-	~CommandExit()= default;
+	virtual ~CommandExit()= default;
 	CommandExit()= default;
 
-	void execute(CADFileManager& fmanager, ViewMediator& vmediator) override;
+	void execute(CADFileManager& fileManager, ViewMediator& viewMediator) override;
 };
 
 #endif //  INCLUDED_COMMANDEXIT_H

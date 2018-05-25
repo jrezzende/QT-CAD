@@ -7,10 +7,10 @@
 class CommandUndo : public Command
 {
 public:
-	~CommandUndo()= default;
+	virtual ~CommandUndo()= default;
 	CommandUndo()= default;
 
-	void execute(CADFileManager& fmanager, ViewMediator& vmediator) override;
+	void execute(CADFileManager& fileManager, ViewMediator& viewMediator) override;
 };
 
 #endif //  INCLUDED_COMMANDUNDO_H

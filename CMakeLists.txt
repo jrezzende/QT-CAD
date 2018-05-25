@@ -4,7 +4,6 @@ project(Cad CXX)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-#set(CMAKE_PREFIX_PATH "C:/Qt/5.10.0/msvc2017_64/lib/cmake")
 		
 SET(CAD_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
@@ -20,5 +19,6 @@ add_subdirectory(src/App/Model)
 add_subdirectory(src/App/View)
 
 add_subdirectory(src/Domain)
+add_subdirectory(src/Utilities)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)

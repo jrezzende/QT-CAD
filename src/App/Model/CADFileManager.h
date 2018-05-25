@@ -2,8 +2,6 @@
 #ifndef INCLUDED_CADFILEMANAGER_H
 #define INCLUDED_CADFILEMANAGER_H
 
-#include <memory>
-
 #include "CADFile.h"
 
 class CADFileManager
@@ -21,7 +19,7 @@ public:
    { current->connectClearRedo(std::bind(&CADFileManager::clearStash, this)); }
 
    CADFile& currentFile() const { return *current; }
-   CADFile& mementoFile() const { return *stashFile; }
+   CADFile& stash() const { return *stashFile; }
 
    bool redo() const { return redoFlag; }
 

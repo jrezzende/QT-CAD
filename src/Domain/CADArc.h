@@ -5,7 +5,7 @@
 
 #include "CADShape.h"
 
-class CADArc : public CADShape
+class CADArc final : public CADShape
 {
 	Point p3;
 

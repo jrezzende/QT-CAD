@@ -5,17 +5,17 @@
 #include "CADFile.h"
 #include "ViewMediator.h"
 
-void CommandNewFile::execute(CADFileManager& m, ViewMediator& mediator)
+void CommandNewFile::execute(CADFileManager& fileManager, ViewMediator& viewMediator)
 {
-   m.clearShapes();
+   fileManager.clearShapes();
 
-   const auto file= new CADFile("untitled", &mediator.canvas());
+   const auto file= new CADFile("untitled", &viewMediator.canvas());
 	const auto stashFile= new CADFile("stashFile", file->canvas());
 
-	m.setCurrentFile(file);
-	m.setStashFile(stashFile);
+	fileManager.setCurrentFile(file);
+	fileManager.setStashFile(stashFile);
 
-   mediator.manager().resetMapper();
-	mediator.setWindowWidget(file->canvas());
-	mediator.setTitle(QString::fromStdString(file->fileName()));
+   viewMediator.manager().resetMapper();
+	viewMediator.setWindowWidget(file->canvas());
+	viewMediator.setTitle(QString::fromStdString(file->fileName()));
 }

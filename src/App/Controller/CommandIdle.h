@@ -7,10 +7,10 @@
 class CommandIdle : public Command
 {
 public:
-	~CommandIdle()= default;
+	virtual ~CommandIdle()= default;
 	CommandIdle()= default;
 
-	void execute(CADFileManager& fmanager, ViewMediator& vmediator) override;
+   void execute(CADFileManager& fileManager, ViewMediator& viewMediator) override;
 };
 
 #endif //  INCLUDED_COMMANDIDLE_H

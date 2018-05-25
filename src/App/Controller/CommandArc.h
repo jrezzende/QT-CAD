@@ -2,8 +2,6 @@
 #ifndef INCLUDED_COMMANDARC_H
 #define INCLUDED_COMMANDARC_H
 
-#include <memory>
-
 #include "ShapeCommand.h"
 #include "CADArc.h"
 #include "CADLine.h"
@@ -15,8 +13,8 @@ class CommandArc : public ShapeCommand
 
 public: 
 	~CommandArc()= default;
-	explicit CommandArc(CADFileManager& _fileManager, ViewMediator& _viewMediator): 
-   ShapeCommand(_fileManager, _viewMediator, ARC) 
+	CommandArc(CADFileManager& fileManager, ViewMediator& viewMediator):
+   ShapeCommand(fileManager, viewMediator, ARC) 
    { arc= new CADArc(); arc->setShape(ARC); previewLine = new CADLine(); }
 
 	void mousePressEvent(const Point& point) override;

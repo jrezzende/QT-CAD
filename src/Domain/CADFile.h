@@ -1,6 +1,6 @@
 #pragma once
-#ifndef INCLUDED_CADFile_H
-#define INCLUDED_CADFile_H
+#ifndef INCLUDED_CADFILE_H
+#define INCLUDED_CADFILE_H
 
 #include <functional>
 
@@ -66,4 +66,4 @@ public:
 	void reprint();
 };
 
-#endif //  INCLUDED_CADFile_H
+#endif //  INCLUDED_CADFILE_H

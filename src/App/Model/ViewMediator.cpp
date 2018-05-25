@@ -27,6 +27,9 @@ void ViewMediator::sendMouseEvents(MouseEvent me, Point& p) const
    case TRACKING:
       sendMouseMessages(TRACKING, p);
       break;
+   case RIGHTCLICK:
+      handler->rightClickEvent(p);
+      break;
    }
 }
 

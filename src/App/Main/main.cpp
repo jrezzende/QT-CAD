@@ -1,8 +1,6 @@
 #include "App.h"
 
-int main(int argc, char *argv[])
+void main(int argc, char *argv[])
 {
-	App::instance().start(argc, argv);
-
-	return 0;
+	App().start(argc, argv);
 }

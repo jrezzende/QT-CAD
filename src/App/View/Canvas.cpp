@@ -10,7 +10,7 @@
 #include "ViewMediator.h"
 
 Canvas::Canvas(ViewMediator* _mediator, QWidget* parent) : QWidget(parent), pixMap(1920, 1080), mediator(_mediator),
-drawing(false), currentDelta(0)
+drawing(false), dragEvent(false), currentDelta(0)
 {
 	setCursor(QCursor(Qt::CrossCursor));
 
@@ -73,8 +73,10 @@ QPainterPath Canvas::drawPath(CADShape& shape)
 
 void Canvas::mousePressEvent(QMouseEvent* event)
 {
-   if (event->button() != Qt::LeftButton)
-      event->ignore();
+   if (event->button() == Qt::RightButton) {
+      dragEvent= true;
+      return mediator->sendMouseEvents(RIGHTCLICK, *new Point(event->pos().x(), event->pos().y()));
+   }
 
    mediator->sendMouseEvents(PRESS, *new Point(event->pos().x(), event->pos().y()));
    setDrawing(true);
@@ -84,8 +86,9 @@ void Canvas::mousePressEvent(QMouseEvent* event)
 
 void Canvas::mouseReleaseEvent(QMouseEvent* event)
 {
-	if (event->button() != Qt::LeftButton)
-      event->ignore();
+   if (event->button() == Qt::RightButton)
+      dragEvent= false;
+      
 
    mediator->sendMouseEvents(RELEASE, *new Point(event->pos().x(), event->pos().y()));
 	setDrawing(false);
@@ -97,7 +100,8 @@ void Canvas::mouseMoveEvent(QMouseEvent* event)
 {
    if (!drawing) {
       mediator->sendMouseEvents(TRACKING, *new Point(event->pos().x(), event->pos().y()));
-      return;
+      if (!dragEvent)
+         return;
    }
 
    mediator->sendMouseEvents(MOVE, *new Point(event->pos().x(), event->pos().y()));

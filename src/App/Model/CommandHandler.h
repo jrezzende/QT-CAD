@@ -23,6 +23,8 @@ class CommandHandler
 
    PointMapper* mapper;
 
+   bool dragging;
+
 public:
    ~CommandHandler();
    explicit CommandHandler(CADFileManager& m);
@@ -35,6 +37,7 @@ public:
    void createZoomCmd();
 
    void mousePressEvent(const Point& pos);
+   void rightClickEvent(const Point& pos);
    void mouseReleaseEvent(const Point& pos);
    void mouseMoveEvent(const Point& pos);
 

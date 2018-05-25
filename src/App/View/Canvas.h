@@ -21,6 +21,8 @@ class Canvas : public QWidget
    ViewMediator* mediator;
 
 	bool drawing;
+   bool dragEvent;
+
    int currentDelta;
 
 protected:

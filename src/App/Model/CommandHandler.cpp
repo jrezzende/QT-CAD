@@ -11,6 +11,7 @@
 #include "CommandIdle.h"
 #include "CommandLine.h"
 #include "CommandZoom.h"
+#include "CommandTranslateCanvas.h"
 #include "CommandLoadFile.h"
 #include "CommandNewFile.h"
 #include "CommandSave.h"
@@ -27,7 +28,7 @@ CommandHandler::~CommandHandler()
 }
 
 CommandHandler::CommandHandler(CADFileManager& m) :
-cadFileManager(m), currentCmd(nullptr), shapeCommand(nullptr), mapper(new PointMapper())
+cadFileManager(m), currentCmd(nullptr), shapeCommand(nullptr), mapper(new PointMapper()), dragging(false)
 {
    viewMediator= new ViewMediator(this);
    m.setCanvas(viewMediator->canvas());
@@ -78,11 +79,19 @@ void CommandHandler::mousePressEvent(const Point& pos)
 	shapeCommand->mousePressEvent(pos);
 }
 
+void CommandHandler::rightClickEvent(const Point & pos)
+{
+   shapeCommand = new CommandTranslateCanvas(cadFileManager, *viewMediator);
+   shapeCommand->mousePressEvent(pos);
+
+   dragging= true;
+}
+
 void CommandHandler::mouseReleaseEvent(const Point& pos)
 {
 	shapeCommand->mouseReleaseEvent(pos);
 	
-	if(shapeCommand->type() == LINE)
+	if(shapeCommand->type() == LINE || dragging)
 		createLineCommand();
 
 	else if (shapeCommand->hasSecondClick())
@@ -92,6 +101,8 @@ void CommandHandler::mouseReleaseEvent(const Point& pos)
 		else if(shapeCommand->type() == ARC)
 			createArcCommand();
 	}
+
+   dragging= false;
 }
 
 void CommandHandler::mouseMoveEvent(const Point& pos)

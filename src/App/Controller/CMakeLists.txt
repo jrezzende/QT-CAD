@@ -13,6 +13,7 @@ set(
 	CommandUndo.cpp
 	CommandRedo.cpp
 	CommandClear.cpp
+	CommandTranslateCanvas.cpp
 	CommandExit.cpp
 )
 
@@ -31,6 +32,7 @@ set(
 	CommandRedo.h
 	CommandClear.h
 	CommandExit.h
+	CommandTranslateCanvas.h
 	ShapeCommand.h
 )
 

@@ -16,7 +16,8 @@ enum MouseEvent
    MOVE,
    RELEASE,
    WHEEL,
-   TRACKING
+   TRACKING,
+   RIGHTCLICK
 };
 
 enum WindowActions

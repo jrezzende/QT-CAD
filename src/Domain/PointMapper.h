@@ -32,6 +32,8 @@ public:
    void recalculatePoint(Point& point);
 
    void reset() { dFactor= 0; zFactor= DEFAULT; }
+
+   void setUpperLeftPoint(const Point& point) { upperLeftPoint= point; }
    void setDeltaFactor(const int factor) { dFactor = factor; setZoomFactor(); }
    void setZoomFactor();
 

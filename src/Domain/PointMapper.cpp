@@ -76,7 +76,7 @@ std::vector<Point> PointMapper::recalculatePointsInShape(std::vector<Point> poin
    std::vector<Point> recalculatedPoints;
 
    for (auto point : points)
-      recalculatedPoints.push_back(Point(point + upperLeftPoint) * zFactor);
+      recalculatedPoints.push_back(Point(point + (upperLeftPoint)) * zFactor);
    
    return recalculatedPoints;
 }

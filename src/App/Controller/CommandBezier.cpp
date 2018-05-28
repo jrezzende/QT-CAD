@@ -11,7 +11,7 @@ void CommandBezier::mousePressEvent(const Point& point)
 	else {
 		secondClick = true;
       bezier->setThirdPoint(point);
-      fileManager.currentFile().eraseShape(*previewLine);
+      fileManager.current().eraseShape(*previewLine);
 	}
 }
 
@@ -19,11 +19,11 @@ void CommandBezier::mouseMoveEvent(const Point& point)
 {
 	if (!isDrawing) {
 		previewLine->setSecondPoint(point);
-      fileManager.currentFile().addShape(*previewLine);
+      fileManager.current().addShape(*previewLine);
 	}
 	else {
 		bezier->setThirdPoint(point);
-      fileManager.currentFile().addShape(*bezier);
+      fileManager.current().addShape(*bezier);
 	}
 }
 
@@ -34,7 +34,7 @@ void CommandBezier::mouseReleaseEvent(const Point& point)
 		isDrawing= true;
 	}
 	else {
-      fileManager.currentFile().addShape(*bezier);
-      fileManager.currentFile().canvas()->setDrawing(false);
+      fileManager.current().addShape(*bezier);
+      fileManager.current().canvas()->setDrawing(false);
 	}
 }

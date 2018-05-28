@@ -27,7 +27,7 @@ class CommandHandler
 
 public:
    ~CommandHandler();
-   explicit CommandHandler(CADFileManager& m);
+   explicit CommandHandler(CADFileManager& fileManager);
 
    void createNewFileCmd();
    void createSaveFileCmd();
@@ -57,8 +57,8 @@ public:
 
    void resetMapper() { mapper->reset(); }
 
-   bool currentFileStatus() const { return cadFileManager.currentFile().status(); }
-   std::vector<CADShape*> currentFileShapes() const { return cadFileManager.currentFile().shapesVector(); }
+   bool currentFileStatus() const { return cadFileManager.current().status(); }
+   std::vector<CADShape*> currentFileShapes() const { return cadFileManager.current().shapesVector(); }
 
    void sendMessageToStatusBar(std::string& msg) const;
 	void runCommand(Command* cmd);

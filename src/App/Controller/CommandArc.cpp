@@ -11,7 +11,7 @@ void CommandArc::mousePressEvent(const Point& point)
 	else {
 		secondClick = true;
 		arc->setThirdPoint(point);
-		fileManager.currentFile().eraseShape(*previewLine);
+		fileManager.current().eraseShape(*previewLine);
 	}
 }
 
@@ -19,10 +19,10 @@ void CommandArc::mouseMoveEvent(const Point& point)
 {
 	if (!isDrawing) {
 		previewLine->setSecondPoint(point);
-      fileManager.currentFile().addShape(*previewLine);
+      fileManager.current().addShape(*previewLine);
 	}
 	else {
-      fileManager.currentFile().addShape(*arc);
+      fileManager.current().addShape(*arc);
 		arc->setThirdPoint(point);
 	}
 }
@@ -34,7 +34,7 @@ void CommandArc::mouseReleaseEvent(const Point& point)
 		isDrawing= true;
 	}
 	else {
-      fileManager.currentFile().addShape(*arc);
-		fileManager.currentFile().canvas()->setDrawing(false);
+      fileManager.current().addShape(*arc);
+		fileManager.current().canvas()->setDrawing(false);
 	}
 }

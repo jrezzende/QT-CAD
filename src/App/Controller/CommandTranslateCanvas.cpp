@@ -12,7 +12,7 @@ void CommandTranslateCanvas::mouseMoveEvent(const Point & point)
    gap= translationPoint - point;
    viewMediator.handler().pointMapper().setUpperLeftPoint(gap);
 
-   auto shapes= viewMediator.handler().pointMapper().transformShapes(fileManager.currentFile());
+   auto shapes= viewMediator.handler().pointMapper().transformShapes(fileManager.current());
    viewMediator.canvas().clearMap();
 
    for (auto shape : shapes) {

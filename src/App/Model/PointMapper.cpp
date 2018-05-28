@@ -8,13 +8,10 @@
 std::vector<CADShape*> PointMapper::transformShapes(CADFile& currentFile)
 {
    std::vector<CADShape*> newShapes;
-
    newShapes.reserve(currentFile.shapesEnd() - currentFile.shapesBegin());
 
    for (auto shape : make_range(currentFile.shapesBegin(), currentFile.shapesEnd()))
-   {
       newShapes.push_back(shape->clone());
-   }
 
    for (auto shape : newShapes) {
       std::vector<Point> points;

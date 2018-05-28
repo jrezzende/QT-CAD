@@ -1,5 +1,7 @@
 #include "CADLine.h"
 
+#pragma warning(push)
+#pragma warning(disable: 4244)
 std::vector<Point> CADLine::coordinates()
 {
 	std::vector<Point> points;
@@ -41,3 +43,4 @@ std::vector<Point> CADLine::coordinates()
 
 	return points;
 }
+#pragma warning(pop)

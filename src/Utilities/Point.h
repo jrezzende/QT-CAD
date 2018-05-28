@@ -14,11 +14,11 @@ public:
 	Point() : x(0), y(0) {}
    Point(const int _x, const int _y) : x(_x), y(_y) {}
    
-	bool operator==(const Point& point) const { return std::abs(x - point.x) + std::abs(y - point.y) < 0.00001; }
+	bool operator==(const Point& point) const 
+   { return std::abs(x - point.x) + std::abs(y - point.y) < 0.00001; }
 
-	static double distanceBetweenTwoPoints(const Point& p1, const Point& p2) {
-	   return sqrt(pow(p1.x - p2.x, 2) + pow(p1.y - p2.y, 2)); 
-    }
+	static double distanceBetweenTwoPoints(const Point& p1, const Point& p2) 
+   { return sqrt(pow(p1.x - p2.x, 2) + pow(p1.y - p2.y, 2)); }
 
    Point Point::operator+(const Point& toAdd) const 
    { return Point(x + toAdd.x, y + toAdd.y); }
@@ -26,12 +26,8 @@ public:
    Point Point::operator-(const Point& toSubtract) const 
    { return Point(x - toSubtract.x, y - toSubtract.y); }
 
-   Point Point::operator*(const double value) const 
+   Point Point::operator*(const int value) const 
    { return Point(x * value, y * value); }
-
-   Point Point::operator/(const double value) const
-   { return Point(x / value, y / value); }
-
 };
 
 #endif //INCLUDED_POINT_H

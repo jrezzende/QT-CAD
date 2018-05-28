@@ -68,7 +68,7 @@ void CommandLoadFile::execute(CADFileManager& fileManager, ViewMediator& viewMed
 		}
 	}
 			fileManager.setRedoFlag(false);
-			fileManager.currentFile().reprint();
+			fileManager.current().reprint();
 
          viewMediator.setTitle(QString::fromStdString(file->fileName()));
 	}

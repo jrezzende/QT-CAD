@@ -5,9 +5,9 @@
 
 void CommandUndo::execute(CADFileManager& fileManager, ViewMediator& viewMediator)
 {
-	if (!fileManager.currentFile().shapesVector().empty()) {
-		fileManager.stash().addShape(*fileManager.currentFile().shapesVector().back());
-		fileManager.currentFile().eraseLastShape();
+	if (!fileManager.current().shapesVector().empty()) {
+		fileManager.stash().addShape(*fileManager.current().shapesVector().back());
+		fileManager.current().eraseLastShape();
 	}
    viewMediator.handler().resetMapper();
 }

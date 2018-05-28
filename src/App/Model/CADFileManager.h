@@ -6,31 +6,30 @@
 
 class CADFileManager
 {
-   CADFile* current;
-   CADFile* stashFile;
+   CADFile* current_;
+   CADFile* stash_;
 
    bool redoFlag;
 
 public:
    ~CADFileManager()= default;
    CADFileManager() : 
-   current(new CADFile("untitled")), 
-   stashFile(new CADFile("stashFile")), redoFlag(false)
-   { current->connectClearRedo(std::bind(&CADFileManager::clearStash, this)); }
+   current_(new CADFile("untitled")), stash_(new CADFile("stashFile")), redoFlag(false)
+   { current_->connectClearRedo(std::bind(&CADFileManager::clearStash, this)); }
 
-   CADFile& currentFile() const { return *current; }
-   CADFile& stash() const { return *stashFile; }
+   CADFile& current() const { return *current_; }
+   CADFile& stash() const { return *stash_; }
 
    bool redo() const { return redoFlag; }
 
    void setCurrentFile(CADFile* file)  { 
-      file->connectClearRedo(std::bind(&CADFileManager::clearStash, this));  current= file;  }
-   void setStashFile(CADFile* file)  { stashFile = file; }
+      file->connectClearRedo(std::bind(&CADFileManager::clearStash, this));  current_ = file;  }
+   void setStashFile(CADFile* file)  { stash_ = file; }
    void setRedoFlag(bool flag) { redoFlag= flag; }
-   void setCanvas(Canvas& _canvas) const { current->setCanvas(_canvas); stashFile->setCanvas(_canvas); }
+   void setCanvas(Canvas& _canvas) const { current_->setCanvas(_canvas); stash_->setCanvas(_canvas); }
 
-   void clearStash() const { stashFile->eraseAllShapes(); }
-   void clearShapes() const { current->eraseAllShapes(); }
+   void clearStash() const { stash_->eraseAllShapes(); }
+   void clearShapes() const { current_->eraseAllShapes(); }
 };
 
 #endif //  INCLUDED_CADFILEMANAGER_H

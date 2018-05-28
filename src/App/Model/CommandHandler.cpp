@@ -27,11 +27,12 @@ CommandHandler::~CommandHandler()
 	delete shapeCommand;
 }
 
-CommandHandler::CommandHandler(CADFileManager& m) :
-cadFileManager(m), currentCmd(nullptr), shapeCommand(nullptr), mapper(new PointMapper()), dragging(false)
+CommandHandler::CommandHandler(CADFileManager& fileManager) :
+cadFileManager(fileManager), currentCmd(nullptr), shapeCommand(nullptr), 
+mapper(new PointMapper()), dragging(false)
 {
    viewMediator= new ViewMediator(this);
-   m.setCanvas(viewMediator->canvas());
+   fileManager.setCanvas(viewMediator->canvas());
    viewMediator->setWindowWidget(&viewMediator->canvas());
    
    createLineCommand();
@@ -126,8 +127,8 @@ void CommandHandler::createArcCommand()
 {
 	if (shapeCommand)
 		delete shapeCommand;
-	shapeCommand = new CommandArc(cadFileManager, *viewMediator);
 
+	shapeCommand = new CommandArc(cadFileManager, *viewMediator);
    sendMessageToStatusBar(std::string("Drawing mode selected: Arc."));
 }
 
@@ -135,8 +136,8 @@ void CommandHandler::createBezierCommand()
 {
 	if (shapeCommand)
 		delete shapeCommand;
-	shapeCommand= new CommandBezier(cadFileManager, *viewMediator);
 
+	shapeCommand= new CommandBezier(cadFileManager, *viewMediator);
    sendMessageToStatusBar(std::string("Drawing mode selected: Bezier."));
 }
 
@@ -144,8 +145,8 @@ void CommandHandler::createLineCommand()
 {
 	if (shapeCommand)
 		delete shapeCommand;
-	shapeCommand = new CommandLine(cadFileManager, *viewMediator);
 
+	shapeCommand = new CommandLine(cadFileManager, *viewMediator);
    sendMessageToStatusBar(std::string("Drawing mode selected: Line."));
 }
 

@@ -10,10 +10,10 @@ void CommandLine::mousePressEvent(const Point& point)
 void CommandLine::mouseMoveEvent(const Point& point)
 {
    line->setSecondPoint(point);
-   fileManager.currentFile().addShape(*line);
+   fileManager.current().addShape(*line);
 }
 
 void CommandLine::mouseReleaseEvent(const Point& point)
 {
-   fileManager.currentFile().addShape(*line);
+   fileManager.current().addShape(*line);
 }

@@ -5,7 +5,7 @@
 
 void CommandZoom::execute(CADFileManager& fileManager, ViewMediator& viewMediator)
 {
-   auto zoomedShapes= mapper.transformShapes(fileManager.currentFile());
+   auto zoomedShapes= mapper.transformShapes(fileManager.current());
 
    viewMediator.canvas().clearMap();
 

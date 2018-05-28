@@ -4,7 +4,6 @@
 
 template <typename IterT>
 struct Range {
-   
    IterT begin_;
    IterT end_;
 

@@ -10,4 +10,4 @@ enum ShapeType
 	ARC
 };
 
-#endif //  INCLUDED_SHAPETYPE_H
+#endif // INCLUDED_SHAPETYPE_H

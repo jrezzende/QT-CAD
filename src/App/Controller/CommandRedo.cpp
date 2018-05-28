@@ -10,17 +10,17 @@ void CommandRedo::execute(CADFileManager& fileManager, ViewMediator& viewMediato
 
 	if (fileManager.redo()) {
 		for (size_t i = fileManager.stash().shapesVector().size() - 1; i > 0; i--)
-         fileManager.currentFile().addFromRedo(*fileManager.stash().shapesVector().at(i));
+         fileManager.current().addFromRedo(*fileManager.stash().shapesVector().at(i));
 
-		fileManager.currentFile().addFromRedo(*fileManager.stash().shapesVector().front());
+		fileManager.current().addFromRedo(*fileManager.stash().shapesVector().front());
 		fileManager.stash().eraseAllShapes();
 		fileManager.setRedoFlag(false);
 	}
 	else {
-		fileManager.currentFile().addFromRedo(*fileManager.stash().shapesVector().back());
+		fileManager.current().addFromRedo(*fileManager.stash().shapesVector().back());
 		fileManager.stash().eraseLastShape();
 	}
 	
    viewMediator.handler().resetMapper();
-	fileManager.currentFile().reprint();
+	fileManager.current().reprint();
 }

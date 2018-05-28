@@ -9,5 +9,5 @@ void CommandUndo::execute(CADFileManager& fileManager, ViewMediator& viewMediato
 		fileManager.stash().addShape(*fileManager.currentFile().shapesVector().back());
 		fileManager.currentFile().eraseLastShape();
 	}
-   viewMediator.manager().resetMapper();
+   viewMediator.handler().resetMapper();
 }

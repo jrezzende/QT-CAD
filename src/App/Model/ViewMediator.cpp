@@ -10,15 +10,15 @@ void ViewMediator::sendMouseEvents(MouseEvent me, Point& p) const
    switch(me)
    {
    case PRESS:
-      handler->mousePressEvent(p);
+      handler_->mousePressEvent(p);
       sendMouseMessages(PRESS, p);
       break;
    case MOVE:
-      handler->mouseMoveEvent(p);
+      handler_->mouseMoveEvent(p);
       sendMouseMessages(MOVE, p);
       break;
    case RELEASE:
-      handler->mouseReleaseEvent(p);
+      handler_->mouseReleaseEvent(p);
       sendMouseMessages(RELEASE, p);
       break;
    case WHEEL:
@@ -28,7 +28,7 @@ void ViewMediator::sendMouseEvents(MouseEvent me, Point& p) const
       sendMouseMessages(TRACKING, p);
       break;
    case RIGHTCLICK:
-      handler->rightClickEvent(p);
+      handler_->rightClickEvent(p);
       break;
    }
 }
@@ -38,13 +38,13 @@ void ViewMediator::sendShapeEvents(const ShapeType st) const
    switch(st)
    {
    case LINE:
-      handler->createLineCommand();
+      handler_->createLineCommand();
       break;
    case BEZIER:
-      handler->createBezierCommand();
+      handler_->createBezierCommand();
       break;
    case ARC:
-      handler->createArcCommand();
+      handler_->createArcCommand();
       break;
    case UNDEFINED:
       return;
@@ -79,8 +79,8 @@ void ViewMediator::sendMouseMessages(const MouseEvent me, const Point& p) const
 
 void ViewMediator::sendDeltaFactor(const int factor)
 {
-   handler->pointMapper().setDeltaFactor(factor);
-   handler->createZoomCmd();
+   handler_->pointMapper().setDeltaFactor(factor);
+   handler_->createZoomCmd();
 }
 
 void ViewMediator::sendMessage(std::string msg)
@@ -93,26 +93,26 @@ void ViewMediator::sendCommand(const WindowActions wa) const
    switch(wa)
    {
    case NEW:
-      handler->createNewFileCmd();
-      handler->createLineCommand();
+      handler_->createNewFileCmd();
+      handler_->createLineCommand();
       break;
    case LOAD:
-      handler->createLoadFileCmd();
+      handler_->createLoadFileCmd();
       break;
    case SAVE:
-      handler->createSaveFileCmd();
+      handler_->createSaveFileCmd();
       break;
    case UNDO:
-      handler->eraseLastShape();
+      handler_->eraseLastShape();
       break;
    case REDO:
-      handler->redoShape();
+      handler_->redoShape();
       break;
    case CLEAR:
-      handler->clearShapes();
+      handler_->clearShapes();
       break;
    case EXIT:
-      handler->createExitFileCmd();
+      handler_->createExitFileCmd();
       break;
    }
 }

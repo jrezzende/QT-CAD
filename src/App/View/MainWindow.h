@@ -50,12 +50,10 @@ public slots:
 	void verifyLoadFileAction();
 	void verifyClearAction();
 	void verifyExitAction();	
-	
-	//////////////////
+
 	void lineSignal() const;
-	void bezierSignal() const; // SIGNALS
+	void bezierSignal() const;
 	void arcSignal() const;
-	///////////////////
 };
 
 #endif //  INCLUDED_MAINWINDOW_H

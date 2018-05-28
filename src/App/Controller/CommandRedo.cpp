@@ -21,6 +21,6 @@ void CommandRedo::execute(CADFileManager& fileManager, ViewMediator& viewMediato
 		fileManager.stash().eraseLastShape();
 	}
 	
-   viewMediator.manager().resetMapper();
+   viewMediator.handler().resetMapper();
 	fileManager.currentFile().reprint();
 }

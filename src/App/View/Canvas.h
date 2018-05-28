@@ -6,7 +6,6 @@
 #include "qpainter.h"
 #include "qpixmap.h"
 
-class Rect;
 class ViewMediator;
 class CADShape;
 class Handler;
@@ -46,10 +45,9 @@ public:
 
    void toggleTracking();
    void clearMap();
-   void endPainter();
 
 	void drawCanvas(CADShape& shape);
-	void drawPixmap(CADShape& shape);
+   void drawPixmap(CADShape& shape) { painter.drawPath(drawPath(shape)); }
 
 	QPainterPath drawPath(CADShape& shape);
 };

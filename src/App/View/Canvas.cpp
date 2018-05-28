@@ -1,6 +1,5 @@
 #include "qevent.h"
 #include "qpainterpath.h"
-#include "qdebug.h"
 
 #include "Canvas.h"
 #include "Point.h"
@@ -23,42 +22,26 @@ drawing(false), dragEvent(false), currentDelta(0)
 
 void Canvas::toggleTracking()
 {
-	if (hasMouseTracking()) {
-		setMouseTracking(false);
-		return;
-	}
-	setMouseTracking(true);
+	bool isTracking= hasMouseTracking();
+	setMouseTracking(!isTracking);
 }
 
 void Canvas::clearMap()
 {
    pixMap.fill();
-
    update();
-}
-
-void Canvas::endPainter()
-{
-	painter.end();
 }
 
 void Canvas::drawCanvas(CADShape& shape)
 {
    drawPixmap(shape);
-
 	update();
-}
-
-void Canvas::drawPixmap(CADShape& shape)
-{
-   painter.drawPath(drawPath(shape));
 }
 
 QPainterPath Canvas::drawPath(CADShape& shape)
 {
+   QPainterPath path;
 	auto shapePoints= shape.coordinates();
-
-	QPainterPath path;
 
 	path.moveTo(shapePoints[0].x, shapePoints[0].y);
 
@@ -78,7 +61,7 @@ void Canvas::mousePressEvent(QMouseEvent* event)
    }
 
    mediator->sendMouseEvents(PRESS, *new Point(event->pos().x(), event->pos().y()));
-   setDrawing(true);
+   drawing= true;
 
 	event->accept();
 }
@@ -87,10 +70,9 @@ void Canvas::mouseReleaseEvent(QMouseEvent* event)
 {
    if (event->button() == Qt::RightButton)
       dragEvent= false;
-      
 
    mediator->sendMouseEvents(RELEASE, *new Point(event->pos().x(), event->pos().y()));
-	setDrawing(false);
+	drawing= false;
 
 	event->accept();
 }
@@ -115,7 +97,6 @@ void Canvas::wheelEvent(QWheelEvent* event)
    currentDelta = event->delta() / 120;
 
    mediator->sendDeltaFactor(currentDelta);
-
    mediator->sendMouseEvents(WHEEL, *new Point(event->pos().x(), event->pos().y()));
 }
 

@@ -3,7 +3,6 @@
 #include "qevent.h"
 #include "qmessagebox.h"
 #include "qshortcut.h"
-#include "qdebug.h"
 #include "qstring.h"
 #include "qstatusbar.h"
 #include "qsize.h"
@@ -22,7 +21,8 @@ MainWindow::~MainWindow()
    delete mediator;
 }
 
-MainWindow::MainWindow(ViewMediator* _mediator) : QMainWindow(nullptr), statusbar(nullptr), desktop(nullptr), windowCanvas(new Canvas(_mediator, this)), mediator(_mediator)
+MainWindow::MainWindow(ViewMediator* _mediator) : QMainWindow(nullptr), statusbar(nullptr), 
+desktop(nullptr), windowCanvas(new Canvas(_mediator, this)), mediator(_mediator)
 {
 	initializeComponents();
 	createShortcuts();
@@ -97,6 +97,7 @@ void MainWindow::initializeComponents()
 	nav->addMenu(shapesMenu);
    nav->addAction(toggleTracking);
    nav->setStyleSheet("font-size: 16px");
+
 	shapesMenu->addAction(lineAction);
 	shapesMenu->addAction(bezierAction);
 	shapesMenu->addAction(arcAction);
@@ -131,55 +132,86 @@ void MainWindow::initializeComponents()
    setStatusBar(statusbar);
 }
 
+void MainWindow::createShortcuts()
+{
+   connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_N), this), &QShortcut::activated, this, &MainWindow::verifyNewFileAction);
+   connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_O), this), &QShortcut::activated, this, &MainWindow::verifyLoadFileAction);
+   connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_S), this), &QShortcut::activated, this, &MainWindow::save);
+   connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_L), this), &QShortcut::activated, this, &MainWindow::lineSignal);
+   connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_B), this), &QShortcut::activated, this, &MainWindow::bezierSignal);
+   connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_A), this), &QShortcut::activated, this, &MainWindow::arcSignal);
+   connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z), this), &QShortcut::activated, this, &MainWindow::undo);
+   connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Y), this), &QShortcut::activated, this, &MainWindow::redo);
+   connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_X), this), &QShortcut::activated, this, &MainWindow::verifyClearAction);
+   connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_T), this), &QShortcut::activated, this, &MainWindow::mouseTrackingAction);
+}
+
 //////////////////////////////////////
 
 void MainWindow::newFile() const
 {
 	mediator->sendCommand(NEW);
-
 	statusbar->showMessage(tr("New file action invoked."), 10000);
 }
 
 void MainWindow::loadFile() const
 {
 	mediator->sendCommand(LOAD);
-	
 	statusbar->showMessage(tr("Load file action invoked."), 10000);
 }
 
 void MainWindow::save() const
 {
 	mediator->sendCommand(SAVE);
-
 	statusbar->showMessage(tr("Save file action invoked."), 10000);
 }
 
 void MainWindow::undo() const
 {
 	mediator->sendCommand(UNDO);
-
 	statusbar->showMessage(tr("Undo action invoked."), 10000);
 }
 
 void MainWindow::redo() const
 {
 	mediator->sendCommand(REDO);
-
 	statusbar->showMessage(tr("Redo action invoked."), 10000);
 }
 
 void MainWindow::clear() const
 {
 	mediator->sendCommand(CLEAR);
-
 	statusbar->showMessage(tr("Clear action invoked."), 10000);
 }
 
 void MainWindow::exit() const
 {
 	mediator->sendCommand(EXIT);
-
 	statusbar->showMessage(tr("Exit action invoked."), 10000);
+}
+
+void MainWindow::mouseTrackingAction()
+{
+   windowCanvas->toggleTracking();
+   statusbar->showMessage(tr("Mouse tracking action invoked."), 10000);
+}
+
+void MainWindow::lineSignal() const
+{
+   mediator->sendShapeEvents(LINE);
+   statusbar->showMessage(tr("Drawing mode selected: Line."), 10000);
+}
+
+void MainWindow::bezierSignal() const
+{
+   mediator->sendShapeEvents(BEZIER);
+   statusbar->showMessage(tr("Drawing mode selected: Bezier."), 10000);
+}
+
+void MainWindow::arcSignal() const
+{
+   mediator->sendShapeEvents(ARC);
+   statusbar->showMessage(tr("Drawing mode selected: Arc."), 10000);
 }
 
 std::string MainWindow::newFileName()
@@ -203,26 +235,12 @@ std::string MainWindow::openFileName()
    ).toStdString();
 }
 
-void MainWindow::createShortcuts()
-{
-	connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_N), this), &QShortcut::activated, this, &MainWindow::verifyNewFileAction);
-	connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_O), this), &QShortcut::activated, this, &MainWindow::verifyLoadFileAction);
-	connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_S), this), &QShortcut::activated, this, &MainWindow::save);
-	connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_L), this), &QShortcut::activated, this, &MainWindow::lineSignal);
-	connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_B), this), &QShortcut::activated, this, &MainWindow::bezierSignal);
-	connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_A), this), &QShortcut::activated, this, &MainWindow::arcSignal);
-	connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z), this), &QShortcut::activated, this, &MainWindow::undo);
-	connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Y), this), &QShortcut::activated, this, &MainWindow::redo);
-	connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_X), this), &QShortcut::activated, this, &MainWindow::verifyClearAction);
-	connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_T), this), &QShortcut::activated, this, &MainWindow::mouseTrackingAction);
-}
-
 void MainWindow::verifyExitAction() 
 {
-	if (mediator->manager().currentFileShapes().empty())
+	if (mediator->handler().currentFileShapes().empty())
 		exit();
 
-   if (mediator->manager().currentFileStatus() == NOTSAVED) {
+   if (mediator->handler().currentFileStatus() == NOTSAVED) {
 		if (QMessageBox::question(this, "Quit?", "Are you sure you want to exit?",
 			QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
 			exit();
@@ -230,66 +248,37 @@ void MainWindow::verifyExitAction()
 	exit();
 }
 
-void MainWindow::mouseTrackingAction()
-{
-	windowCanvas->toggleTracking();
-
-	statusbar->showMessage(tr("Mouse tracking action invoked."), 10000);
-}
-
 void MainWindow::verifyNewFileAction()
 {
-	if (mediator->manager().currentFileShapes().empty())
-		newFile();
-	else if (mediator->manager().currentFileStatus() == NOTSAVED) {
+	if (mediator->handler().currentFileShapes().empty())
+      return newFile();
+
+	else if (mediator->handler().currentFileStatus() == NOTSAVED) {
 		if (QMessageBox::question(this, "Discard file?", "Are you sure you want to discard this file?",
 			QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
          windowCanvas->pixmap().fill();
-			newFile();
+			return newFile();
 	}
-	else
 		newFile();
 }
 
 void MainWindow::verifyLoadFileAction()
 {
-	if (mediator->manager().currentFileStatus() == NOTSAVED && !(mediator->manager().currentFileShapes().empty())) {
+	if (mediator->handler().currentFileStatus() == NOTSAVED && !(mediator->handler().currentFileShapes().empty())) {
 		if (QMessageBox::question(this, "Overwrite this file?", "Are you sure you want to discard this file?",
 			QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
-			loadFile();
+         return loadFile();
 	}
-	else
 		loadFile();
 }
 
 void MainWindow::verifyClearAction()
 {
-	if(mediator->manager().currentFileShapes().empty())
-		clear();
-	else if (mediator->manager().currentFileStatus() == NOTSAVED) {
+	if(mediator->handler().currentFileShapes().empty())
+      return clear();
+	else if (mediator->handler().currentFileStatus() == NOTSAVED) {
 		if(QMessageBox::question(this, "This action cannot be undone!", "Are you sure you want to clear the file?",
 			QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
 			clear();
 	}
-}
-
-void MainWindow::lineSignal() const
-{
-   mediator->sendShapeEvents(LINE);
-
-	statusbar->showMessage(tr("Drawing mode selected: Line."), 10000);
-}
-
-void MainWindow::bezierSignal() const
-{
-   mediator->sendShapeEvents(BEZIER);
-
-	statusbar->showMessage(tr("Drawing mode selected: Bezier."), 10000);
-}
-
-void MainWindow::arcSignal() const
-{
-   mediator->sendShapeEvents(ARC);
-
-	statusbar->showMessage(tr("Drawing mode selected: Arc."), 10000);
 }

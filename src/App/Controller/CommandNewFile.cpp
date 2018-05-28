@@ -15,7 +15,7 @@ void CommandNewFile::execute(CADFileManager& fileManager, ViewMediator& viewMedi
 	fileManager.setCurrentFile(file);
 	fileManager.setStashFile(stashFile);
 
-   viewMediator.manager().resetMapper();
+   viewMediator.handler().resetMapper();
 	viewMediator.setWindowWidget(file->canvas());
 	viewMediator.setTitle(QString::fromStdString(file->fileName()));
 }

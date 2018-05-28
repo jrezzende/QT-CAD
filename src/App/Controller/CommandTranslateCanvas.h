@@ -11,7 +11,7 @@ class CommandTranslateCanvas : public ShapeCommand
 
 public:
    ~CommandTranslateCanvas() = default;
-   CommandTranslateCanvas(CADFileManager& fmanager, ViewMediator& viewMediator) :
+   CommandTranslateCanvas(CADFileManager& fileManager, ViewMediator& viewMediator) :
       ShapeCommand(fileManager, viewMediator, UNDEFINED), translationPoint(Point(0, 0)),
       gap(Point(0, 0)) {}
 

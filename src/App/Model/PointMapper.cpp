@@ -3,23 +3,7 @@
 #include "CADFile.h"
 #include "CADBezier.h"
 #include "CADArc.h"
-
-template <typename IterT>
-struct Range {
-   Range(IterT b, IterT e) : start_(b), end_(e) {}
-
-   IterT begin() { return start_; }
-   IterT end() { return end_; }
-
-   IterT start_;
-   IterT end_;
-};
-
-template <typename IterT>
-Range<IterT> make_range(IterT b, IterT e)
-{
-   return Range<IterT>(b, e);
-}
+#include "TemplateIterator.h"
 
 std::vector<CADShape*> PointMapper::transformShapes(CADFile& currentFile)
 {

@@ -28,11 +28,14 @@ class CADFile
 
 public:
 	~CADFile()= default;
-	explicit CADFile(const std::string _fileName) : name(_fileName), fileStatus(NOTSAVED), drawArea(nullptr) {}
-	CADFile(const std::string _fileName, Canvas* _canvas) : name(_fileName), fileStatus(NOTSAVED), drawArea(_canvas) {}
-	CADFile(
-      const std::string _fileName, const std::string _filePath, Canvas* _canvas
-   ) : name(_fileName), path(_filePath), fileStatus(NOTSAVED), drawArea(_canvas) {}
+	explicit CADFile(const std::string _fileName) : name(_fileName), 
+      fileStatus(NOTSAVED), drawArea(nullptr) {}
+
+	CADFile(const std::string _fileName, Canvas* _canvas) :
+      name(_fileName), fileStatus(NOTSAVED), drawArea(_canvas) {}
+
+	CADFile(const std::string _fileName, const std::string _filePath, Canvas* _canvas) :
+      name(_fileName), path(_filePath), fileStatus(NOTSAVED), drawArea(_canvas) {}
 
 	void setStatus(Status _status) { fileStatus = _status; }
 	bool status() const { return fileStatus; }
@@ -44,6 +47,7 @@ public:
 	std::string filePath() const {return path;}
 	
    std::vector<CADShape*>shapesVector() { return shapes; }
+
    std::vector<CADShape*>::const_iterator shapesBegin() const { return shapes.begin(); }
    std::vector<CADShape*>::const_iterator shapesEnd() const { return shapes.end(); }
 

@@ -2,15 +2,15 @@
 #include "CADFileManager.h"
 #include "ViewMediator.h"
 
-void CommandClear::execute(CADFileManager& m, ViewMediator& mediator)
+void CommandClear::execute(CADFileManager& fileManager, ViewMediator& mediator)
 {
-	if(m.current().shapesVector().empty())
+	if(fileManager.current().shapesVector().empty())
 		return;
 
-	for (size_t i = m.current().shapesVector().size() - 1; i > 0; i--)
-		m.stash().addShape(*m.current().shapesVector().at(i));
+	for (size_t i = fileManager.current().shapesVector().size() - 1; i > 0; i--)
+      fileManager.stash().addShape(*fileManager.current().shapesVector().at(i));
 
-	m.stash().addShape(*m.current().shapesVector().front());
-	m.current().eraseAllShapes();
-	m.setRedoFlag(true);
+	fileManager.stash().addShape(*fileManager.current().shapesVector().front());
+	fileManager.current().eraseAllShapes();
+	fileManager.setRedoFlag(true);
 }

@@ -13,6 +13,7 @@ class CADArc final : public CADShape
 	double finalAngle;
 	double incrementAngle;
 	double radius;
+
 	int arcDivisions;
 
 	Point translatePoint(Point& p);
@@ -36,8 +37,8 @@ public:
 	void accept(ShapeVisitor& v) override { v.visitArc(*this); };
    CADArc* clone() const override { return new CADArc(*this); }
 
-   static double degreesToRadians(const double degrees) { return degrees * PI / 180; }
-   static double radiansToDegrees(const double radians) { return radians * 180 / PI; }
+   double degreesToRadians(const double degrees) { return degrees * PI / 180; }
+   double radiansToDegrees(const double radians) { return radians * 180 / PI; }
 };
 
 #endif //  INCLUDED_CADARC_H
